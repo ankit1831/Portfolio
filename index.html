@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankit's AI Portfolio</title>
+    <style>
+        /* Modern Dark Theme Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            width: 400px;
+            height: 600px;
+            background-color: #2d2d2d;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #007bff;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #007bff;
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: #404040;
+            color: #e0e0e0;
+            border-bottom-left-radius: 2px;
+        }
+
+        .input-area {
+            padding: 20px;
+            background-color: #252525;
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            background-color: #404040;
+            color: white;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Loading Animation */
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            color: #888;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="header">
+            🤖 Ankit's Portfolio Assistant
+        </div>
+        
+        <div class="chat-box" id="chat-box">
+            <div class="message bot-message">
+                Hello! I am Ankit's AI Assistant. Ask me anything about his projects, skills, or experience.
+            </div>
+        </div>
+        
+        <div class="typing-indicator" id="typing">AI is typing...</div>
+
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Type a question..." onkeypress="handleEnter(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const inputField = document.getElementById("user-input");
+            const chatBox = document.getElementById("chat-box");
+            const typingIndicator = document.getElementById("typing");
+            const question = inputField.value.trim();
+
+            if (!question) return;
+
+            // 1. Add User Message to Chat
+            addMessage(question, "user-message");
+            inputField.value = "";
+
+            // 2. Show Loading
+            typingIndicator.style.display = "block";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                // 3. Send to Python Server
+                const response = await fetch("http://127.0.0.1:8000/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query: question })
+                });
+
+                const data = await response.json();
+
+                // 4. Add AI Response to Chat
+                typingIndicator.style.display = "none";
+                addMessage(data.answer, "bot-message");
+
+            } catch (error) {
+                typingIndicator.style.display = "none";
+                addMessage("⚠️ Error: Could not connect to AI server. Make sure app.py is running!", "bot-message");
+                console.error(error);
+            }
+        }
+
+        function addMessage(text, className) {
+            const chatBox = document.getElementById("chat-box");
+            const div = document.createElement("div");
+            div.className = `message ${className}`;
+            div.innerText = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function handleEnter(event) {
+            if (event.key === "Enter") sendMessage();
+        }
+    </script>
+
+</body>
+</html>

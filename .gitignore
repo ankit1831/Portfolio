@@ -1,1 +1,10 @@
+# Ignore virtual env
+.venv/
+venv/
+__pycache__/
+
+# Ignore Environment Variables (Security Risk!)
 .env
+
+# Optional: Ignore system files
+.DS_Store

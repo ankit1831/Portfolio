@@ -1,42 +1,75 @@
-AI/ML & Data Science
-Artificial Intelligence: AI fundamentals, intelligent systems, search algorithms, knowledge representation
+# AI/ML & Data Science
 
-Machine Learning: Supervised/unsupervised/reinforcement learning, model selection, hyperparameter tuning, cross-validation, feature engineering, model deployment (MLflow)
+## Artificial Intelligence
 
-Deep Learning: Artificial Neural Networks (ANN), Convolutional Neural Networks (CNN), Recurrent Neural Networks (RNN), Transfer Learning, model optimization
+AI fundamentals, intelligent systems, search algorithms, knowledge representation
 
-Natural Language Processing (NLP): Transformers architecture, tokenization, embeddings (Word2Vec, BERT), sequence models
+## Machine Learning
 
-Generative AI & LLMs: Large Language Models, prompt engineering, Retrieval-Augmented Generation (RAG), fine-tuning techniques (PEFT, LoRA), metric evaluation (BLEU, ROUGE, perplexity), agentic workflows
+Supervised, unsupervised, and reinforcement learning; model selection; hyperparameter tuning; cross-validation; feature engineering; model deployment (MLflow)
 
-Web Development (Frontend)
-HTML5, CSS3 (Flexbox, Grid, Animations)
+## Deep Learning
 
-JavaScript (ES6+, DOM manipulation, async/await)
+Artificial Neural Networks (ANN), Convolutional Neural Networks (CNN), Recurrent Neural Networks (RNN), Transfer Learning, model optimization
 
-Responsive design, cross-browser compatibility
+## Natural Language Processing (NLP)
 
-Computer Science Fundamentals
-Data Structures & Algorithms: Arrays, linked lists, stacks, queues, trees, graphs, hash tables, sorting/searching algorithms, dynamic programming, time/space complexity
+Transformers architecture, tokenization, embeddings (Word2Vec, BERT), sequence models
 
-Operating Systems: Process management, memory management, file systems, scheduling algorithms, deadlocks
+## Generative AI & LLMs
 
-Computer Networks: OSI/TCP-IP models, HTTP/HTTPS, DNS, sockets, network protocols
+Large Language Models, prompt engineering, Retrieval-Augmented Generation (RAG), fine-tuning techniques (PEFT, LoRA), metric evaluation (BLEU, ROUGE, perplexity), agentic workflows
 
-Database Management: MySQL (queries, joins, indexing, normalization), relational database design, SQL optimization
+# Web Development (Frontend)
 
-Programming Languages
-Python: Data science stack (NumPy, Pandas, Matplotlib, Scikit-learn), web frameworks (Flask), scripting, automation
+HTML5, CSS3 (Flexbox, Grid, Animations), JavaScript (ES6+, DOM manipulation, async/await), responsive design, cross-browser compatibility
 
-C++: Object-oriented programming, STL, memory management, competitive programming
+# Computer Science Fundamentals
 
-Java: Core Java, OOP principles, collections framework, exception handling
+## Data Structures & Algorithms
 
-Tools & Platforms
-Linux: Command line proficiency, bash scripting, system administration, package management
+Arrays, linked lists, stacks, queues, trees, graphs, hash tables, sorting/searching algorithms, dynamic programming, time/space complexity
 
-Database: MySQL database design, CRUD operations, query optimization
+## Operating Systems
 
-Version Control: Git (branching, merging, GitHub workflows)
+Process management, memory management, file systems, scheduling algorithms, deadlocks
 
-Development Tools: VS Code, Jupyter Notebook
+## Computer Networks
+
+OSI/TCP-IP models, HTTP/HTTPS, DNS, sockets, network protocols
+
+## Database Management
+
+MySQL (queries, joins, indexing, normalization), relational database design, SQL optimization
+
+# Programming Languages
+
+## Python
+
+Data science stack (NumPy, Pandas, Matplotlib, Scikit-learn), web frameworks (Flask), scripting, automation
+
+## C++
+
+Object-oriented programming, STL, memory management, competitive programming
+
+## Java
+
+Core Java, OOP principles, collections framework, exception handling
+
+# Tools & Platforms
+
+## Linux
+
+Command line proficiency, bash scripting, system administration, package management
+
+## Database
+
+MySQL database design, CRUD operations, query optimization
+
+## Version Control
+
+Git (branching, merging, GitHub workflows)
+
+## Development Tools
+
+VS Code, Jupyter Notebook
