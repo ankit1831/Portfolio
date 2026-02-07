@@ -400,3 +400,126 @@ footer {
 html { 
     scroll-behavior: smooth; 
 }
+
+/* Make cards feel clickable */
+.project-card { cursor: pointer; }
+.project-card:focus { outline: 2px solid rgba(0,255,136,0.6); outline-offset: 6px; }
+
+/* Modal using native <dialog> */
+.project-modal {
+  width: min(900px, 92vw);
+  border: 1px solid rgba(0,255,136,0.25);
+  border-radius: 18px;
+  padding: 0;
+  background: rgba(10,10,10,0.92);
+  color: #e2e8f0;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+  
+}
+.project-modal{
+  position: fixed;
+  inset: 0;       /* top/right/bottom/left = 0 */
+  margin: auto;   /* centers the dialog box */
+}
+/* Smaller modals for Education/Experience */
+.project-modal.modal-small{
+  width: min(720px, 92vw);
+}
+
+
+
+.project-modal::backdrop {
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+}
+
+.modal-inner {
+  position: relative;
+  padding: 1.5rem 1.5rem 1.75rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(0,255,136,0.25);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  color: #e2e8f0;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.modal-subtitle { opacity: 0.9; margin: 0.5rem 0 1rem; }
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.modal-link {
+  text-decoration: none;
+  color: #0a0a0a;
+  background: linear-gradient(45deg, #00ff88, #00d4aa);
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.modal-section { margin-top: 1rem; }
+.modal-section h4 { margin-bottom: 0.6rem; color: #00ff88; }
+
+.modal-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.modal-chips span {
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(0,255,136,0.1);
+  border: 1px solid rgba(0,255,136,0.25);
+  font-size: 0.95rem;
+}
+
+.modal-bullets { margin-top: 0.75rem; padding-left: 1.2rem; }
+.modal-bullets li { margin-bottom: 0.4rem; }
+
+/* Compact Experience/Education cards */
+.experience-card{
+  padding: 1.25rem;          /* was 2rem */
+}
+
+.experience-card h3{ margin-bottom: 0.35rem; }
+.experience-card h4{ margin-bottom: 0.35rem; }
+
+.experience-card .date{
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.experience-card ul{
+  margin-top: 0.6rem;
+  padding-left: 1.1rem;
+}
+
+.experience-card li{ margin-bottom: 0.35rem; }
+
+.experience-grid{
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(4, minmax(200px, 1fr));
+}
+
+@media (max-width: 1024px){
+  .experience-grid{ grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+}
+@media (max-width: 600px){
+  .experience-grid{ grid-template-columns: 1fr; }
+}
+
