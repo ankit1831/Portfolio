@@ -26,7 +26,26 @@
           <li><a href="#experience">Experience</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#contact">Contact</a></li>
+          <li>
+            <a
+              class="nav-resume"
+              href="docs/Ankit Sharma Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Resume</a
+            >
+          </li>
         </ul>
+
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          type="button"
+          aria-label="Toggle theme"
+        >
+          <i class="fas fa-moon"></i>
+        </button>
+
         <div class="hamburger"><span></span><span></span><span></span></div>
       </nav>
     </header>
@@ -40,6 +59,13 @@
           Building impactful Generative AI & Computer Vision solutions
         </p>
         <a href="#projects" class="cta-button">View My Work</a>
+        <a
+          href="docs/Ankit Sharma Resume.pdf"
+          class="cta-button cta-secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+          >View Resume</a
+        >
       </div>
     </section>
 
@@ -328,7 +354,17 @@
           aria-haspopup="dialog"
           aria-controls="modal-brain-tumor"
         >
-          <div class="project-image">🧠</div>
+          <div class="project-image">
+            <img
+              src="assets\brain.webp"
+              alt="Brain Tumor Detection thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
           <div class="project-content">
             <h3 class="project-title">Brain Tumor Detection</h3>
             <p>94% accuracy CNN for MRI scans</p>
@@ -347,7 +383,17 @@
           aria-haspopup="dialog"
           aria-controls="modal-heal-bridge"
         >
-          <div class="project-image">🏥</div>
+          <div class="project-image">
+            <img
+              src="assets\heal.webp"
+              alt="Heal-Bridge AI thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
           <div class="project-content">
             <h3 class="project-title">Heal-Bridge AI</h3>
             <p>Live healthcare + AI symptom checker</p>
@@ -366,7 +412,17 @@
           aria-haspopup="dialog"
           aria-controls="modal-groq-chat"
         >
-          <div class="project-image">🤖</div>
+          <div class="project-image">
+            <img
+              src="assets\chat.webp"
+              alt="Groq LLM Chatbot thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
           <div class="project-content">
             <h3 class="project-title">Groq LLM Chatbot</h3>
             <p>300ms multi-model streaming chat</p>
@@ -385,12 +441,108 @@
           aria-haspopup="dialog"
           aria-controls="modal-gait"
         >
-          <div class="project-image">🚶</div>
+          <div class="project-image">
+            <img
+              src="assets\gait.webp"
+              alt="Gait Biometrics thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
           <div class="project-content">
             <h3 class="project-title">Gait Biometrics</h3>
             <p>View-invariant walking recognition</p>
             <div class="project-tags">
               <span>PyTorch</span><span>OpenCV</span>
+            </div>
+          </div>
+        </article>
+        <!-- Card 5 -->
+        <article
+          class="project-card"
+          data-modal="modal-student-performance"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-student-performance"
+        >
+          <div class="project-image">
+            <img
+              src="assets\stu.webp"
+              alt="Student Performance Prediction thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Student Performance Prediction</h3>
+            <p>Complete ML pipeline + Flask app (92.5% accuracy)</p>
+            <div class="project-tags">
+              <span>Scikit-learn</span><span>Flask</span><span>92.5%</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article
+          class="project-card"
+          data-modal="modal-food-delivery"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-food-delivery"
+        >
+          <div class="project-image">
+            <img
+              src="assets\food.webp"
+              alt="Food Delivery Time Prediction thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Food Delivery Time Prediction</h3>
+            <p>ETA regression (RMSE 3.2 min, R² 0.87)</p>
+            <div class="project-tags">
+              <span>XGBoost</span><span>Pandas</span><span>RMSE 3.2</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 7 -->
+        <article
+          class="project-card"
+          data-modal="modal-churn"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-churn"
+        >
+          <div class="project-image">
+            <img
+              src="assets\cust.webp"
+              alt="Customer Churn Prediction thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Customer Churn Prediction</h3>
+            <p>Explainable churn model (AUC 0.95)</p>
+            <div class="project-tags">
+              <span>XGBoost</span><span>SHAP</span><span>AUC 0.95</span>
             </div>
           </div>
         </article>
@@ -526,7 +678,7 @@
           <div class="modal-actions">
             <a
               class="modal-link"
-              href="https://ankit1831.github.io/LLM-using-Groq/"
+              href="https://llm-using-groq-t9pwlcrmfpta7vnehdwhb8.streamlit.app/"
               target="_blank"
               rel="noopener noreferrer"
               >Live</a
@@ -615,6 +767,184 @@
           </div>
         </div>
       </dialog>
+      <dialog
+        id="modal-student-performance"
+        class="project-modal"
+        aria-labelledby="student-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+          <h3 id="student-title">Student Performance Prediction</h3>
+          <p class="modal-subtitle">
+            Complete ML pipeline + Flask deployment + EDA dashboards.
+          </p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Student_performance_prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live</a
+            >
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Student_performance_prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Key results</h4>
+            <ul class="modal-bullets">
+              <li>Best model: Random Forest.</li>
+              <li>Accuracy: 92.5%, F1-Score: 0.91.</li>
+              <li>RMSE (Grade): 1.18.</li>
+            </ul>
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>Pandas</span><span>Scikit-learn</span><span>Seaborn</span
+              ><span>Matplotlib</span><span>Flask</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Detailed explanation</h4>
+            <p>
+              Dataset: 1,000+ student records. Preprocessing included outlier
+              removal, encoding, and SMOTE balancing. Built multiple models (LR,
+              DT, RF, KNN, SVM, XGBoost) and deployed the final predictor as a
+              Flask web app.
+            </p>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        id="modal-food-delivery"
+        class="project-modal"
+        aria-labelledby="food-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+          <h3 id="food-title">Food Delivery Time Prediction</h3>
+          <p class="modal-subtitle">
+            ETA regression optimization for delivery platforms.
+          </p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Food_delivery_time_prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live</a
+            >
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Food_delivery_time_prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Key results</h4>
+            <ul class="modal-bullets">
+              <li>XGBoost: RMSE 3.2 min, R² 0.87.</li>
+              <li>Random Forest: RMSE 3.5 min, R² 0.85.</li>
+              <li>Linear Regression: RMSE 4.1 min, R² 0.78.</li>
+            </ul>
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>Pandas</span><span>XGBoost</span><span>Featuretools</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Detailed explanation</h4>
+            <p>
+              Trained regression models using 18 variables (distance, traffic,
+              weather, ratings, order volume). Insights showed weather and peak
+              hours as major drivers (~25% variance explained).
+            </p>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        id="modal-churn"
+        class="project-modal"
+        aria-labelledby="churn-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+          <h3 id="churn-title">Customer Churn Prediction</h3>
+          <p class="modal-subtitle">Explainable churn classifier with SHAP.</p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Customer-Churn-Prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live</a
+            >
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Customer-Churn-Prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Key results</h4>
+            <ul class="modal-bullets">
+              <li>AUC-ROC: 0.95, Accuracy: 93.2%.</li>
+              <li>Precision (Churn): 0.91, Recall (Churn): 0.89, F1: 0.90.</li>
+              <li>
+                Explainability: SHAP used to interpret drivers (contract type,
+                monthly charges).
+              </li>
+            </ul>
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>Scikit-learn</span><span>XGBoost</span><span>SHAP</span
+              ><span>Plotly</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Detailed explanation</h4>
+            <p>
+              Built a telco churn classifier on 7,000+ customer records with
+              SMOTE balancing and feature selection. Used an ensemble approach
+              (XGBoost + Logistic Regression) and added SHAP explanations for
+              business insights.
+            </p>
+          </div>
+        </div>
+      </dialog>
     </section>
 
     <!-- Contact -->
@@ -629,11 +959,22 @@
           </div>
           <div><i class="fab fa-github"></i> github.com/ankit1831</div>
         </div>
-        <form class="contact-form">
-          <input type="text" placeholder="Your Name" required />
-          <input type="email" placeholder="Your Email" required />
-          <textarea rows="5" placeholder="Your Message" required></textarea>
+        <form
+          class="contact-form"
+          id="contact-form"
+          action="https://formspree.io/f/xreagdnk"
+          method="POST"
+        >
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <textarea
+            name="message"
+            rows="5"
+            placeholder="Your Message"
+            required
+          ></textarea>
           <button type="submit">Send Message</button>
+          <p id="form-status" style="margin-top: 10px"></p>
         </form>
       </div>
     </section>
