@@ -66,6 +66,16 @@
           rel="noopener noreferrer"
           >View Resume</a
         >
+        <a
+          href="#"
+          class="cta-button cta-secondary"
+          data-modal="ai-chat-modal"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="ai-chat-modal"
+        >
+          Ask my AI
+        </a>
       </div>
     </section>
 
@@ -336,6 +346,27 @@
             <ul class="modal-bullets">
               <li>Excellent foundation in Mathematics and Science.</li>
             </ul>
+          </div>
+        </div>
+      </dialog>
+      <dialog
+        id="ai-chat-modal"
+        class="project-modal ai-chat-modal"
+        aria-labelledby="ai-chat-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+
+          <h3 id="ai-chat-title">Ankit’s AI Assistant</h3>
+          <p class="modal-subtitle">
+            Ask about my projects, skills, and experience.
+          </p>
+
+          <!-- Step 3: We will paste your chat UI here (from index.html) -->
+          <div class="ai-chat-shell">
+            <!-- Chat content will be loaded here via JS in Step 3 -->
           </div>
         </div>
       </dialog>
@@ -991,6 +1022,16 @@
         ></a>
       </div>
     </footer>
+    <button
+      class="chat-fab"
+      type="button"
+      data-modal="ai-chat-modal"
+      aria-label="Open chat"
+      aria-haspopup="dialog"
+      aria-controls="ai-chat-modal"
+    >
+      Chat
+    </button>
 
     <script src="script.js"></script>
   </body>
