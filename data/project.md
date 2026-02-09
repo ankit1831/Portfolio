@@ -1,169 +1,217 @@
-# Computer Vision & Medical AI
+# Projects — Ankit Sharma (Catalog)
 
-## Brain Tumor Detection System (Featured Project)
-
-Multi-class MRI tumor classification with 94%+ accuracy using CNNs.
-
-**Problem:** Classify brain MRI images into glioma, meningioma, pituitary, and no tumor.
-
-**Dataset:** 3,000+ T1-weighted MRI scans with augmentation pipeline.
-
-**Architecture:**
-
-- Custom CNN: Conv2D → MaxPool → Dropout → Dense layers
-- Transfer Learning: VGG16 / ResNet50 fine-tuned
-- Preprocessing: Resize 150x150, normalization, CLAHE enhancement
-
-**Performance Metrics:**
-
-- Test Accuracy: 94.23% (1324/1405 images)
-- Validation Accuracy: 91–94%
-- F1-Score (weighted): 0.94
-- Class-wise Precision: [0.95 no_tumor, 0.93 glioma, 0.92 meningioma, 0.91 pituitary]
-- Confusion Matrix and ROC curves implemented
-
-**Deployment:** Flask web app with image upload, prediction, and confidence heatmap.
-
-**Tech Stack:** TensorFlow/Keras, OpenCV, Flask, Bootstrap.
-
-GitHub
+This file contains projects in a consistent format for retrieval and interview-ready answers.
 
 ---
 
-# Healthcare & Web Applications
+## Brain Tumor Detection System
+Aliases: brain tumor, MRI tumor classifier, brain MRI classification
 
-## Heal-Bridge AI (Live Platform - Production Ready)
+### One-liner
+Multi-class MRI tumor classification with 94%+ accuracy using CNNs and transfer learning.
 
-Healthcare platform with AI symptom checker and appointment system.
+### Problem
+Classify brain MRI images into glioma, meningioma, pituitary, and no tumor.
 
-**Core Features:**
+### What I built
+- Multi-class image classification pipeline for brain MRI scans
+- Transfer learning experiments (VGG16/ResNet50) + custom CNN baseline
+- Preprocessing pipeline (resize, normalization, CLAHE enhancement)
+- Flask web app for upload + prediction
 
-- Symptom analysis and preliminary health assessment
-- Doctor appointment booking across multiple specialties
-- Medical record management and prescription upload
-- Multi-language support (English, Hindi, regional languages)
+### Tech stack
+TensorFlow/Keras, OpenCV, Flask
 
-**AI Components:** AI-powered health insights, prescription scanner (handwriting OCR).
+### Data
+- 3,000+ T1-weighted MRI scans with augmentation
 
-**Architecture:** Full-stack web app with cloud deployment.
+### Metrics
+- Test Accuracy: 94.23% (1324/1405)
+- Weighted F1: 0.94
+- Class-wise precision: 0.95 (no_tumor), 0.93 (glioma), 0.92 (meningioma), 0.91 (pituitary)
 
-**Status:** Live and actively maintained (upcoming: teleconsultation, EHR integration).
+### Links
+- Live:
+- GitHub:
 
-**Live Demo:** https://heal-bridge-ai.onrender.com/
-
-**Tech Stack:** Python, Flask, Streamlit, Render hosting.
-
-GitHub
+### Interview talking points
+- Why transfer learning helped and how augmentation improved generalization
+- What mistakes caused overfitting and how you fixed them
+- How you measured performance (confusion matrix/ROC) and validated results
 
 ---
 
-# Generative AI & LLMs
+## Gait Recognition System (CASIA-B)
+Aliases: gait biometrics, CASIA-B, view-invariant gait, gait recognition
+
+### One-liner
+Biometric identification using walking patterns with same-view and cross-view evaluation.
+
+### Problem
+Recognize identities from gait sequences under cross-view and clothing variations.
+
+### What I built
+- Preprocessing pipeline for gait silhouettes/sequences
+- Deep pipeline: CNN (spatial) → LSTM (temporal) → classifier
+- Same-view vs cross-view evaluation setup
+
+### Tech stack
+PyTorch, OpenCV
+
+### Data
+- CASIA-B: 124 subjects × 11 angles × 3 clothing × 10 sequences
+
+### Metrics (ongoing / reported)
+- Same-view Rank-1: 92.4%
+- Cross-view Rank-1: 78.2%
+- mAP (multi-shot): 85%
+
+### Links
+- Live/Docs:
+- GitHub:
+
+### Interview talking points
+- Why cross-view is harder and what features help robustness
+- How you structure sequences and avoid leakage across splits
+- Next improvements (view-invariant representation, metric learning)
+
+---
 
 ## Groq-Powered LLM Chatbot
+Aliases: Groq chatbot, LLM streaming chatbot, model-switching chatbot
 
-Ultra-fast conversational AI with model switching capabilities.
+### One-liner
+Ultra-fast chatbot with model switching and streaming responses (targeting <300ms perceived latency).
 
-**Features:**
+### Problem
+Provide a responsive multi-model chat experience with good UX.
 
-- Model selector: Llama3-70B/8B, Mixtral, Gemma, Gemma2
-- Streaming responses (<300 ms latency)
-- Conversation history and clear chat functionality
+### What I built
+- Multi-model selection (Llama3, Mixtral, Gemma family)
+- Streaming UI behavior + conversation history management
+- Clear chat functionality and practical UX controls
 
-**Performance:** Groq Cloud optimized inference with production-grade speed.
+### Tech stack
+Python, Streamlit, Groq API
 
-**Tech Stack:** Streamlit, Groq API, async Python.
+### Performance
+- Optimized for low-latency streaming experience
 
-GitHub
+### Links
+- Live:
+- GitHub:
+
+### Interview talking points
+- Latency: what makes streaming feel fast even when compute is heavy
+- UX: model switching, history, safe defaults
+- Tradeoffs: speed vs quality vs cost
 
 ---
 
-# Machine Learning Pipelines
+## Heal-Bridge AI
+Aliases: Heal-Bridge, health platform, symptom checker, appointment system
 
-## Student Performance Prediction (Complete ML Pipeline)
+### One-liner
+Healthcare platform with AI symptom checker and appointment booking (live deployment).
 
-Academic success predictor with Flask deployment and EDA dashboards.
+### Problem
+Help users with preliminary symptom analysis and streamline healthcare workflows.
 
-**Dataset:** 1,000+ student records (study time, demographics, family background).
+### What I built
+- Symptom analysis flow + preliminary health assessment
+- Appointment booking across specialties
+- Medical record/prescription upload and management
+- Multi-language support (English/Hindi/regional)
 
-**Preprocessing:** Outlier removal, encoding, SMOTE balancing.
+### AI components
+- AI-powered health insights
+- Prescription scanner (handwriting OCR)
 
-**Models:** Linear Regression, Decision Tree, Random Forest, KNN, SVM, XGBoost.
+### Tech stack
+Python, Flask, Streamlit, Render hosting
 
-**Best Model (Random Forest):**
+### Status
+- Live and actively maintained
+- Planned: teleconsultation, EHR integration
 
-- Accuracy: 92.5%
-- F1-Score: 0.91
-- RMSE (Grade): 1.18
-- Feature Importance: study_time (28%), failures (22%), family_edu (18%)
+### Links
+- Live: https://heal-bridge-ai.onrender.com/
+- GitHub:
 
-**Web App:** Input form with prediction and probability visualization.
+### Interview talking points
+- Product thinking: user flows, edge cases, privacy considerations
+- Deployment learnings: monitoring, stability, iteration speed
+- How you would validate medical AI safely (disclaimers, escalation, evaluation)
 
-**Tech Stack:** Pandas, Scikit-learn, Seaborn, Matplotlib, Flask.
+---
 
-GitHub
+## Food Delivery Time Prediction
+Aliases: food delivery ETA, delivery time regression, ETA prediction
 
-## Food Delivery Time Prediction (Regression Optimization)
+### One-liner
+ETA regression model for delivery platforms (RMSE: 3.2 minutes, R²: 0.87).
 
-ETA predictor for delivery platforms (RMSE: 3.2 minutes).
+### Problem
+Predict delivery time using operational + context features.
 
-**Features:** 18 variables (distance, weather, traffic, restaurant rating, order volume).
+### What I built
+- Feature-based regression pipeline
+- Model comparison and selection (XGBoost, Random Forest, Linear Regression)
+- Insights about drivers (weather/peak hours)
 
-**Models Compared:**
+### Tech stack
+Pandas, XGBoost, Featuretools
 
+### Metrics
 - XGBoost: RMSE 3.2 min, R² 0.87
 - Random Forest: RMSE 3.5 min, R² 0.85
 - Linear Regression: RMSE 4.1 min, R² 0.78
 
-**Insights:** Weather and peak hours most impactful (25% variance explained).
+### Links
+- Live:
+- GitHub:
 
-**Tech Stack:** Pandas, XGBoost, Featuretools.
-
-GitHub
-
-## Customer Churn Prediction (Business Analytics)
-
-Telco churn classifier with SHAP explainability (AUC: 0.95).
-
-**Dataset:** 7,000+ customer records (tenure, charges, services).
-
-**Preprocessing:** SMOTE (48% → 50% churn balance), feature selection.
-
-**Ensemble:** XGBoost + Logistic Regression.
-
-**Metrics:**
-
-- Accuracy: 93.2%
-- Precision (Churn): 0.91
-- Recall (Churn): 0.89
-- F1-Score: 0.90
-- AUC-ROC: 0.95
-
-**Explainability:** SHAP analysis showing contract type and monthly charges as top predictors.
-
-**Tech Stack:** Scikit-learn, XGBoost, SHAP, Plotly.
-
-GitHub
+### Interview talking points
+- Why XGBoost won, how you prevented leakage
+- Feature engineering impact and error analysis
+- Business interpretation of ETA errors
 
 ---
 
-# Research Projects
+## Customer Churn Prediction (Explainable ML)
+Aliases: churn model, telco churn, SHAP churn
 
-## Gait Recognition System (CASIA-B Dataset)
+### One-liner
+Explainable churn classifier with SHAP; strong performance (AUC: 0.95).
 
-Biometric identification via walking patterns with cross-view challenge.
+### Problem
+Predict which customers are likely to churn and explain the drivers.
 
-**Dataset:** 124 subjects × 11 angles × 3 clothing conditions × 10 sequences.
+### What I built
+- Preprocessing pipeline including SMOTE balancing
+- Ensemble approach: XGBoost + Logistic Regression
+- SHAP explainability to identify key churn drivers
 
-**Pipeline:** CNN (spatial) → LSTM (temporal) → softmax classifier.
+### Tech stack
+Scikit-learn, XGBoost, SHAP, Plotly
 
-**Metrics (Ongoing):**
+### Data
+- 7,000+ customer records
 
-- Same-view Rank-1: 92.4%
-- Cross-view Rank-1: 78.2%
-- mAP: 85% (multi-shot)
+### Metrics
+- AUC-ROC: 0.95
+- Accuracy: 93.2%
+- Precision (churn): 0.91
+- Recall (churn): 0.89
+- F1 (churn): 0.90
 
-**Research Focus:** View-invariant features and clothing robustness.
+### Links
+- Live:
+- GitHub:
 
-**Tech Stack:** PyTorch, OpenCV, CASIA-B preprocessing scripts.
+### Interview talking points
+- Why explainability matters and how you used SHAP correctly
+- Imbalanced data handling and metric choice
+- How to operationalize churn predictions (thresholds, interventions)
 
-Status: Active development.
+---

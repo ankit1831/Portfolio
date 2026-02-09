@@ -1,75 +1,61 @@
-# AI/ML & Data Science
+# Skills — Ankit Sharma (Index)
 
-## Artificial Intelligence
+This file is organized for fast retrieval: top skills first, then categories, with evidence mapping to projects.
 
-AI fundamentals, intelligent systems, search algorithms, knowledge representation
+---
+
+## Top skills (most relevant for placements)
+- Machine Learning (supervised/unsupervised, model selection, evaluation)
+- Deep Learning (CNNs, transfer learning, optimization)
+- Computer Vision (classification, preprocessing, OpenCV pipelines)
+- NLP & Transformers (tokenization, embeddings, transformer basics)
+- Generative AI / LLM apps (RAG basics, prompt engineering, chatbot UX)
+- Python (ML stack, APIs, automation)
+- Model evaluation (metrics, error analysis)
+- Deployment basics (Flask/Streamlit apps, practical hosting)
+
+## Evidence (skills → where used)
+- Computer Vision + CNNs → Brain Tumor Detection
+- Sequence modeling / temporal modeling → Gait Recognition (CNN→LSTM)
+- LLM app building + UX → Groq-Powered LLM Chatbot
+- Full product workflow → Heal-Bridge AI
+- Regression + feature engineering → Food Delivery ETA
+- Classification + explainability → Customer Churn (SHAP)
+
+---
 
 ## Machine Learning
-
-Supervised, unsupervised, and reinforcement learning; model selection; hyperparameter tuning; cross-validation; feature engineering; model deployment (MLflow)
+- Cross-validation, model comparison, hyperparameter tuning
+- Feature engineering, handling imbalanced data (SMOTE)
+- Metrics: accuracy, F1, AUC, RMSE, R²
 
 ## Deep Learning
+- CNNs, transfer learning (VGG16/ResNet50)
+- Regularization, augmentation, overfitting control
+- PyTorch / TensorFlow usage
 
-Artificial Neural Networks (ANN), Convolutional Neural Networks (CNN), Recurrent Neural Networks (RNN), Transfer Learning, model optimization
+## Computer Vision
+- Preprocessing: resize, normalization, CLAHE enhancement
+- OpenCV pipelines and image-based model deployment
 
-## Natural Language Processing (NLP)
-
-Transformers architecture, tokenization, embeddings (Word2Vec, BERT), sequence models
+## NLP & Transformers
+- Tokenization, embeddings (Word2Vec/BERT-style)
+- Transformers architecture basics and LLM application building
 
 ## Generative AI & LLMs
+- RAG basics, prompt engineering
+- Chatbots: model selection, streaming UX patterns
+- Fine-tuning concepts (PEFT/LoRA) and evaluation awareness
 
-Large Language Models, prompt engineering, Retrieval-Augmented Generation (RAG), fine-tuning techniques (PEFT, LoRA), metric evaluation (BLEU, ROUGE, perplexity), agentic workflows
+## Web / App development
+- Frontend: HTML, CSS, JavaScript (async/await, DOM, responsive UI)
+- Backend basics: Flask
+- App frameworks: Streamlit
 
-# Web Development (Frontend)
+## Databases & CS fundamentals
+- MySQL concepts: queries, joins, indexing, normalization
+- OS + Networks fundamentals, DSA foundations
 
-HTML5, CSS3 (Flexbox, Grid, Animations), JavaScript (ES6+, DOM manipulation, async/await), responsive design, cross-browser compatibility
-
-# Computer Science Fundamentals
-
-## Data Structures & Algorithms
-
-Arrays, linked lists, stacks, queues, trees, graphs, hash tables, sorting/searching algorithms, dynamic programming, time/space complexity
-
-## Operating Systems
-
-Process management, memory management, file systems, scheduling algorithms, deadlocks
-
-## Computer Networks
-
-OSI/TCP-IP models, HTTP/HTTPS, DNS, sockets, network protocols
-
-## Database Management
-
-MySQL (queries, joins, indexing, normalization), relational database design, SQL optimization
-
-# Programming Languages
-
-## Python
-
-Data science stack (NumPy, Pandas, Matplotlib, Scikit-learn), web frameworks (Flask), scripting, automation
-
-## C++
-
-Object-oriented programming, STL, memory management, competitive programming
-
-## Java
-
-Core Java, OOP principles, collections framework, exception handling
-
-# Tools & Platforms
-
-## Linux
-
-Command line proficiency, bash scripting, system administration, package management
-
-## Database
-
-MySQL database design, CRUD operations, query optimization
-
-## Version Control
-
-Git (branching, merging, GitHub workflows)
-
-## Development Tools
-
-VS Code, Jupyter Notebook
+## Tools
+- Git/GitHub, VS Code, Jupyter
+- Linux command line basics

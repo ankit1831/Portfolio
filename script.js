@@ -141,6 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 // ========== CLEAN AI CHAT (keep only this for chatbot integration) ==========
 const API_URL = "http://127.0.0.1:8000/chat";
+
 let AI_CHAT_LOADED = false;
 function injectTypingDotsCSSOnce() {
   if (document.getElementById("ai-typing-dots-css")) return;
@@ -341,7 +342,7 @@ async function sendAIChat() {
   try {
     // IMPORTANT: keep timeout short so it doesn’t "hang" when server is off
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 1500);
+    const timeout = setTimeout(() => controller.abort(), 35000);
 
     const res = await fetch(API_URL, {
       method: "POST",
@@ -355,13 +356,21 @@ async function sendAIChat() {
     const data = await res.json();
     if (typing) typing.style.display = "none";
 
-    addAIMessage(data.answer || "No response from server.", "bot");
+    addAIMessage(
+      data.answer || "No response from server.",
+      "bot",
+      data.sources || [],
+    );
   } catch (err) {
     if (typing) typing.style.display = "none";
     addAIMessage(
-      "AI server is offline. Please start app.py (port 8000).",
+      "Error: " +
+        (err?.name === "AbortError"
+          ? "Request timed out (increase timeout)."
+          : err?.message || err),
       "bot",
     );
+    console.error(err);
   }
 }
 function clearAIChat() {
@@ -387,7 +396,7 @@ function clearAIChat() {
 }
 
 // 4) Add message bubble
-function addAIMessage(text, type) {
+function addAIMessage(text, type, sources = []) {
   const box = document.getElementById("ai-chat-box");
   if (!box) return;
 
@@ -415,6 +424,55 @@ function addAIMessage(text, type) {
   }
 
   box.appendChild(div);
+  if (type === "bot" && sources && sources.length) {
+    const srcWrap = document.createElement("div");
+    srcWrap.style.cssText =
+      "margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;opacity:0.9;";
+
+    sources.slice(0, 4).forEach((s) => {
+      const chip = document.createElement("span");
+      const labelParts = [];
+      if (s.source_file) labelParts.push(s.source_file);
+      if (s.project_name) labelParts.push(s.project_name);
+      if (s.section) labelParts.push(s.section);
+
+      chip.textContent = labelParts.join(" • ");
+      chip.dataset.snippet = s.snippet || "";
+      chip.style.cursor = "pointer";
+      chip.addEventListener("click", () => {
+        const existing = div.querySelector(".ai-evidence");
+        if (existing) existing.remove();
+
+        const ev = document.createElement("div");
+        ev.className = "ai-evidence";
+        ev.textContent = chip.dataset.snippet || "No snippet available.";
+        ev.style.cssText = `
+    margin-top:10px;
+    padding:10px 12px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,0.05);
+    color:var(--text);
+    font-size:0.85rem;
+    line-height:1.5;
+  `;
+        div.appendChild(ev);
+      });
+
+      chip.style.cssText = `
+      font-size:0.78rem;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.06);
+      color:var(--text);
+    `;
+      srcWrap.appendChild(chip);
+    });
+
+    div.appendChild(srcWrap);
+  }
+
   box.scrollTop = box.scrollHeight;
 }
 
