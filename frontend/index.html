@@ -1,213 +1,1039 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ankit's AI Chat</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* Your exact theme */
-    :root {
-      --bg1: #0a0a0a; --bg2: #1a1a2e; --bg3: #16213e;
-      --border: rgba(0, 255, 136, 0.28);
-      --text: #e2e8f0; --accent1: #00ff88; --accent2: #00d4aa;
-    }
-    [data-theme="light"] {
-      --bg1: #f8fafc; --bg2: #eef2ff; --bg3: #ffffff;
-      --text: #0f172a; --accent1: #00a85a; --accent2: #008f78;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, var(--bg1), var(--bg2));
-      color: var(--text);
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .chat-container {
-      width: 100%;
-      max-width: 900px;
-      height: 100vh;
-      margin: 0 auto;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 0;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-    }
-
-    .header {
-      background: linear-gradient(45deg, var(--accent1), var(--accent2));
-      padding: 1.5rem;
-      text-align: center;
-      color: #0a0a0a;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 1.3rem;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .chat-box {
-      flex: 1;
-      padding: 1.5rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      background: var(--bg1);
-    }
-
-    .message {
-      max-width: 75%;
-      padding: 1rem 1.25rem;
-      border-radius: 18px;
-      line-height: 1.5;
-      font-size: 0.95rem;
-      word-wrap: break-word;
-    }
-
-    .user-message {
-      align-self: flex-end;
-      background: linear-gradient(45deg, var(--accent1), var(--accent2));
-      color: #0a0a0a;
-      border-bottom-right-radius: 4px;
-    }
-
-    .bot-message {
-      align-self: flex-start;
-      background: rgba(255,255,255,0.08);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-bottom-left-radius: 4px;
-      backdrop-filter: blur(10px);
-    }
-
-    .typing-indicator {
-      display: none;
-      align-self: flex-start;
-      color: rgba(0,255,136,0.6);
-      font-size: 0.85rem;
-      font-style: italic;
-    }
-
-    .input-area {
-      padding: 1.5rem;
-      background: var(--bg2);
-      display: flex;
-      gap: 1rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .input-area input {
-      flex: 1;
-      padding: 1rem 1.25rem;
-      border-radius: 25px;
-      border: 1px solid var(--border);
-      outline: none;
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.95rem;
-      backdrop-filter: blur(10px);
-    }
-
-    .input-area input::placeholder {
-      color: rgba(226,232,240,0.5);
-    }
-
-    .input-area button {
-      padding: 1rem 1.75rem;
-      border-radius: 25px;
-      border: none;
-      background: linear-gradient(45deg, var(--accent1), var(--accent2));
-      color: #0a0a0a;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .input-area button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0,255,136,0.3);
-    }
-  </style>
-</head>
-<body>
-  <div class="chat-container">
-    <div class="header">
-      <i class="fas fa-robot" style="margin-right: 0.5rem;"></i>
-      Ankit's Portfolio AI
-    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ankit Sharma - AI/ML Portfolio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     
-    <div class="chat-box" id="chat-box">
-      <div class="message bot-message">
-        Hi! I'm Ankit's AI assistant. Ask me about his projects, skills, experience, or anything from his portfolio!
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav>
+        <div class="logo">Ankit Sharma</div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <a
+              class="nav-resume"
+              href="docs/Ankit Sharma Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Resume</a
+            >
+          </li>
+        </ul>
+
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          type="button"
+          aria-label="Toggle theme"
+        >
+          <i class="fas fa-moon"></i>
+        </button>
+
+        <div class="hamburger"><span></span><span></span><span></span></div>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <h1>Hi, I'm <span>Ankit Sharma</span></h1>
+        <p>
+          AI/ML Engineer | B.Tech CS VIT Bhopal | CodingJr AI Research Intern |
+          Building impactful Generative AI & Computer Vision solutions
+        </p>
+        <a href="#projects" class="cta-button">View My Work</a>
+        <a
+          href="docs/Ankit Sharma Resume.pdf"
+          class="cta-button cta-secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+          >View Resume</a
+        >
+        <a
+          href="#"
+          class="cta-button cta-secondary"
+          data-modal="ai-chat-modal"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="ai-chat-modal"
+        >
+          Ask my AI
+        </a>
       </div>
-    </div>
-    
-    <div class="typing-indicator" id="typing-indicator">
-      AI is typing...
-    </div>
-    
-    <div class="input-area">
-      <input type="text" id="user-input" placeholder="Type a question about me..." onkeypress="handleEnter(event)">
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
+    </section>
 
-  <script>
-    const API_URL = 'http://127.0.0.1:8000/chat';  // Your FastAPI
+    <!-- About -->
+    <section id="about">
+      <h2>About Me</h2>
+      <div class="about-grid">
+        <img
+          src="docs\passport latest.jpg"
+          alt="Ankit Sharma"
+          class="about-image"
+        />
+        <div class="about-text">
+          <p>
+            21-year-old B.Tech Computer Science student from VIT Bhopal
+            University (CGPA 8.75). Passionate about AI/ML with hands-on
+            experience from
+            <strong>CodingJr AI Research Internship</strong> where I conducted
+            Generative AI research and built production chatbots.
+          </p>
+          <p>
+            Currently specializing in Large Language Models, RAG systems,
+            Computer Vision, and Cloud Computing. Cricket enthusiast, 3x Kho Kho
+            cluster champion, and aspiring family provider from rural Himachal
+            Pradesh.
+          </p>
+          <a href="#contact" class="cta-button">Get In Touch</a>
+        </div>
+      </div>
+    </section>
 
-    async function sendMessage() {
-      const inputField = document.getElementById('user-input');
-      const chatBox = document.getElementById('chat-box');
-      const typingIndicator = document.getElementById('typing-indicator');
-      const question = inputField.value.trim();
-      
-      if (!question) return;
+    <!-- Skills -->
+    <section id="skills">
+      <h2>Skills & Technologies</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <i class="fas fa-brain skill-icon"></i>
+          <h3>Generative AI / LLMs</h3>
+          <p>Llama-2, RAG, Fine-tuning, PEFT/LoRA, Prompt Engineering</p>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-cloud skill-icon"></i>
+          <h3>Cloud Computing</h3>
+          <p>Oracle OCI Certified, AWS IAM/Lambda, MLOps</p>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-robot skill-icon"></i>
+          <h3>Machine Learning</h3>
+          <p>CNNs, RNNs, XGBoost, Scikit-learn, TensorFlow/PyTorch</p>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-code skill-icon"></i>
+          <h3>Full Stack</h3>
+          <p>Python, C++, Java, Flask, HTML/CSS/JS, MySQL</p>
+        </div>
+        <div class="skill-card">
+          <i class="fab fa-linux skill-icon"></i>
+          <h3>DevOps</h3>
+          <p>Linux, Git/GitHub, Docker basics, VS Code</p>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-database skill-icon"></i>
+          <h3>Databases</h3>
+          <p>MySQL, Pandas, Data Engineering</p>
+        </div>
+      </div>
+    </section>
 
-      // Add user message
-      addMessage(question, 'user-message');
-      inputField.value = '';
+    <!-- Experience -->
+    <section id="experience">
+      <h2>Experience & Education</h2>
+      <div class="experience-grid">
+        <div
+          class="experience-card internship"
+          data-modal="exp-codingjr"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="exp-codingjr"
+        >
+          <h3>AI Research Intern</h3>
+          <h4>CodingJr (Remote)</h4>
+          <p class="date">Apr 2025 - Jul 2025 (3 months)</p>
+          <ul>
+            <li>Generative AI research & transformer models</li>
+            <li>Production chatbot development (NLP)</li>
+            <li>Model fine-tuning & evaluation pipelines</li>
+            <li>Remote collaboration with India-wide teams</li>
+          </ul>
+        </div>
+        <div
+          class="experience-card education"
+          data-modal="edu-btech"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="edu-btech"
+        >
+          <h3>B.Tech Computer Science</h3>
+          <h4>VIT Bhopal University</h4>
+          <p class="date">2023 - Present (3rd Year) | CGPA: 8.75</p>
+          <p>Top performer specializing in AI/ML & Cloud Computing</p>
+        </div>
+        <div
+          class="experience-card education"
+          data-modal="edu-class12"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="edu-class12"
+        >
+          <h3>Class 12 (CBSE)</h3>
+          <h4>JNV Kothipura, Bilaspur (HP)</h4>
+          <p class="date">2022 | Score: 84.4</p>
+          <p>Science stream with Computer Science; House Captain.</p>
+        </div>
 
-      // Show typing
-      typingIndicator.style.display = 'block';
-      chatBox.scrollTop = chatBox.scrollHeight;
+        <div
+          class="experience-card education"
+          data-modal="edu-class10"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="edu-class10"
+        >
+          <h3>Class 10 (CBSE)</h3>
+          <h4>JNV Kothipura, Bilaspur (HP)</h4>
+          <p class="date">2020 | Score: 92.8</p>
+          <p>Strong foundation in Mathematics and Science.</p>
+        </div>
+      </div>
 
-      try {
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: question })
-        });
-        const data = await response.json();
-        
-        typingIndicator.style.display = 'none';
-        addMessage(data.answer, 'bot-message');
-      } catch (error) {
-        typingIndicator.style.display = 'none';
-        addMessage('Error: Could not connect to AI server. Make sure app.py is running on port 8000!', 'bot-message');
-        console.error(error);
-      }
-    }
+      <!-- EXPERIENCE + EDUCATION MODALS -->
+      <dialog
+        id="exp-codingjr"
+        class="project-modal modal-small"
+        aria-labelledby="exp-codingjr-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+          <h3 id="exp-codingjr-title">AI Research Intern — CodingJr</h3>
+          <p class="modal-subtitle">
+            Remote | Apr 28, 2025 – Jul 28, 2025 (3 months)
+          </p>
 
-    function addMessage(text, className) {
-      const chatBox = document.getElementById('chat-box');
-      const div = document.createElement('div');
-      div.className = `message ${className}`;
-      div.innerText = text;
-      chatBox.appendChild(div);
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="docs\Ankit Sharma  - Internship Certificate.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Certificate
+            </a>
+          </div>
 
-    function handleEnter(event) {
-      if (event.key === 'Enter') sendMessage();
-    }
-  </script>
-</body>
+          <div class="modal-section">
+            <h4>Highlights</h4>
+            <ul class="modal-bullets">
+              <li>Researched Generative AI and transformer models.</li>
+              <li>Built chatbot solutions using advanced NLP techniques.</li>
+              <li>Implemented fine-tuning and evaluation pipelines.</li>
+              <li>
+                Worked on production AI deployment exposure and collaboration.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        id="edu-btech"
+        class="project-modal modal-small"
+        aria-labelledby="edu-btech-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+          <h3 id="edu-btech-title">B.Tech Computer Science — VIT Bhopal</h3>
+          <p class="modal-subtitle">
+            2023 – Present | 3rd Year | CGPA: 8.75/10
+          </p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="docs\StudentGradeHistory_23BCE11180.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Marksheet
+            </a>
+          </div>
+
+          <div class="modal-section">
+            <h4>Focus</h4>
+            <p>
+              Specializing in AI, Machine Learning, and Cloud Computing;
+              consistently among top performers.
+            </p>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        id="edu-class12"
+        class="project-modal modal-small"
+        aria-labelledby="edu-class12-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+          <h3 id="edu-class12-title">Class 12 (CBSE) — JNV Kothipura</h3>
+          <p class="modal-subtitle">
+            2022 | Score: 84.4 | Science (with Computer Science)
+          </p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="docs\class 12 certificate.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Marksheet
+            </a>
+          </div>
+
+          <div class="modal-section">
+            <h4>Highlights</h4>
+            <ul class="modal-bullets">
+              <li>Science stream with Computer Science.</li>
+              <li>School House Captain (leadership role).</li>
+            </ul>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        id="edu-class10"
+        class="project-modal modal-small"
+        aria-labelledby="edu-class10-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+          <h3 id="edu-class10-title">Class 10 (CBSE) — JNV Kothipura</h3>
+          <p class="modal-subtitle">2020 | Score: 92.8</p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="docs\class10 .pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Marksheet
+            </a>
+          </div>
+
+          <div class="modal-section">
+            <h4>Highlights</h4>
+            <ul class="modal-bullets">
+              <li>Excellent foundation in Mathematics and Science.</li>
+            </ul>
+          </div>
+        </div>
+      </dialog>
+      <dialog
+        id="ai-chat-modal"
+        class="project-modal ai-chat-modal"
+        aria-labelledby="ai-chat-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+
+          <h3 id="ai-chat-title">Ankit’s AI Assistant</h3>
+          <p class="modal-subtitle">
+            Ask about my projects, skills, and experience.
+          </p>
+
+          <!-- Step 3: We will paste your chat UI here (from index.html) -->
+          <div class="ai-chat-shell">
+            <!-- Chat content will be loaded here via JS in Step 3 -->
+          </div>
+        </div>
+      </dialog>
+    </section>
+
+    <section id="projects">
+      <h2>Featured Projects</h2>
+
+      <div class="projects-grid">
+        <!-- Card 1 -->
+        <article
+          class="project-card"
+          data-modal="modal-brain-tumor"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-brain-tumor"
+        >
+          <div class="project-image">
+            <img
+              src="assets\brain.webp"
+              alt="Brain Tumor Detection thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Brain Tumor Detection</h3>
+            <p>94% accuracy CNN for MRI scans</p>
+            <div class="project-tags">
+              <span>TensorFlow</span><span>Flask</span><span>94% Acc</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article
+          class="project-card"
+          data-modal="modal-heal-bridge"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-heal-bridge"
+        >
+          <div class="project-image">
+            <img
+              src="assets\heal.webp"
+              alt="Heal-Bridge AI thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Heal-Bridge AI</h3>
+            <p>Live healthcare + AI symptom checker</p>
+            <div class="project-tags">
+              <span>Flask</span><span>Streamlit</span><span>LIVE</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article
+          class="project-card"
+          data-modal="modal-groq-chat"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-groq-chat"
+        >
+          <div class="project-image">
+            <img
+              src="assets\chat.webp"
+              alt="Groq LLM Chatbot thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Groq LLM Chatbot</h3>
+            <p>300ms multi-model streaming chat</p>
+            <div class="project-tags">
+              <span>Groq API</span><span>Streamlit</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article
+          class="project-card"
+          data-modal="modal-gait"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-gait"
+        >
+          <div class="project-image">
+            <img
+              src="assets\gait.webp"
+              alt="Gait Biometrics thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Gait Biometrics</h3>
+            <p>View-invariant walking recognition</p>
+            <div class="project-tags">
+              <span>PyTorch</span><span>OpenCV</span>
+            </div>
+          </div>
+        </article>
+        <!-- Card 5 -->
+        <article
+          class="project-card"
+          data-modal="modal-student-performance"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-student-performance"
+        >
+          <div class="project-image">
+            <img
+              src="assets\stu.webp"
+              alt="Student Performance Prediction thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Student Performance Prediction</h3>
+            <p>Complete ML pipeline + Flask app (92.5% accuracy)</p>
+            <div class="project-tags">
+              <span>Scikit-learn</span><span>Flask</span><span>92.5%</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article
+          class="project-card"
+          data-modal="modal-food-delivery"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-food-delivery"
+        >
+          <div class="project-image">
+            <img
+              src="assets\food.webp"
+              alt="Food Delivery Time Prediction thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Food Delivery Time Prediction</h3>
+            <p>ETA regression (RMSE 3.2 min, R² 0.87)</p>
+            <div class="project-tags">
+              <span>XGBoost</span><span>Pandas</span><span>RMSE 3.2</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 7 -->
+        <article
+          class="project-card"
+          data-modal="modal-churn"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-churn"
+        >
+          <div class="project-image">
+            <img
+              src="assets\cust.webp"
+              alt="Customer Churn Prediction thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Customer Churn Prediction</h3>
+            <p>Explainable churn model (AUC 0.95)</p>
+            <div class="project-tags">
+              <span>XGBoost</span><span>SHAP</span><span>AUC 0.95</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- MODALS -->
+      <dialog
+        id="modal-brain-tumor"
+        class="project-modal"
+        aria-labelledby="brain-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+
+          <h3 id="brain-title">Brain Tumor Detection</h3>
+          <p class="modal-subtitle">
+            MRI tumor classification with transfer learning.
+          </p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="https://ankit1831.github.io/Brain-Tumor-Detection-System/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live</a
+            >
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Brain-Tumor-Detection-System"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>TensorFlow / Keras</span><span>Transfer Learning</span
+              ><span>Flask</span><span>Streamlit</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Detailed explanation</h4>
+            <p>
+              Paste your MD-file detailed writeup here (problem → approach →
+              results → deployment → learnings). Keep it 6–10 lines for best
+              readability.
+            </p>
+            <ul class="modal-bullets">
+              <li>Dataset: MRI scans (multi-class).</li>
+              <li>Model: VGG16/ResNet50 fine-tuning + augmentation.</li>
+              <li>Result: 94% accuracy, fast inference pipeline.</li>
+            </ul>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        id="modal-heal-bridge"
+        class="project-modal"
+        aria-labelledby="heal-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+
+          <h3 id="heal-title">Heal-Bridge AI</h3>
+          <p class="modal-subtitle">
+            Healthcare platform with AI symptom checker & booking.
+          </p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="https://heal-bridge-ai.onrender.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live</a
+            >
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Heal-BridgeAI"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>Flask</span><span>Streamlit</span><span>ML Model</span
+              ><span>Database</span><span>Multi-language</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Detailed explanation</h4>
+            <p>
+              Paste your MD-file explanation here (features, architecture,
+              deployment, challenges).
+            </p>
+            <ul class="modal-bullets">
+              <li>AI symptom checker flow + confidence output.</li>
+              <li>Appointments + patient records.</li>
+              <li>Production deployment link + monitoring notes.</li>
+            </ul>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        id="modal-groq-chat"
+        class="project-modal"
+        aria-labelledby="groq-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+
+          <h3 id="groq-title">Groq LLM Chatbot</h3>
+          <p class="modal-subtitle">
+            Fast streaming chatbot with multi-model switching.
+          </p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="https://llm-using-groq-t9pwlcrmfpta7vnehdwhb8.streamlit.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live</a
+            >
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/LLM-using-Groq/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>Groq API</span><span>Streamlit</span
+              ><span>Llama/Mixtral/Gemma</span><span>Streaming</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Detailed explanation</h4>
+            <p>
+              Paste your MD-file details here (prompting, latency, streaming UI,
+              eval, cost).
+            </p>
+            <ul class="modal-bullets">
+              <li>300ms streaming target + optimizations.</li>
+              <li>Model selection UX + fallbacks.</li>
+              <li>Conversation memory / safety notes.</li>
+            </ul>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        id="modal-gait"
+        class="project-modal"
+        aria-labelledby="gait-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+
+          <h3 id="gait-title">Gait Biometrics</h3>
+          <p class="modal-subtitle">Cross-view gait recognition on CASIA-B.</p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="YOUR_PAPER_OR_LIVE_LINK"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live/Docs</a
+            >
+            <a
+              class="modal-link"
+              href="YOUR_GITHUB_LINK"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>PyTorch</span><span>OpenCV</span><span>CNN + LSTM</span
+              ><span>CASIA-B</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Detailed explanation</h4>
+            <p>
+              Paste your MD writeup here (preprocessing, model, training, rank-1
+              metric, cross-view).
+            </p>
+            <ul class="modal-bullets">
+              <li>Preprocessing: silhouettes / sequence extraction.</li>
+              <li>Model: CNN features + temporal modeling.</li>
+              <li>Result: Cross-view evaluation + findings.</li>
+            </ul>
+          </div>
+        </div>
+      </dialog>
+      <dialog
+        id="modal-student-performance"
+        class="project-modal"
+        aria-labelledby="student-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+          <h3 id="student-title">Student Performance Prediction</h3>
+          <p class="modal-subtitle">
+            Complete ML pipeline + Flask deployment + EDA dashboards.
+          </p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Student_performance_prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live</a
+            >
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Student_performance_prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Key results</h4>
+            <ul class="modal-bullets">
+              <li>Best model: Random Forest.</li>
+              <li>Accuracy: 92.5%, F1-Score: 0.91.</li>
+              <li>RMSE (Grade): 1.18.</li>
+            </ul>
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>Pandas</span><span>Scikit-learn</span><span>Seaborn</span
+              ><span>Matplotlib</span><span>Flask</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Detailed explanation</h4>
+            <p>
+              Dataset: 1,000+ student records. Preprocessing included outlier
+              removal, encoding, and SMOTE balancing. Built multiple models (LR,
+              DT, RF, KNN, SVM, XGBoost) and deployed the final predictor as a
+              Flask web app.
+            </p>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        id="modal-food-delivery"
+        class="project-modal"
+        aria-labelledby="food-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+          <h3 id="food-title">Food Delivery Time Prediction</h3>
+          <p class="modal-subtitle">
+            ETA regression optimization for delivery platforms.
+          </p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Food_delivery_time_prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live</a
+            >
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Food_delivery_time_prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Key results</h4>
+            <ul class="modal-bullets">
+              <li>XGBoost: RMSE 3.2 min, R² 0.87.</li>
+              <li>Random Forest: RMSE 3.5 min, R² 0.85.</li>
+              <li>Linear Regression: RMSE 4.1 min, R² 0.78.</li>
+            </ul>
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>Pandas</span><span>XGBoost</span><span>Featuretools</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Detailed explanation</h4>
+            <p>
+              Trained regression models using 18 variables (distance, traffic,
+              weather, ratings, order volume). Insights showed weather and peak
+              hours as major drivers (~25% variance explained).
+            </p>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        id="modal-churn"
+        class="project-modal"
+        aria-labelledby="churn-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+          <h3 id="churn-title">Customer Churn Prediction</h3>
+          <p class="modal-subtitle">Explainable churn classifier with SHAP.</p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Customer-Churn-Prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live</a
+            >
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Customer-Churn-Prediction"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Key results</h4>
+            <ul class="modal-bullets">
+              <li>AUC-ROC: 0.95, Accuracy: 93.2%.</li>
+              <li>Precision (Churn): 0.91, Recall (Churn): 0.89, F1: 0.90.</li>
+              <li>
+                Explainability: SHAP used to interpret drivers (contract type,
+                monthly charges).
+              </li>
+            </ul>
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>Scikit-learn</span><span>XGBoost</span><span>SHAP</span
+              ><span>Plotly</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Detailed explanation</h4>
+            <p>
+              Built a telco churn classifier on 7,000+ customer records with
+              SMOTE balancing and feature selection. Used an ensemble approach
+              (XGBoost + Logistic Regression) and added SHAP explanations for
+              business insights.
+            </p>
+          </div>
+        </div>
+      </dialog>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2>Let's Connect</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div><i class="fas fa-phone"></i> +91 8219637259</div>
+          <div><i class="fas fa-envelope"></i> ankitsharma1831@gmail.com</div>
+          <div>
+            <i class="fab fa-linkedin"></i> linkedin.com/in/sharma-ankit-
+          </div>
+          <div><i class="fab fa-github"></i> github.com/ankit1831</div>
+        </div>
+        <form
+          class="contact-form"
+          id="contact-form"
+          action="https://formspree.io/f/xreagdnk"
+          method="POST"
+        >
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <textarea
+            name="message"
+            rows="5"
+            placeholder="Your Message"
+            required
+          ></textarea>
+          <button type="submit">Send Message</button>
+          <p id="form-status" style="margin-top: 10px"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/sharma-ankit-"
+          ><i class="fab fa-linkedin"></i
+        ></a>
+        <a href="https://github.com/ankit1831"><i class="fab fa-github"></i></a>
+        <a href="mailto:ankitsharma1831@gmail.com"
+          ><i class="fas fa-envelope"></i
+        ></a>
+      </div>
+    </footer>
+    <button
+      class="chat-fab"
+      type="button"
+      data-modal="ai-chat-modal"
+      aria-label="Open chat"
+      aria-haspopup="dialog"
+      aria-controls="ai-chat-modal"
+    >
+      Chat
+    </button>
+
+    <script src="script.js"></script>
+  </body>
 </html>

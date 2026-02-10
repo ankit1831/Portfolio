@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ========== CLEAN AI CHAT WITH MEMORY ==========
-const API_URL = "http://127.0.0.1:8000/chat";
+const API_URL = "https://ankit-protfolio.onrender.com/chat";
 
 let AI_CHAT_LOADED = false;
 let chatHistory = []; // <-- NEW: Stores conversation history
