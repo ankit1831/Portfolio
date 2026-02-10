@@ -1,4 +1,5 @@
 import os
+from typing import List, Optional
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,21 +8,21 @@ from pydantic import BaseModel
 # Groq Client
 from groq import Groq
 
-# LangChain components (keeping your existing vector store logic)
+# LangChain components
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 
-# 1) Load Environment Variables
+# 1) Load Env
 load_dotenv()
 
-# Verify API Key is present
+# Verify API Key
 if not os.getenv("GROQ_API_KEY"):
     print("⚠️ WARNING: GROQ_API_KEY not found in .env file!")
 
 app = FastAPI()
 
-# 2) CORS (Allowing access from your frontend)
+# 2) CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -30,102 +31,89 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 3) Load Embeddings + Vector Store
-# We keep this part as-is because it works well for retrieval.
+# 3) Load Vector Store
 print("⏳ Loading Vector Store...")
 try:
-    embedding_model = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
-    vector_store = FAISS.load_local(
-        "faiss_index",
-        embedding_model,
-        allow_dangerous_deserialization=True
-    )
-    # Increased 'k' slightly to give the LLM more context to work with
-    retriever = vector_store.as_retriever(
-        search_type="mmr",
-        search_kwargs={"k": 5, "fetch_k": 20, "lambda_mult": 0.7}
-    )
+    embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    vector_store = FAISS.load_local("faiss_index", embedding_model, allow_dangerous_deserialization=True)
+    retriever = vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 4, "fetch_k": 20, "lambda_mult": 0.7})
     print("✅ Vector Store Loaded Successfully!")
 except Exception as e:
     print(f"❌ Error loading vector store: {e}")
     retriever = None
 
-# 4) Initialize Groq Client
-client = Groq(
-    api_key=os.environ.get("GROQ_API_KEY"),
-)
+# 4) Groq Client
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
-# 5) Improved Prompt Template
-# I removed the strict "1-line" rule to allow for more natural, conversational answers.
+# 5) Prompt with History Support
+# 5) Stricter, Professional Prompt
+# app.py
+
+# app.py
+
+# app.py
+
+# app.py
+
+# app.py
+
 template = """
-You are Ankit's professional AI Portfolio Assistant. Your goal is to represent Ankit to recruiters and visitors.
+You are Ankit's professional AI Portfolio Assistant.
 
-**Instructions:**
-1. Answer the user's question **enthusiastically and professionally**.
-2. Use **ONLY** the provided Context to answer. Do not make up facts.
-3. If the answer is not in the context, say: "I don't have that specific information about Ankit yet, but I can tell you about his projects or skills."
-4. Keep answers concise (2-3 sentences max) unless the user asks for a detailed explanation.
-5. Format your response nicely (use bullet points if listing multiple items).
+**INSTRUCTIONS:**
+1. **GREETINGS:** If (and ONLY if) the user says "Hi", "Hello", "Hey", or "Start", reply:
+   "Hello! I am Ankit's AI assistant. Ask me about his projects, skills, or experience."
+   (Do NOT add this sentence to any other answer).
+2. **ANSWERING:** Use the **Context** below to answer the user's question. 
+   - If the context contains the answer, summarize it clearly in bullet points.
+   - If the context mentions Ankit's background (student, VIT Bhopal, etc.), USE IT.
+3. **SUBTLE PROMOTION:** At the very end of your answer if question is about a specific skill or role, add ONE short, professional sentence highlighting why Ankit is a strong candidate for this specific skill or role.
+4. **MISSING INFO:** Only say "I don't have that info" if the context is completely empty or irrelevant.
+5. **FORMAT:** Keep it concise (3-4 sentences). Use bullet points (-) for lists.
 
-**Context about Ankit:**
+**Chat History:**
+{chat_history}
+
+**Context:**
 {context}
 
 **User Question:** {question}
 
-**Your Answer:**
+**Answer:**
 """
-
 prompt = ChatPromptTemplate.from_template(template)
 
-def format_docs(docs) -> str:
-    cleaned = []
-    for d in docs:
-        # Simple cleanup to remove excessive newlines/headers
-        content = d.page_content.replace("\n", " ").strip()
-        cleaned.append(content)
-    return "\n\n".join(cleaned)
+def format_docs(docs):
+    return "\n\n".join([d.page_content.replace("\n", " ") for d in docs])
 
-def query_groq_chat(prompt_text: str) -> str:
+def format_history(history):
     """
-    Sends the formatted prompt to Groq's Llama 3 model.
+    Converts the list of messages into a string for the prompt.
     """
-    try:
-        chat_completion = client.chat.completions.create(
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt_text,
-                }
-            ],
-            model="llama-3.1-8b-instant", # Fast and capable
-            temperature=0.6,        # Slight creativity for natural tone
-            max_tokens=300,
-        )
-        return chat_completion.choices[0].message.content
-    except Exception as e:
-        return f"Error communicating with AI: {str(e)}"
+    formatted_history = ""
+    # We only take the last 4 messages to save tokens
+    for msg in history[-4:]:
+        # FIX: Use dot notation (msg.role) instead of brackets (msg['role'])
+        role = "User" if msg.role == 'user' else "AI"
+        formatted_history += f"{role}: {msg.content}\n"
+    return formatted_history if formatted_history else "No previous history."
+# 6) Updated API Schema
+class Message(BaseModel):
+    role: str
+    content: str
 
-# 6) API Request Schema
 class QueryRequest(BaseModel):
     query: str
+    history: List[Message] = []  # New field for history
 
-def extract_sources(docs, max_sources=3):
-    """
-    Helper to clean up source metadata for the UI.
-    """
+def extract_sources(docs):
     sources = []
     seen = set()
     for d in docs:
-        source = d.metadata.get("source", "Unknown")
-        # Just get the filename, not the full path
-        filename = os.path.basename(source)
+        filename = os.path.basename(d.metadata.get("source", "Unknown"))
         if filename not in seen:
             sources.append({"source_file": filename, "snippet": d.page_content[:100] + "..."})
             seen.add(filename)
-            if len(sources) >= max_sources:
-                break
     return sources
 
 # 7) Chat Endpoint
@@ -135,30 +123,35 @@ async def chat(request: QueryRequest):
         raise HTTPException(status_code=500, detail="Vector Store not loaded.")
 
     try:
-        # 1. Retrieve relevant documents
+        # Retrieve docs
         docs = retriever.invoke(request.query)
-        
-        # 2. Format context
         context_text = format_docs(docs)
+        
+        # Format history
+        history_text = format_history(request.history)
 
-        # 3. Create prompt
-        formatted_prompt = prompt.format(context=context_text, question=request.query)
+        # Generate Prompt
+        formatted_prompt = prompt.format(
+            context=context_text, 
+            question=request.query,
+            chat_history=history_text
+        )
 
-        # 4. Get answer from Groq
-        response_text = query_groq_chat(formatted_prompt)
+        # Call Groq
+        chat_completion = client.chat.completions.create(
+            messages=[{"role": "user", "content": formatted_prompt}],
+            model="llama-3.1-8b-instant",
+            temperature=0.6,
+            max_tokens=300,
+        )
 
         return {
-            "answer": response_text,
+            "answer": chat_completion.choices[0].message.content,
             "sources": extract_sources(docs)
         }
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
-
-# 8) Health Check
-@app.get("/")
-def home():
-    return {"status": "Ankit's AI Portfolio Server is Running 🚀"}
 
 if __name__ == "__main__":
     import uvicorn

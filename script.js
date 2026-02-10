@@ -46,8 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Contact form handling (prevent default submit, show message)
-  // Contact form handling (AJAX to Formspree - stay on same page)
+  // Contact form handling (AJAX to Formspree)
   const contactForm = document.querySelector("#contact-form");
   const statusEl = document.querySelector("#form-status");
 
@@ -88,8 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Project modals (native <dialog>): open on click / Enter / Space
-  // Uses dialog.showModal() and dialog.close() [web:17][web:24]
+  // Project modals logic
   const projectCards = document.querySelectorAll(
     ".project-card[data-modal], .experience-card[data-modal]",
   );
@@ -103,7 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (typeof dialog.showModal === "function") {
         dialog.showModal();
       } else {
-        // Fallback: if <dialog> unsupported, at least show it
         dialog.setAttribute("open", "");
       }
     };
@@ -117,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // Close button inside modal
     const closeBtn = dialog.querySelector(".modal-close");
     if (closeBtn) {
       closeBtn.addEventListener("click", () => {
@@ -126,23 +122,21 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    // Backdrop click to close (clicking the <dialog> itself, not inner content)
     dialog.addEventListener("click", (e) => {
       if (e.target === dialog) {
         if (typeof dialog.close === "function") dialog.close();
         else dialog.removeAttribute("open");
       }
     });
-
-    // Escape key closes dialog by default for native <dialog>.
-    // Some browsers fire "cancel" event; preventDefault stops close, so we DON'T prevent it.
-    // (No extra code needed.)
   });
 });
-// ========== CLEAN AI CHAT (keep only this for chatbot integration) ==========
+
+// ========== CLEAN AI CHAT WITH MEMORY ==========
 const API_URL = "http://127.0.0.1:8000/chat";
 
 let AI_CHAT_LOADED = false;
+let chatHistory = []; // <-- NEW: Stores conversation history
+
 function injectTypingDotsCSSOnce() {
   if (document.getElementById("ai-typing-dots-css")) return;
 
@@ -166,7 +160,6 @@ function injectTypingDotsCSSOnce() {
   document.head.appendChild(style);
 }
 
-// 1) Open modal (uses your existing <dialog>)
 function showAIChatModal() {
   const dialog = document.getElementById("ai-chat-modal");
   if (!dialog) return;
@@ -174,14 +167,12 @@ function showAIChatModal() {
   if (typeof dialog.showModal === "function") dialog.showModal();
   else dialog.setAttribute("open", "");
 
-  // Load UI after modal is visible (prevents slow/open freeze)
   setTimeout(() => {
     initAIChatUI();
     focusAIInput();
   }, 0);
 }
 
-// 2) Build chat UI only once
 function initAIChatUI() {
   if (AI_CHAT_LOADED) return;
 
@@ -237,21 +228,11 @@ function initAIChatUI() {
         </div>
       </div>
 
-      <div id="ai-typing" style="
-  display:none;
-  padding:0 18px 12px;
-">
-  <span class="ai-typing-dots" style="
-    display:inline-flex;
-    gap:6px;
-    align-items:center;
-  ">
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </span>
-</div>
-
+      <div id="ai-typing" style="display:none; padding:0 18px 12px;">
+        <span class="ai-typing-dots" style="display:inline-flex; gap:6px; align-items:center;">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </span>
+      </div>
 
       <div style="
         flex-shrink:0;
@@ -274,39 +255,37 @@ function initAIChatUI() {
           "
         />
         <button id="ai-clear" type="button"
-  style="
-    padding:12px 18px;
-    border-radius:999px;
-    border:2px solid var(--border);
-    cursor:pointer;
-    font-weight:800;
-    background:transparent;
-    color:var(--text);
-  "
->Clear</button>
+          style="
+            padding:12px 18px;
+            border-radius:999px;
+            border:2px solid var(--border);
+            cursor:pointer;
+            font-weight:800;
+            background:transparent;
+            color:var(--text);
+          "
+        >Clear</button>
 
-<button id="ai-send" type="button"
-  style="
-    padding:12px 18px;
-    border-radius:999px;
-    border:none;
-    cursor:pointer;
-    font-weight:800;
-    color:#0a0a0a;
-    background:linear-gradient(45deg,var(--accent1),var(--accent2));
-  "
->Send</button>
-
+        <button id="ai-send" type="button"
+          style="
+            padding:12px 18px;
+            border-radius:999px;
+            border:none;
+            cursor:pointer;
+            font-weight:800;
+            color:#0a0a0a;
+            background:linear-gradient(45deg,var(--accent1),var(--accent2));
+          "
+        >Send</button>
       </div>
     </div>
   `;
 
-  // Wire events (only once)
   const input = document.getElementById("ai-input");
   const sendBtn = document.getElementById("ai-send");
   const clearBtn = document.getElementById("ai-clear");
-  if (clearBtn) clearBtn.addEventListener("click", clearAIChat);
 
+  if (clearBtn) clearBtn.addEventListener("click", clearAIChat);
   if (sendBtn) sendBtn.addEventListener("click", sendAIChat);
   if (input) {
     input.addEventListener("keydown", (e) => {
@@ -322,7 +301,7 @@ function focusAIInput() {
   if (input) input.focus();
 }
 
-// 3) Send message
+// 3) Send message with History
 async function sendAIChat() {
   const input = document.getElementById("ai-input");
   const box = document.getElementById("ai-chat-box");
@@ -333,50 +312,52 @@ async function sendAIChat() {
   const q = input.value.trim();
   if (!q) return;
 
+  // Add User Message to UI
   addAIMessage(q, "user");
   input.value = "";
 
+  // Show typing
   if (typing) typing.style.display = "block";
   box.scrollTop = box.scrollHeight;
 
   try {
-    // IMPORTANT: keep timeout short so it doesn’t "hang" when server is off
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 35000);
 
+    // Send Query + History
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query: q }),
+      body: JSON.stringify({
+        query: q,
+        history: chatHistory, // <-- Sending history here
+      }),
       signal: controller.signal,
     });
 
     clearTimeout(timeout);
-
     const data = await res.json();
-    
+
     if (typing) typing.style.display = "none";
 
-    addAIMessage(
-      data.answer || "No response from server.",
-      "bot",
-      data.sources || [],
-    );
+    // Add Bot Response to UI
+    addAIMessage(data.answer || "No response.", "bot", data.sources || []);
+
+    // Update History
+    chatHistory.push({ role: "user", content: q });
+    chatHistory.push({ role: "assistant", content: data.answer });
   } catch (err) {
     if (typing) typing.style.display = "none";
-    addAIMessage(
-      "Error: " +
-        (err?.name === "AbortError"
-          ? "Request timed out (increase timeout)."
-          : err?.message || err),
-      "bot",
-    );
+    addAIMessage("Error: " + (err.message || err), "bot");
     console.error(err);
   }
 }
+
 function clearAIChat() {
   const box = document.getElementById("ai-chat-box");
   if (!box) return;
+
+  chatHistory = []; // <-- Reset History
 
   box.innerHTML = `
     <div class="ai-msg bot" style="
@@ -392,11 +373,9 @@ function clearAIChat() {
       Hi! Ask me about Ankit's skills, projects, internship, or achievements.
     </div>
   `;
-
   focusAIInput();
 }
 
-// 4) Add message bubble
 function addAIMessage(text, type, sources = []) {
   const box = document.getElementById("ai-chat-box");
   if (!box) return;
@@ -405,10 +384,13 @@ function addAIMessage(text, type, sources = []) {
   div.className = `ai-msg ${type}`;
   div.textContent = text;
 
+  // Basic styling
+  // script.js - inside addAIMessage function
   div.style.maxWidth = "78%";
   div.style.padding = "12px 14px";
   div.style.borderRadius = "16px";
   div.style.lineHeight = "1.5";
+  div.style.whiteSpace = "pre-wrap"; // <--- ADD THIS LINE HERE
 
   if (type === "user") {
     div.style.alignSelf = "flex-end";
@@ -425,6 +407,8 @@ function addAIMessage(text, type, sources = []) {
   }
 
   box.appendChild(div);
+
+  // Add sources if available
   if (type === "bot" && sources && sources.length) {
     const srcWrap = document.createElement("div");
     srcWrap.style.cssText =
@@ -432,53 +416,25 @@ function addAIMessage(text, type, sources = []) {
 
     sources.slice(0, 4).forEach((s) => {
       const chip = document.createElement("span");
-      const labelParts = [];
-      if (s.source_file) labelParts.push(s.source_file);
-      if (s.project_name) labelParts.push(s.project_name);
-      if (s.section) labelParts.push(s.section);
-
-      chip.textContent = labelParts.join(" • ");
-      chip.dataset.snippet = s.snippet || "";
-      chip.style.cursor = "pointer";
-      chip.addEventListener("click", () => {
-        const existing = div.querySelector(".ai-evidence");
-        if (existing) existing.remove();
-
-        const ev = document.createElement("div");
-        ev.className = "ai-evidence";
-        ev.textContent = chip.dataset.snippet || "No snippet available.";
-        ev.style.cssText = `
-    margin-top:10px;
-    padding:10px 12px;
-    border-radius:12px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,0.05);
-    color:var(--text);
-    font-size:0.85rem;
-    line-height:1.5;
-  `;
-        div.appendChild(ev);
-      });
-
+      chip.textContent = s.source_file;
+      chip.title = s.snippet; // Show snippet on hover
       chip.style.cssText = `
-      font-size:0.78rem;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,0.06);
-      color:var(--text);
-    `;
+        font-size:0.75rem;
+        padding:4px 8px;
+        border-radius:12px;
+        border:1px solid var(--border);
+        background:rgba(255,255,255,0.05);
+        cursor:help;
+      `;
       srcWrap.appendChild(chip);
     });
-
     div.appendChild(srcWrap);
   }
 
   box.scrollTop = box.scrollHeight;
 }
 
-// 5) Hook buttons that have data-modal="ai-chat-modal"
-// (Open modal + lazy-load chat UI instantly)
+// Hook buttons
 document.querySelectorAll('[data-modal="ai-chat-modal"]').forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -486,19 +442,16 @@ document.querySelectorAll('[data-modal="ai-chat-modal"]').forEach((btn) => {
   });
 });
 
-// 6) Close modal wiring
+// Close modal logic
 const aiChatModal = document.getElementById("ai-chat-modal");
 if (aiChatModal) {
   const closeBtn = aiChatModal.querySelector(".modal-close");
-
   if (closeBtn) {
     closeBtn.addEventListener("click", () => {
       if (typeof aiChatModal.close === "function") aiChatModal.close();
       else aiChatModal.removeAttribute("open");
     });
   }
-
-  // Backdrop click close
   aiChatModal.addEventListener("click", (e) => {
     if (e.target === aiChatModal) {
       if (typeof aiChatModal.close === "function") aiChatModal.close();
