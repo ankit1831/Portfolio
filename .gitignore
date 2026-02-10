@@ -1,10 +1,14 @@
-# Ignore virtual env
-.venv/
-venv/
-__pycache__/
-
-# Ignore Environment Variables (Security Risk!)
+# Secrets (Never upload these!)
 .env
 
-# Optional: Ignore system files
+# Python junk
+__pycache__/
+*.pyc
+
+# Virtual Environment (Heavy folder)
+venv/
+.venv/
+env/
+
+# OS junk
 .DS_Store

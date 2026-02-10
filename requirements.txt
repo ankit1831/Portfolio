@@ -1,10 +1,11 @@
 fastapi
 uvicorn
 python-dotenv
+groq
 langchain-community
 langchain-huggingface
 langchain-core
 faiss-cpu
-huggingface-hub
 pydantic
-requests
+python-multipart
+sentence-transformers
