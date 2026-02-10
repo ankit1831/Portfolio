@@ -354,6 +354,7 @@ async function sendAIChat() {
     clearTimeout(timeout);
 
     const data = await res.json();
+    
     if (typing) typing.style.display = "none";
 
     addAIMessage(
