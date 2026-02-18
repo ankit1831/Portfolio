@@ -8,6 +8,9 @@ I’m Ankit Sharma, a B.Tech Computer Science student at VIT Bhopal University (
 
 Himachal Pradesh, India
 
+## Age
+22
+
 ## Target roles (placements)
 
 - Data Scientist
@@ -41,14 +44,19 @@ Himachal Pradesh, India
 - Oracle Cloud Infrastructure 2025 Certified Data Science Professional
 - Oracle Cloud Infrastructure 2025 Certified Generative AI Professional
 - The Bits and Bytes of Computer Networking (Coursera)
-- Introduction to Machine Learning (Certified Course)
+- Introduction to Machine Learning (NPTEL )
+- Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate
+- AWS Educate Getting Started with Compute - Training Badge
+- AWS Educate Getting Started with Storage - Training Badge
+- AWS Educate Introduction to Cloud 101 - Training Badge
 
 ## Strengths (what I’m good at)
 
 - Building end-to-end ML pipelines (data → training → evaluation → deployment)
 - Computer vision classification and model optimization
 - LLM application building (chatbots, RAG basics, prompt engineering)
-- Explaining models with metrics and interpretable insights (e.g., SHAP)
+- Explaining models with metrics and interpretable insights 
+- Building ML & DL model solving real world problems
 
 ## Highlights (evidence)
 

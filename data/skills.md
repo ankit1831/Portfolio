@@ -26,13 +26,14 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 
 ## Machine Learning
 - Cross-validation, model comparison, hyperparameter tuning
-- Feature engineering, handling imbalanced data (SMOTE)
+- Feature engineering, handling imbalanced data , exploratory data analysis , data visualisation
 - Metrics: accuracy, F1, AUC, RMSE, R²
 
 ## Deep Learning
-- CNNs, transfer learning (VGG16/ResNet50)
-- Regularization, augmentation, overfitting control
-- PyTorch / TensorFlow usage
+
+- ANNs, CNNs, transfer learning (VGG16/ResNet50)
+- Regularization, augmentation, overfitting control , architecture
+- PyTorch / TensorFlow-Keras usage
 
 ## Computer Vision
 - Preprocessing: resize, normalization, CLAHE enhancement
@@ -54,8 +55,9 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 
 ## Databases & CS fundamentals
 - MySQL concepts: queries, joins, indexing, normalization
-- OS + Networks fundamentals, DSA foundations
+- OS + Networks fundamentals, DSA foundations, DBMS
 
 ## Tools
-- Git/GitHub, VS Code, Jupyter
+
+- Git/GitHub, VS Code, Jupyter, Anaconda
 - Linux command line basics

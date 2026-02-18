@@ -39,7 +39,7 @@ My priority is ML Engineer, followed by Data Scientist and AI Engineer. I enjoy 
 
 ### Q4. Walk me through your Brain Tumor Detection project.
 
-Brain Tumor Detection is a multi-class MRI image classification system that predicts glioma, meningioma, pituitary, and no-tumor. I built both a custom CNN baseline and transfer learning variants (VGG16/ResNet50) with a preprocessing pipeline (resize to 150×150, normalization, CLAHE enhancement). The best version achieved 94.23% test accuracy and a weighted F1 of 0.94. I deployed it as a Flask web app for image upload and inference, which helped me think about usability and real inference constraints.
+Brain Tumor Detection is a multi-class MRI image classification system that predicts tumor and no-tumor. I built both a custom CNN baseline and transfer learning variants (VGG16/ResNet50) with a preprocessing pipeline (resize to 150×150, normalization, CLAHE enhancement). The best version achieved 94.23% test accuracy and a weighted F1 of 0.94. I deployed it as a Flask web app for image upload and inference, which helped me think about usability and real inference constraints.
 
 ### Q5. What were the main challenges in Brain Tumor Detection, and how did you handle them?
 

@@ -8,13 +8,13 @@ This file contains projects in a consistent format for retrieval and interview-r
 Aliases: brain tumor, MRI tumor classifier, brain MRI classification
 
 ### One-liner
-Multi-class MRI tumor classification with 94%+ accuracy using CNNs and transfer learning.
+Multi-class MRI tumor classification with 96%+ accuracy using CNNs and transfer learning.
 
 ### Problem
-Classify brain MRI images into glioma, meningioma, pituitary, and no tumor.
+Classify brain MRI images into tumor and no tumor.  
 
 ### What I built
-- Multi-class image classification pipeline for brain MRI scans
+- Image classification pipeline for brain MRI scans
 - Transfer learning experiments (VGG16/ResNet50) + custom CNN baseline
 - Preprocessing pipeline (resize, normalization, CLAHE enhancement)
 - Flask web app for upload + prediction
@@ -24,15 +24,15 @@ TensorFlow/Keras, OpenCV, Flask
 
 ### Data
 - 3,000+ T1-weighted MRI scans with augmentation
+- Brats2022 dataset
 
 ### Metrics
-- Test Accuracy: 94.23% (1324/1405)
+- Test Accuracy: 96%+
 - Weighted F1: 0.94
-- Class-wise precision: 0.95 (no_tumor), 0.93 (glioma), 0.92 (meningioma), 0.91 (pituitary)
+- Class-wise precision: 0.95 (no_tumor), 0.93 (no tumor)
 
 ### Links
-- Live:
-- GitHub:
+- GitHub: https://github.com/ankit1831/Brain-Tumor-Detection-System
 
 ### Interview talking points
 - Why transfer learning helped and how augmentation improved generalization
@@ -54,6 +54,7 @@ Recognize identities from gait sequences under cross-view and clothing variation
 - Preprocessing pipeline for gait silhouettes/sequences
 - Deep pipeline: CNN (spatial) → LSTM (temporal) → classifier
 - Same-view vs cross-view evaluation setup
+- using transfer learning model (Exception)
 
 ### Tech stack
 PyTorch, OpenCV
@@ -62,13 +63,12 @@ PyTorch, OpenCV
 - CASIA-B: 124 subjects × 11 angles × 3 clothing × 10 sequences
 
 ### Metrics (ongoing / reported)
-- Same-view Rank-1: 92.4%
-- Cross-view Rank-1: 78.2%
-- mAP (multi-shot): 85%
+- Using CNNs : 94% 
+- Using Exception (Transfer Learning ): 98%+
+
 
 ### Links
-- Live/Docs:
-- GitHub:
+- GitHub:https://github.com/ankit1831/GAIT-Based-Biometric-Recognition-System
 
 ### Interview talking points
 - Why cross-view is harder and what features help robustness
@@ -98,8 +98,7 @@ Python, Streamlit, Groq API
 - Optimized for low-latency streaming experience
 
 ### Links
-- Live:
-- GitHub:
+- GitHub:https://github.com/ankit1831/LLM-using-Groq
 
 ### Interview talking points
 - Latency: what makes streaming feel fast even when compute is heavy
@@ -109,23 +108,19 @@ Python, Streamlit, Groq API
 ---
 
 ## Heal-Bridge AI
-Aliases: Heal-Bridge, health platform, symptom checker, appointment system
+Aliases: Heal-Bridge, health platform, symptom checker
 
 ### One-liner
-Healthcare platform with AI symptom checker and appointment booking (live deployment).
+Healthcare platform with AI symptom checker (live deployment).
 
 ### Problem
 Help users with preliminary symptom analysis and streamline healthcare workflows.
 
 ### What I built
 - Symptom analysis flow + preliminary health assessment
-- Appointment booking across specialties
-- Medical record/prescription upload and management
-- Multi-language support (English/Hindi/regional)
 
 ### AI components
 - AI-powered health insights
-- Prescription scanner (handwriting OCR)
 
 ### Tech stack
 Python, Flask, Streamlit, Render hosting
@@ -136,7 +131,7 @@ Python, Flask, Streamlit, Render hosting
 
 ### Links
 - Live: https://heal-bridge-ai.onrender.com/
-- GitHub:
+- GitHub:https://github.com/ankit1831/Heal-BridgeAI
 
 ### Interview talking points
 - Product thinking: user flows, edge cases, privacy considerations
@@ -149,30 +144,35 @@ Python, Flask, Streamlit, Render hosting
 Aliases: food delivery ETA, delivery time regression, ETA prediction
 
 ### One-liner
-ETA regression model for delivery platforms (RMSE: 3.2 minutes, R²: 0.87).
+ETA regression model for delivery platforms (RMSE: 5.2 minutes, R²: 0.87).
 
 ### Problem
 Predict delivery time using operational + context features.
 
 ### What I built
 - Feature-based regression pipeline
+- Data preprocessing and feature engineering
+- Exploratory Data Analysis (EDA) with insightful visualizations
+- Implementation of multiple machine learning models
+- Model evaluation and comparison
+- Web interface for user-friendly predictions (Planned with Flask)
 - Model comparison and selection (XGBoost, Random Forest, Linear Regression)
 - Insights about drivers (weather/peak hours)
 
 ### Tech stack
-Pandas, XGBoost, Featuretools
+Pandas, XGBoost, Featuretools,Pandas, NumPy, Scikit-Learn, Matplotlib, Seaborn
 
 ### Metrics
-- XGBoost: RMSE 3.2 min, R² 0.87
-- Random Forest: RMSE 3.5 min, R² 0.85
-- Linear Regression: RMSE 4.1 min, R² 0.78
+- XGBoost: RMSE 7.2 min, R² 0.87
+- Random Forest: RMSE 5.5 min, R² 0.85
+- Linear Regression: RMSE 6.1 min, R² 0.78
 
 ### Links
 - Live:
-- GitHub:
+- GitHub:https://github.com/ankit1831/Food_delivery_time_prediction
 
 ### Interview talking points
-- Why XGBoost won, how you prevented leakage
+- Why Random Forest won, how you prevented leakage
 - Feature engineering impact and error analysis
 - Business interpretation of ETA errors
 
@@ -188,8 +188,8 @@ Explainable churn classifier with SHAP; strong performance (AUC: 0.95).
 Predict which customers are likely to churn and explain the drivers.
 
 ### What I built
-- Preprocessing pipeline including SMOTE balancing
-- Ensemble approach: XGBoost + Logistic Regression
+- Preprocessing pipeline 
+- Ensemble approach: XGBoost + Logistic Regression + other regression  odels
 - SHAP explainability to identify key churn drivers
 
 ### Tech stack
@@ -206,8 +206,7 @@ Scikit-learn, XGBoost, SHAP, Plotly
 - F1 (churn): 0.90
 
 ### Links
-- Live:
-- GitHub:
+- GitHub:https://github.com/ankit1831/Customer-Churn-Prediction
 
 ### Interview talking points
 - Why explainability matters and how you used SHAP correctly
