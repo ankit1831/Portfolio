@@ -9,8 +9,9 @@ from pydantic import BaseModel
 from groq import Groq
 
 # LangChain components
-from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
+# LangChain components
+from langchain_community.vectorstores.upstash import UpstashVectorStore
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 
 # 1) Load Env
@@ -33,9 +34,21 @@ app.add_middleware(
 
 # 3) Load Vector Store
 print("⏳ Loading Vector Store...")
+# 3) Load Vector Store
+print("⏳ Loading Vector Store...")
 try:
-    embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    vector_store = FAISS.load_local("faiss_index", embedding_model, allow_dangerous_deserialization=True)
+    # Use the lightweight serverless Hugging Face API
+    embedding_model = HuggingFaceEndpointEmbeddings(
+        model="sentence-transformers/all-MiniLM-L6-v2",
+        task="feature-extraction",
+        huggingfacehub_api_token=os.environ.get("HF_TOKEN")
+    )
+    
+    # Connect directly to your Upstash cloud database
+    vector_store = UpstashVectorStore(
+        embedding=embedding_model
+    )
+    
     retriever = vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 4, "fetch_k": 20, "lambda_mult": 0.7})
     print("✅ Vector Store Loaded Successfully!")
 except Exception as e:
@@ -46,16 +59,8 @@ except Exception as e:
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 # 5) Prompt with History Support
-# 5) Stricter, Professional Prompt
-# app.py
 
-# app.py
 
-# app.py
-
-# app.py
-
-# app.py
 
 template = """
 You are Ankit's professional AI Portfolio Assistant.
