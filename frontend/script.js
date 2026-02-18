@@ -237,15 +237,16 @@ function initAIChatUI() {
       <div style="
         flex-shrink:0;
         display:flex;
-        gap:12px;
-        padding:16px;
+        gap:8px;
+        padding:12px;
         background:var(--bg2);
         border-top:2px solid var(--border);
       ">
-        <input id="ai-input" type="text" placeholder="Ask about my projects, skills..."
+        <input id="ai-input" type="text" placeholder="Ask about my projects..."
           style="
             flex:1;
-            padding:12px 16px;
+            min-width: 0; /* CRITICAL FIX: Allows input to shrink below default width */
+            padding:10px 14px;
             border-radius:999px;
             border:2px solid var(--border);
             outline:none;
@@ -256,25 +257,27 @@ function initAIChatUI() {
         />
         <button id="ai-clear" type="button"
           style="
-            padding:12px 18px;
+            padding:10px 14px;
             border-radius:999px;
             border:2px solid var(--border);
             cursor:pointer;
             font-weight:800;
             background:transparent;
             color:var(--text);
+            white-space: nowrap; /* Prevents button text from breaking */
           "
         >Clear</button>
 
         <button id="ai-send" type="button"
           style="
-            padding:12px 18px;
+            padding:10px 14px;
             border-radius:999px;
             border:none;
             cursor:pointer;
             font-weight:800;
             color:#0a0a0a;
             background:linear-gradient(45deg,var(--accent1),var(--accent2));
+            white-space: nowrap; /* Prevents button text from breaking */
           "
         >Send</button>
       </div>
@@ -409,6 +412,7 @@ function addAIMessage(text, type, sources = []) {
   box.appendChild(div);
 
   // Add sources if available
+  /*
   if (type === "bot" && sources && sources.length) {
     const srcWrap = document.createElement("div");
     srcWrap.style.cssText =
@@ -430,6 +434,7 @@ function addAIMessage(text, type, sources = []) {
     });
     div.appendChild(srcWrap);
   }
+    */
 
   box.scrollTop = box.scrollHeight;
 }
