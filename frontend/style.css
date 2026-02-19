@@ -161,8 +161,9 @@ nav {
 }
 
 /* Sections */
+/* Update this tag in your style.css */
 section {
-  padding: 5rem 2rem;
+  padding: 3.5rem 2rem; /* Reduced from 5rem to pull all sections closer together */
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -758,4 +759,119 @@ nav {
   overflow: hidden;
   background: transparent;
   border: none;
+}
+/* ========== HERO AI BAR (CLEAN & PROFESSIONAL) ========== */
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem; /* Reduced to fix the huge gap before About Me */
+  width: 100%;
+}
+
+/* Clean, glass-like input box */
+.hero-ai-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.03); /* Very subtle background */
+  border: 1px solid var(--border); /* Standard subtle green border */
+  border-radius: 999px;
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Subtle glow on hover instead of crazy animations */
+.hero-ai-bar:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent1);
+  box-shadow: 0 8px 25px rgba(0, 255, 136, 0.15);
+}
+
+/* Static, professional icon */
+.spark-icon {
+  color: var(--accent1);
+  font-size: 1.2rem;
+  margin-right: 1rem;
+}
+
+/* Fully visible, static text */
+/* Fully visible, static text with a fade transition */
+.ai-typing-text {
+  flex: 1;
+  color: var(--text);
+  opacity: 0.9;
+  text-align: left;
+  font-family: "Inter", sans-serif;
+  font-size: 1.05rem;
+  transition: opacity 0.4s ease; /* NEW: Allows smooth fading */
+}
+/* Clean Send Button */
+.ai-go-btn {
+  background: var(--accent1);
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0a0a0a;
+  font-size: 1.1rem;
+  margin-left: 1rem;
+  transition:
+    background 0.3s,
+    transform 0.3s;
+}
+
+.hero-ai-bar:hover .ai-go-btn {
+  background: var(--accent2);
+  transform: translateX(3px); /* Just a tiny nudge right on hover */
+}
+
+/* Restored Buttons Row */
+.hero-secondary-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Scaled down CTA buttons so they don't overpower the search bar */
+.hero-small-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* AI Chat Suggestion Pills - Subtle Version */
+.ai-pill {
+  background: transparent; /* No more solid green background */
+  border: 1px solid var(--border); /* Matches the default subtle gray/green border */
+  color: var(--text); /* Standard text color */
+  opacity: 0.6; /* Fades them into the background slightly */
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+/* They only light up when the user hovers over them */
+.ai-pill:hover {
+  opacity: 1;
+  border-color: rgba(0, 255, 136, 0.4);
+  color: var(--accent1);
+}
+
+#ai-suggestions::-webkit-scrollbar {
+  display: none;
 }

@@ -195,14 +195,17 @@ function initAIChatUI() {
         background:linear-gradient(45deg,var(--accent1),var(--accent2));
         color:#0a0a0a;
         padding:16px 20px;
-        text-align:center;
         font-family:Poppins, sans-serif;
         font-weight:700;
         font-size:1.1rem;
         border-bottom:2px solid rgba(255,255,255,0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
       ">
-        <i class="fas fa-robot" style="margin-right:8px;"></i>
-        Ankit's Portfolio AI
+        <i class="fas fa-robot"></i>
+        Ankit's AI Assistant
       </div>
 
       <div id="ai-chat-box" style="
@@ -232,6 +235,19 @@ function initAIChatUI() {
         <span class="ai-typing-dots" style="display:inline-flex; gap:6px; align-items:center;">
           <span class="dot"></span><span class="dot"></span><span class="dot"></span>
         </span>
+      </div>
+
+      <div id="ai-suggestions" style="
+        display:flex;
+        gap:8px;
+        padding:0 18px 12px;
+        overflow-x:auto;
+      ">
+        <button class="ai-pill" type="button" data-q="What are Ankit's skills?">🎯 Skills</button>
+        <button class="ai-pill" type="button" data-q="Tell me about Ankit's projects.">🚀 Projects</button>
+        <button class="ai-pill" type="button" data-q="What is tech stack used by Ankit?">💻 Tech Stack</button>
+        <button class="ai-pill" type="button" data-q="Tell me about Ankit's Internship?">🏢 Internship</button>
+        <button class="ai-pill" type="button" data-q="Tell me about Ankit's education and background.">🎓 Education</button>
       </div>
 
       <div style="
@@ -287,6 +303,18 @@ function initAIChatUI() {
   const input = document.getElementById("ai-input");
   const sendBtn = document.getElementById("ai-send");
   const clearBtn = document.getElementById("ai-clear");
+  // Handle Suggestion Pill Clicks
+  const suggDiv = document.getElementById("ai-suggestions");
+  if (suggDiv) {
+    suggDiv.querySelectorAll(".ai-pill").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (input) {
+          input.value = btn.getAttribute("data-q");
+          sendAIChat(); // Instantly send the message
+        }
+      });
+    });
+  }
 
   if (clearBtn) clearBtn.addEventListener("click", clearAIChat);
   if (sendBtn) sendBtn.addEventListener("click", sendAIChat);
@@ -479,4 +507,28 @@ if (aiChatModal) {
       else aiChatModal.removeAttribute("open");
     }
   });
+}
+
+// ========== HERO SEARCH BAR TEXT ROTATION ==========
+const placeholderTexts = [
+  "Ask me about Ankit's ML projects...",
+  "What is Ankit's tech stack?",
+  "Tell me about the Brain Tumor detection model...",
+  "What did Ankit do at his CodingJr Internship?",
+];
+let placeholderIndex = 0;
+const typingTextEl = document.querySelector(".ai-typing-text");
+
+if (typingTextEl) {
+  setInterval(() => {
+    // Fade out
+    typingTextEl.style.opacity = 0;
+
+    setTimeout(() => {
+      // Change text and fade back in after 400ms
+      placeholderIndex = (placeholderIndex + 1) % placeholderTexts.length;
+      typingTextEl.textContent = placeholderTexts[placeholderIndex];
+      typingTextEl.style.opacity = 0.9;
+    }, 400);
+  }, 3500); // Cycles every 3.5 seconds
 }
