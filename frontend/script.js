@@ -385,7 +385,23 @@ function addAIMessage(text, type, sources = []) {
 
   const div = document.createElement("div");
   div.className = `ai-msg ${type}`;
-  div.textContent = text;
+
+  if (type === "bot") {
+    // 1. Convert **bold text** to HTML bold tags
+    let formattedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+    // 2. Convert markdown headings (### Heading) to simple bold text (removes the #)
+    formattedText = formattedText.replace(
+      /^#+\s+(.*)$/gm,
+      "<strong>$1</strong>",
+    );
+
+    // Assign the formatted text using innerHTML
+    div.innerHTML = formattedText;
+  } else {
+    // Keep user messages as plain text for security
+    div.textContent = text;
+  }
 
   // Basic styling
   // script.js - inside addAIMessage function
