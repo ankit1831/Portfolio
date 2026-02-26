@@ -14,7 +14,7 @@ from groq import Groq
 # LangChain components
 from langchain_community.vectorstores.upstash import UpstashVectorStore
 # Replace HuggingFaceEndpointEmbeddings
-from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 
 # 1) Load Env
@@ -36,10 +36,11 @@ app.add_middleware(
 )
 
 # This version is a simple HTTP call. It doesn't load heavy ML libraries.
-embedding_model = HuggingFaceInferenceAPIEmbeddings(
-    api_key=os.environ.get("HF_TOKEN"),
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
+embedding_model = HuggingFaceEndpointEmbeddings(
+        model="sentence-transformers/all-MiniLM-L6-v2",
+        task="feature-extraction",
+        huggingfacehub_api_token=os.environ.get("HF_TOKEN")
+    )
 
 # 3) Load Vector Store with Explicit Credentials
 print("⏳ Connecting to Upstash Vector DB...")
