@@ -217,16 +217,7 @@ function initAIChatUI() {
         gap:12px;
         background:var(--bg1);
       ">
-        <div class="ai-msg bot" style="
-          max-width:78%;
-          align-self:flex-start;
-          padding:12px 14px;
-          border-radius:16px;
-          border:1px solid var(--border);
-          background:rgba(255,255,255,0.08);
-          color:var(--text);
-          line-height:1.5;
-        ">
+        <div class="ai-msg bot">
           Hi! Ask me about Ankit's skills, projects, internship, or achievements.
         </div>
       </div>
@@ -410,16 +401,7 @@ function clearAIChat() {
   chatHistory = []; // <-- Reset History
 
   box.innerHTML = `
-    <div class="ai-msg bot" style="
-      max-width:78%;
-      align-self:flex-start;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,0.08);
-      color:var(--text);
-      line-height:1.5;
-    ">
+    <div class="ai-msg bot">
       Hi! Ask me about Ankit's skills, projects, internship, or achievements.
     </div>
   `;
