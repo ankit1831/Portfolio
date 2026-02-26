@@ -135,8 +135,8 @@ document.addEventListener("DOMContentLoaded", function () {
 const API_URL = "https://portfolio-pied-nine-18.vercel.app/chat";
 
 let AI_CHAT_LOADED = false;
-let chatHistory = []; // <-- NEW: Stores conversation history
-
+// Load history from previous session or start fresh
+let chatHistory = JSON.parse(sessionStorage.getItem("ankit_chat_history")) || [];
 function injectTypingDotsCSSOnce() {
   if (document.getElementById("ai-typing-dots-css")) return;
 
@@ -387,6 +387,7 @@ async function sendAIChat() {
     // 4. Update Chat History after stream finishes
     chatHistory.push({ role: "user", content: q });
     chatHistory.push({ role: "assistant", content: fullAnswer });
+    sessionStorage.setItem("ankit_chat_history", JSON.stringify(chatHistory));
   } catch (err) {
     if (typing) typing.style.display = "none";
     botText.innerText = "Error: " + (err.message || "Connection failed.");
@@ -413,12 +414,17 @@ function addAIMessage(text, type, sources = []) {
   if (!box) return;
 
   const div = document.createElement("div");
-  // The CSS classes we just made will handle ALL the styling now!
   div.className = `ai-msg ${type}`; 
 
   if (type === "bot") {
-    let formattedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-    formattedText = formattedText.replace(/^#+\s+(.*)$/gm, "<strong>$1</strong>");
+    let formattedText = text
+      // Bold text
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      // Make Headers slightly larger and accent colored
+      .replace(/^###?\s+(.*)$/gm, "<strong style='font-size: 1.1em; color: var(--accent1); display: block; margin-top: 8px;'>$1</strong>")
+      // Clean up bullet points to have a proper break
+      .replace(/^- (.*)$/gm, "<br>• $1");
+      
     div.innerHTML = formattedText;
   } else {
     div.textContent = text;
