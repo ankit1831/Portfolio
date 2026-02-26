@@ -875,3 +875,26 @@ nav {
 #ai-suggestions::-webkit-scrollbar {
   display: none;
 }
+/* AI Chat Bubble Styles */
+.ai-msg {
+  max-width: 78%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.ai-msg.user {
+  align-self: flex-end;
+  color: #0a0a0a;
+  background: linear-gradient(45deg, var(--accent1), var(--accent2));
+  border-bottom-right-radius: 6px;
+}
+
+.ai-msg.bot {
+  align-self: flex-start;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border); /* This will now work 100% of the time */
+  border-bottom-left-radius: 6px;
+}

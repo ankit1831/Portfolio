@@ -431,74 +431,18 @@ function addAIMessage(text, type, sources = []) {
   if (!box) return;
 
   const div = document.createElement("div");
-  div.className = `ai-msg ${type}`;
+  // The CSS classes we just made will handle ALL the styling now!
+  div.className = `ai-msg ${type}`; 
 
   if (type === "bot") {
-    // 1. Convert **bold text** to HTML bold tags
     let formattedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-
-    // 2. Convert markdown headings (### Heading) to simple bold text (removes the #)
-    formattedText = formattedText.replace(
-      /^#+\s+(.*)$/gm,
-      "<strong>$1</strong>",
-    );
-
-    // Assign the formatted text using innerHTML
+    formattedText = formattedText.replace(/^#+\s+(.*)$/gm, "<strong>$1</strong>");
     div.innerHTML = formattedText;
   } else {
-    // Keep user messages as plain text for security
     div.textContent = text;
   }
 
-  // Basic styling
-  // script.js - inside addAIMessage function
-  div.style.maxWidth = "78%";
-  div.style.padding = "12px 14px";
-  div.style.borderRadius = "16px";
-  div.style.lineHeight = "1.5";
-  div.style.whiteSpace = "pre-wrap"; // <--- ADD THIS LINE HERE
-
-  if (type === "user") {
-    div.style.alignSelf = "flex-end";
-    div.style.color = "#0a0a0a";
-    div.style.background =
-      "linear-gradient(45deg,var(--accent1),var(--accent2))";
-    div.style.borderBottomRightRadius = "6px";
-  } else {
-    div.style.alignSelf = "flex-start";
-    div.style.color = "var(--text)";
-    div.style.background = "rgba(255,255,255,0.08)";
-    div.style.border = "1px solid var(--border)";
-    div.style.borderBottomLeftRadius = "6px";
-  }
-
   box.appendChild(div);
-
-  // Add sources if available
-  /*
-  if (type === "bot" && sources && sources.length) {
-    const srcWrap = document.createElement("div");
-    srcWrap.style.cssText =
-      "margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;opacity:0.9;";
-
-    sources.slice(0, 4).forEach((s) => {
-      const chip = document.createElement("span");
-      chip.textContent = s.source_file;
-      chip.title = s.snippet; // Show snippet on hover
-      chip.style.cssText = `
-        font-size:0.75rem;
-        padding:4px 8px;
-        border-radius:12px;
-        border:1px solid var(--border);
-        background:rgba(255,255,255,0.05);
-        cursor:help;
-      `;
-      srcWrap.appendChild(chip);
-    });
-    div.appendChild(srcWrap);
-  }
-    */
-
   box.scrollTop = box.scrollHeight;
 }
 

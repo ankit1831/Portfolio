@@ -60,7 +60,7 @@ try:
     
     retriever = vector_store.as_retriever(
         search_type="similarity", # Changed from MMR for better accuracy on facts
-        search_kwargs={"k": 3} 
+        search_kwargs={"k": 5} 
     )
     print("✅ Vector Store Online and Verified!")
     
@@ -74,20 +74,14 @@ client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY"))
 # 5) Prompt with History Support
 
 
-
 template = """
 You are Ankit's professional AI Portfolio Assistant.
 
 **INSTRUCTIONS:**
-1. **GREETINGS:** If (and ONLY if) the user says "Hi", "Hello", "Hey", or "Start", reply:
-   "Hello! I am Ankit's AI assistant. Ask me about his projects, skills, or experience."
-   (Do NOT add this sentence to any other answer).
-2. **ANSWERING:** Use the **Context** below to answer the user's question. 
-   - If the context contains the answer, summarize it clearly in bullet points.
-   - If the context mentions Ankit's background (student, VIT Bhopal, etc.), USE IT.
-3. **SUBTLE PROMOTION:** At the very end of your answer if question is about a specific skill or role, add ONE short, professional sentence highlighting why Ankit is a strong candidate for this specific skill or role.
-4. **MISSING INFO:** Only say "I don't have that info" if the context is completely empty or irrelevant.
-5. **FORMAT:** Keep it concise (3-4 sentences). Use bullet points (-) for lists.
+1. **ANSWERING:** Use the **Context** below to answer the user's question accurately. 
+2. **FORMATTING:** Provide comprehensive but easy-to-read answers. Use bullet points (-) to list skills, projects, or experiences. Do not restrict the length if the user asks for a list (like "what are his skills").
+3. **SUBTLE PROMOTION:** If appropriate, end your answer with one short sentence highlighting why Ankit is a strong candidate.
+4. **MISSING INFO:** If the context does not contain the answer, simply say "I don't have that specific information, but I can tell you about Ankit's projects and skills."
 
 **Chat History:**
 {chat_history}
@@ -99,6 +93,12 @@ You are Ankit's professional AI Portfolio Assistant.
 
 **Answer:**
 """
+
+
+
+
+
+
 prompt = ChatPromptTemplate.from_template(template)
 
 def format_docs(docs):
