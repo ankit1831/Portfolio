@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from fastapi.responses import StreamingResponse # <-- NEW
+from groq import AsyncGroq # <-- CHANGED
 
 # Groq Client
 from groq import Groq
@@ -11,7 +13,8 @@ from groq import Groq
 # LangChain components
 # LangChain components
 from langchain_community.vectorstores.upstash import UpstashVectorStore
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
+# Replace HuggingFaceEndpointEmbeddings
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 
 # 1) Load Env
@@ -32,32 +35,41 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 3) Load Vector Store
-print("⏳ Loading Vector Store...")
-# 3) Load Vector Store
-print("⏳ Loading Vector Store...")
+# This version is a simple HTTP call. It doesn't load heavy ML libraries.
+embedding_model = HuggingFaceInferenceAPIEmbeddings(
+    api_key=os.environ.get("HF_TOKEN"),
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
+)
+
+# 3) Load Vector Store with Explicit Credentials
+print("⏳ Connecting to Upstash Vector DB...")
 try:
-    # Use the lightweight serverless Hugging Face API
-    embedding_model = HuggingFaceEndpointEmbeddings(
-        model="sentence-transformers/all-MiniLM-L6-v2",
-        task="feature-extraction",
-        huggingfacehub_api_token=os.environ.get("HF_TOKEN")
-    )
-    
-    # Connect directly to your Upstash cloud database
+    # Fetch credentials explicitly
+    UPSTASH_URL = os.getenv("UPSTASH_VECTOR_REST_URL")
+    UPSTASH_TOKEN = os.getenv("UPSTASH_VECTOR_REST_TOKEN")
+
+    if not UPSTASH_URL or not UPSTASH_TOKEN:
+        raise ValueError("Missing Upstash Credentials in .env")
+
     vector_store = UpstashVectorStore(
-        embedding=embedding_model
+        embedding=embedding_model,
+        index_url=UPSTASH_URL,
+        index_token=UPSTASH_TOKEN
     )
     
-    retriever = vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 4, "fetch_k": 20, "lambda_mult": 0.7})
-    print("✅ Vector Store Loaded Successfully!")
+    retriever = vector_store.as_retriever(
+        search_type="similarity", # Changed from MMR for better accuracy on facts
+        search_kwargs={"k": 3} 
+    )
+    print("✅ Vector Store Online and Verified!")
+    
 except Exception as e:
-    print(f"❌ Error loading vector store: {e}")
+    print(f"❌ CRITICAL: Vector Store failed to initialize: {e}")
     retriever = None
 
 # 4) Groq Client
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
-
+# 4) Groq Client (Async for Streaming)
+client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY"))
 # 5) Prompt with History Support
 
 
@@ -121,42 +133,50 @@ def extract_sources(docs):
             seen.add(filename)
     return sources
 
-# 7) Chat Endpoint
+from fastapi.responses import StreamingResponse
+import json
+
+# 7) Chat Endpoint (Now with Streaming!)
 @app.post("/chat")
 async def chat(request: QueryRequest):
     if not retriever:
         raise HTTPException(status_code=500, detail="Vector Store not loaded.")
 
-    try:
-        # Retrieve docs
-        docs = retriever.invoke(request.query)
-        context_text = format_docs(docs)
-        
-        # Format history
-        history_text = format_history(request.history)
+    # We define an asynchronous generator function inside the route
+    async def generate_chat_stream():
+        try:
+            # 1. Retrieve docs (Keep this synchronous if using standard Upstash client)
+            docs = retriever.invoke(request.query)
+            context_text = format_docs(docs)
+            history_text = format_history(request.history)
 
-        # Generate Prompt
-        formatted_prompt = prompt.format(
-            context=context_text, 
-            question=request.query,
-            chat_history=history_text
-        )
+            # 2. Format the prompt
+            formatted_prompt = prompt.format(
+                context=context_text, 
+                question=request.query,
+                chat_history=history_text
+            )
 
-        # Call Groq
-        chat_completion = client.chat.completions.create(
-            messages=[{"role": "user", "content": formatted_prompt}],
-            model="llama-3.1-8b-instant",
-            temperature=0.6,
-            max_tokens=300,
-        )
+            # 3. Call Groq asynchronously WITH stream=True
+            stream = await client.chat.completions.create(
+                messages=[{"role": "user", "content": formatted_prompt}],
+                model="llama-3.1-8b-instant",
+                temperature=0.6,
+                max_tokens=300,
+                stream=True # <-- CRITICAL FOR STREAMING
+            )
 
-        return {
-            "answer": chat_completion.choices[0].message.content,
-            "sources": extract_sources(docs)
-        }
-    except Exception as e:
-        print(f"Error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+            # 4. Yield each word as it generates
+            async for chunk in stream:
+                if chunk.choices[0].delta.content is not None:
+                    yield chunk.choices[0].delta.content
+                    
+        except Exception as e:
+            print(f"Streaming Error: {e}")
+            yield f"Error generating response: {str(e)}"
+
+    # Return the generator as a StreamingResponse
+    return StreamingResponse(generate_chat_stream(), media_type="text/plain")
 
 if __name__ == "__main__":
     import uvicorn

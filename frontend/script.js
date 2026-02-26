@@ -332,7 +332,7 @@ function focusAIInput() {
   if (input) input.focus();
 }
 
-// 3) Send message with History
+// 3) Send message with Streaming and History Support
 async function sendAIChat() {
   const input = document.getElementById("ai-input");
   const box = document.getElementById("ai-chat-box");
@@ -343,44 +343,63 @@ async function sendAIChat() {
   const q = input.value.trim();
   if (!q) return;
 
-  // Add User Message to UI
+  // 1. Add User Message to UI
   addAIMessage(q, "user");
   input.value = "";
 
-  // Show typing
+  // 2. Setup Bot Message Placeholder for Streaming
+  // We create the message element early so we can append text to it live
+  const botMsgDiv = document.createElement("div");
+  botMsgDiv.className = "ai-msg bot";
+  const botText = document.createElement("div");
+  botText.className = "ai-msg-text";
+  botMsgDiv.appendChild(botText);
+  box.appendChild(botMsgDiv);
+
+  // Show typing indicator initially
   if (typing) typing.style.display = "block";
   box.scrollTop = box.scrollHeight;
 
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 35000);
-
-    // Send Query + History
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: q,
-        history: chatHistory, // <-- Sending history here
+        history: chatHistory,
       }),
-      signal: controller.signal,
     });
 
-    clearTimeout(timeout);
-    const data = await res.json();
+    if (!res.ok) throw new Error(`Server error: ${res.status}`);
 
+    // Hide typing once stream starts
     if (typing) typing.style.display = "none";
 
-    // Add Bot Response to UI
-    addAIMessage(data.answer || "No response.", "bot", data.sources || []);
+    // 3. Handle the Stream
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let fullAnswer = "";
 
-    // Update History
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      // Decode the current chunk and update UI
+      const chunk = decoder.decode(value, { stream: true });
+      fullAnswer += chunk;
+
+      // Update the text in real-time
+      botText.innerText = fullAnswer;
+      box.scrollTop = box.scrollHeight;
+    }
+
+    // 4. Update Chat History after stream finishes
     chatHistory.push({ role: "user", content: q });
-    chatHistory.push({ role: "assistant", content: data.answer });
+    chatHistory.push({ role: "assistant", content: fullAnswer });
   } catch (err) {
     if (typing) typing.style.display = "none";
-    addAIMessage("Error: " + (err.message || err), "bot");
-    console.error(err);
+    botText.innerText = "Error: " + (err.message || "Connection failed.");
+    console.error("Streaming Error:", err);
   }
 }
 
