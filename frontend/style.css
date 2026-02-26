@@ -783,7 +783,7 @@ nav {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 0.75rem 0.75rem 0.75rem 1.8rem; /* Increased top/bottom padding to make it taller */
+  padding: 0.6rem 0.6rem 0.6rem 1.6rem; /* This shrinks the height just a bit */
   cursor: pointer;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -820,8 +820,8 @@ nav {
 .ai-go-btn {
   background: var(--accent1);
   border-radius: 50%;
-  width: 52px; /* Increased from 46px */
-  height: 52px; /* Increased from 46px */
+  width: 48px; /* Scaled down from 52px */
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
