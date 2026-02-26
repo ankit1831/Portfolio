@@ -779,11 +779,11 @@ nav {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 600px;
-  background: rgba(255, 255, 255, 0.03); /* Very subtle background */
-  border: 1px solid var(--border); /* Standard subtle green border */
+  max-width: 650px; /* Slightly wider */
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  padding: 0.75rem 0.75rem 0.75rem 1.8rem; /* Increased top/bottom padding to make it taller */
   cursor: pointer;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -792,7 +792,6 @@ nav {
     border-color 0.3s ease,
     box-shadow 0.3s ease;
 }
-
 /* Subtle glow on hover instead of crazy animations */
 .hero-ai-bar:hover {
   transform: translateY(-2px);
@@ -803,10 +802,9 @@ nav {
 /* Static, professional icon */
 .spark-icon {
   color: var(--accent1);
-  font-size: 1.2rem;
-  margin-right: 1rem;
+  font-size: 1.4rem; /* Increased size */
+  margin-right: 1.2rem;
 }
-
 /* Fully visible, static text */
 /* Fully visible, static text with a fade transition */
 .ai-typing-text {
@@ -815,20 +813,20 @@ nav {
   opacity: 0.9;
   text-align: left;
   font-family: "Inter", sans-serif;
-  font-size: 0.9rem;
-  transition: opacity 0.4s ease; /* NEW: Allows smooth fading */
+  font-size: 1.15rem; /* Increased font size */
+  transition: opacity 0.4s ease;
 }
 /* Clean Send Button */
 .ai-go-btn {
   background: var(--accent1);
   border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  font-size: 0.95rem;
+  width: 52px; /* Increased from 46px */
+  height: 52px; /* Increased from 46px */
   display: flex;
   align-items: center;
   justify-content: center;
   color: #0a0a0a;
+  font-size: 1.2rem; /* Increased icon size inside button */
   margin-left: 1rem;
   transition:
     background 0.3s,
