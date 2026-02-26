@@ -1,5 +1,17 @@
-# Projects — Ankit Sharma (Catalog)
 
+
+# Ankit's Project Portfolio Overview
+Ankit has built several end-to-end Machine Learning and AI projects. His top projects include:
+1. Brain Tumor Detection: A 94% accuracy CNN for MRI scans using TensorFlow and Flask.
+2. Heal-Bridge AI: A live healthcare platform with an AI symptom checker using Flask and Streamlit.
+3. Groq LLM Chatbot: A 300ms fast streaming chatbot using Llama and Mixtral via Groq API.
+4. Gait Biometrics: A cross-view walking recognition model using PyTorch and OpenCV.
+5. Delivery Time Prediction: An ETA regression model using XGBoost (RMSE 3.2 min).
+6. Customer Churn Prediction: An explainable classifier using XGBoost and SHAP.
+
+
+
+# Projects — Ankit Sharma (Catalog)
 This file contains projects in a consistent format for retrieval and interview-ready answers.
 
 ---
