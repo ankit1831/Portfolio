@@ -29,9 +29,14 @@ app = FastAPI()
 # 2) CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://ankit-sharma-sigma.vercel.app"], # Locked to your frontend
+    allow_origins=[
+        "https://ankit-sharma-sigma.vercel.app", # Your live site
+        "http://localhost:5500",                 # VS Code Live Server
+        "http://127.0.0.1:5500",                 # VS Code Live Server Alternate
+        "http://localhost:3000"                  # Standard local port
+    ],
     allow_credentials=True,
-    allow_methods=["POST", "OPTIONS"], # Only allow what is needed
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 

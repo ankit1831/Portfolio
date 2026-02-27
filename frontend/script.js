@@ -136,7 +136,8 @@ const API_URL = "https://portfolio-pied-nine-18.vercel.app/chat";
 
 let AI_CHAT_LOADED = false;
 // Load history from previous session or start fresh
-let chatHistory = JSON.parse(sessionStorage.getItem("ankit_chat_history")) || [];
+let chatHistory =
+  JSON.parse(sessionStorage.getItem("ankit_chat_history")) || [];
 function injectTypingDotsCSSOnce() {
   if (document.getElementById("ai-typing-dots-css")) return;
 
@@ -375,12 +376,24 @@ async function sendAIChat() {
       const { done, value } = await reader.read();
       if (done) break;
 
-      // Decode the current chunk and update UI
+      // Decode the current chunk
       const chunk = decoder.decode(value, { stream: true });
       fullAnswer += chunk;
 
-      // Update the text in real-time
-      botText.innerText = fullAnswer;
+      // LIVE FORMATTING: Apply subtle bolding and sizing rules
+      let formattedText = fullAnswer
+        // 1. Bold text (**text**)
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        // 2. Subtle Headers (## text): Just 5% larger, bold, and accent colored
+        .replace(
+          /^###?\s+(.*)$/gm,
+          "<strong style='font-size: 1.05em; color: var(--accent1); display: block; margin-top: 6px;'>$1</strong>",
+        )
+        // 3. Clean bullet points (changes "-" to "•")
+        .replace(/^- /gm, "• ");
+
+      // CRITICAL FIX: Use innerHTML instead of innerText so the <strong> tags render!
+      botText.innerHTML = formattedText;
       box.scrollTop = box.scrollHeight;
     }
 
@@ -414,17 +427,20 @@ function addAIMessage(text, type, sources = []) {
   if (!box) return;
 
   const div = document.createElement("div");
-  div.className = `ai-msg ${type}`; 
+  div.className = `ai-msg ${type}`;
 
   if (type === "bot") {
     let formattedText = text
       // Bold text
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       // Make Headers slightly larger and accent colored
-      .replace(/^###?\s+(.*)$/gm, "<strong style='font-size: 1.1em; color: var(--accent1); display: block; margin-top: 8px;'>$1</strong>")
+      .replace(
+        /^###?\s+(.*)$/gm,
+        "<strong style='font-size: 1.1em; color: var(--accent1); display: block; margin-top: 8px;'>$1</strong>",
+      )
       // Clean up bullet points to have a proper break
       .replace(/^- (.*)$/gm, "<br>• $1");
-      
+
     div.innerHTML = formattedText;
   } else {
     div.textContent = text;
