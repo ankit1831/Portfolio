@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fastapi.responses import StreamingResponse # <-- NEW
 from groq import AsyncGroq # <-- CHANGED
+from langchain_groq import ChatGroq # <-- NEW: Native LangChain wrapper
 
 # Groq Client
 from groq import Groq
@@ -29,14 +30,9 @@ app = FastAPI()
 # 2) CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://ankit-sharma-sigma.vercel.app", # Your live site
-        "http://localhost:5500",                 # VS Code Live Server
-        "http://127.0.0.1:5500",                 # VS Code Live Server Alternate
-        "http://localhost:3000"                  # Standard local port
-    ],
+    allow_origins=["https://ankit-sharma-sigma.vercel.app"], # Locked to your frontend
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["POST", "OPTIONS"], # Only allow what is needed
     allow_headers=["*"],
 )
 
@@ -73,19 +69,23 @@ except Exception as e:
     print(f"❌ CRITICAL: Vector Store failed to initialize: {e}")
     retriever = None
 
-# 4) Groq Client
-# 4) Groq Client (Async for Streaming)
-client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY"))
+# 4) Groq LLM (LangChain Native for LangSmith Tracking)
+client = ChatGroq(
+    api_key=os.environ.get("GROQ_API_KEY"),
+    model="llama-3.1-8b-instant",
+    temperature=0.1,
+    max_tokens=300
+)
 # 5) Prompt with History Support
 template = """
 You are Ankit's warm, conversational, and professional AI Portfolio Assistant.
 
 **CRITICAL RULES:**
-1. **LANGUAGE MIRRORING:** You MUST respond in the exact same language and script that the user uses. 
-   - If they ask in English, reply in English.
-   - If they ask in Hindi (Devanagari), reply in Hindi.
-   - If they ask in Romanized Hindi/Hinglish (e.g., "apni skills batao"), reply naturally in Hinglish.
-   - Apply this to ANY language they use (Spanish, French, etc.).
+1. **STRICT LANGUAGE MATCHING:** You MUST respond in the EXACT SAME language as the user's CURRENT question. 
+   - Base your language strictly on the "User Question" provided below. 
+   - Ignore the language of previous messages in the Chat History.
+   - If the current question is in English, you MUST reply in English. 
+   - If the current question is in a mix of Hindi and English (Hinglish), reply in Hinglish.
 2. **GREETINGS:** If the user simply says "Hi", "Hello", or "Hey", reply with a brief, friendly greeting and ask what they would like to know about Ankit (e.g., projects, skills, or experience). DO NOT dump his profile summary or list facts unless they explicitly ask.
 3. **SKILLS & TECH STACK:** When asked about his skills or technologies, group them by domain. Use a bullet point for the domain, but list the actual skills in a natural, readable sentence. 
    *(Example: "- **Machine Learning:** Ankit has hands-on experience with supervised learning, CNNs, and transfer learning.")*
@@ -176,9 +176,11 @@ async def chat(request: QueryRequest):
             )
 
             # 4. Yield each word as it generates
-            async for chunk in stream:
-                if chunk.choices[0].delta.content is not None:
-                    yield chunk.choices[0].delta.content
+            # 3. Call Groq asynchronously using LangChain's stream
+            # This automatically logs the input, context, and output to LangSmith!
+            async for chunk in client.astream(formatted_prompt):
+                if chunk.content:
+                    yield chunk.content
                     
         except Exception as e:
             print(f"Streaming Error: {e}")
