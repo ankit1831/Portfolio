@@ -7,3 +7,4 @@ langchain-core
 langchain-community
 langchain-huggingface
 upstash-vector
+langchain-groq
