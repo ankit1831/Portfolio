@@ -144,8 +144,7 @@ def extract_sources(docs):
 
 from fastapi.responses import StreamingResponse
 import json
-
-# 7) Chat Endpoint (Now with Streaming!)
+# 7) Chat Endpoint (Now with LangSmith Tracking!)
 @app.post("/chat")
 async def chat(request: QueryRequest):
     if not retriever:
@@ -166,17 +165,8 @@ async def chat(request: QueryRequest):
                 chat_history=history_text
             )
 
-            # 3. Call Groq asynchronously WITH stream=True
-            stream = await client.chat.completions.create(
-                messages=[{"role": "user", "content": formatted_prompt}],
-                model="llama-3.1-8b-instant",
-                temperature=0.6,
-                max_tokens=300,
-                stream=True # <-- CRITICAL FOR STREAMING
-            )
-
-            # 4. Yield each word as it generates
             # 3. Call Groq asynchronously using LangChain's stream
+            # NOTE: We deleted the old client.chat.completions.create block!
             # This automatically logs the input, context, and output to LangSmith!
             async for chunk in client.astream(formatted_prompt):
                 if chunk.content:
