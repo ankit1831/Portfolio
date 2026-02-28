@@ -411,9 +411,29 @@ async function sendAIChat() {
         .replace(/^- /gm, "• ");
 
       // CRITICAL FIX: Use innerHTML instead of innerText so the <strong> tags render!
+      // CRITICAL FIX: Use innerHTML instead of innerText so the <strong> tags render!
       botText.innerHTML = formattedText;
       box.scrollTop = box.scrollHeight;
-    }
+    } // <-- End of the while loop
+
+    // --- NEW: INJECT THE SPEAKER BUTTON SAFELY ---
+    const speakerBtn = document.createElement("button");
+    speakerBtn.className = "speaker-btn";
+    speakerBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Listen';
+
+    // Attach the completed text to this specific button
+    speakerBtn.onclick = function () {
+      speakText(fullAnswer, this);
+    };
+
+    // Add a line break and put the button at the bottom of the text
+    botText.appendChild(document.createElement("br"));
+    botText.appendChild(document.createElement("br")); // Extra space so it looks clean
+    botText.appendChild(speakerBtn);
+
+    // Scroll down slightly so the user sees the new button
+    box.scrollTop = box.scrollHeight;
+    // --- END OF NEW CODE ---
 
     // 4. Update Chat History after stream finishes
     chatHistory.push({ role: "user", content: q });
@@ -588,4 +608,53 @@ if (SpeechRecognition) {
   };
 } else {
   console.warn("Speech Recognition API is not supported in this browser.");
+}
+
+// --- TEXT TO SPEECH (Speaker Logic) ---
+let currentUtterance = null;
+
+// This forces the browser to load voices in the background so they are ready
+window.speechSynthesis.getVoices();
+
+function speakText(text, buttonElement) {
+  // 1. Cancel anything that is currently playing
+  window.speechSynthesis.cancel();
+
+  // 2. Reset all speaker buttons back to normal
+  document.querySelectorAll(".speaker-btn").forEach((btn) => {
+    btn.classList.remove("playing");
+    btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Listen';
+  });
+
+  // 3. Clean the text (Remove **, *, # and turn bullets into pauses)
+  let cleanText = text.replace(/[*#_]/g, "").replace(/•/g, ". ");
+
+  // 4. Create the speech object
+  currentUtterance = new SpeechSynthesisUtterance(cleanText);
+  currentUtterance.rate = 1.0;
+
+  // 5. Try to find an Indian or UK voice for better Hinglish pronunciation
+  const voices = window.speechSynthesis.getVoices();
+  const bestVoice = voices.find(
+    (v) =>
+      v.lang.includes("en-IN") ||
+      v.name.includes("India") ||
+      v.name.includes("UK"),
+  );
+  if (bestVoice) {
+    currentUtterance.voice = bestVoice;
+  }
+
+  // 6. Visual UI Updates
+  buttonElement.classList.add("playing");
+  buttonElement.innerHTML = '<i class="fa-solid fa-volume-up"></i> Playing...';
+
+  // 7. When it finishes talking, reset the button
+  currentUtterance.onend = () => {
+    buttonElement.classList.remove("playing");
+    buttonElement.innerHTML = '<i class="fa-solid fa-volume-high"></i> Listen';
+  };
+
+  // 8. Speak!
+  window.speechSynthesis.speak(currentUtterance);
 }

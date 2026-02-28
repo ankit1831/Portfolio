@@ -940,3 +940,33 @@ nav {
   50% { transform: scale(1.2); opacity: 0.7; }
   100% { transform: scale(1); opacity: 1; }
 }
+
+/* --- AI Speaker Button --- */
+.speaker-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: all 0.3s ease;
+  font-family: Inter, sans-serif;
+}
+
+.speaker-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent1);
+  border-color: var(--accent1);
+}
+
+/* Active state when the AI is currently talking */
+.speaker-btn.playing {
+  color: #10b981; /* A nice success green */
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
