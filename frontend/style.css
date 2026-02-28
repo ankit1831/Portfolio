@@ -941,33 +941,35 @@ nav {
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* --- AI Speaker Button (Smaller & Cleaner) --- */
+/* --- AI Speaker Button (Inline Icon Only) --- */
 .speaker-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: none;
   color: var(--text);
   cursor: pointer;
-  font-size: 0.75rem; /* Shrunk from 0.85rem */
-  padding: 4px 10px;  /* Tighter padding */
-  border-radius: 999px;
+  font-size: 1rem;
+  padding: 0 0 0 8px; /* Just a tiny bit of space from the last word */
   display: inline-flex;
   align-items: center;
-  gap: 5px;
   transition: all 0.2s ease;
-  font-family: Inter, sans-serif;
-  opacity: 0.8; /* Slightly faded so it doesn't distract */
+  opacity: 0.5; /* Faded so it's not distracting */
+  vertical-align: middle; /* Keeps it perfectly level with the text */
 }
 
 .speaker-btn:hover {
   opacity: 1;
-  background: rgba(255, 255, 255, 0.1);
   color: var(--accent1);
-  border-color: var(--accent1);
 }
 
+/* Active state when talking */
 .speaker-btn.playing {
   color: #10b981; 
-  border-color: #10b981;
-  background: rgba(16, 185, 129, 0.1);
   opacity: 1;
+  animation: pulse-green 1.5s infinite;
+}
+
+@keyframes pulse-green {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }

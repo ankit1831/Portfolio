@@ -416,26 +416,20 @@ async function sendAIChat() {
       box.scrollTop = box.scrollHeight;
     } // <-- End of the while loop
 
-// --- NEW: INJECT THE SPEAKER BUTTON SAFELY (Bottom Right) ---
+    // --- NEW: INJECT THE SPEAKER BUTTON INLINE ---
     const speakerBtn = document.createElement("button");
     speakerBtn.className = "speaker-btn";
-    speakerBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Listen';
-    
-    speakerBtn.onclick = function() { 
-      speakText(fullAnswer, this); 
+    speakerBtn.title = "Listen to answer"; // Hover tooltip instead of text
+    speakerBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+
+    speakerBtn.onclick = function () {
+      speakText(fullAnswer, this);
     };
-    
-    // Create a wrapper to push it to the right
-    const btnWrapper = document.createElement("div");
-    btnWrapper.style.textAlign = "right";
-    btnWrapper.style.marginTop = "8px"; // Gives it breathing room from the text
-    btnWrapper.style.width = "100%";
-    
-    btnWrapper.appendChild(speakerBtn);
-    botMsgDiv.appendChild(btnWrapper); // Append to the main bubble, not the text
+
+    // Append directly to botText! No breaks, no divs.
+    botText.appendChild(speakerBtn);
 
     box.scrollTop = box.scrollHeight;
-    // --- END OF NEW CODE ---
     // --- END OF NEW CODE ---
 
     // 4. Update Chat History after stream finishes
@@ -620,27 +614,27 @@ let currentUtterance = null;
 window.speechSynthesis.getVoices();
 
 function speakText(text, buttonElement) {
-  // NEW: If it's already playing, this click means "STOP"
+  // If playing, stop it
   if (buttonElement.classList.contains('playing')) {
     window.speechSynthesis.cancel();
     buttonElement.classList.remove('playing');
-    buttonElement.innerHTML = '<i class="fa-solid fa-volume-high"></i> Listen';
-    return; // Stop the function here so it doesn't start talking again
+    buttonElement.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+    return;
   }
 
-  // 1. Cancel anything else playing
+  // 1. Cancel anything else
   window.speechSynthesis.cancel();
 
-  // 2. Reset all speaker buttons back to normal
+  // 2. Reset all speaker icons
   document.querySelectorAll('.speaker-btn').forEach(btn => {
     btn.classList.remove('playing');
-    btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Listen';
+    btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
   });
 
-  // 3. Clean the text
+  // 3. Clean text
   let cleanText = text.replace(/[*#_]/g, '').replace(/•/g, '. ');
 
-  // 4. Create the speech object
+  // 4. Create speech
   currentUtterance = new SpeechSynthesisUtterance(cleanText);
   currentUtterance.rate = 1.0; 
 
@@ -651,16 +645,15 @@ function speakText(text, buttonElement) {
     currentUtterance.voice = bestVoice;
   }
 
-  // 6. Visual UI Updates (Turn to Stop Button)
+  // 6. UI Update: Change to Stop Icon
   buttonElement.classList.add('playing');
-  buttonElement.innerHTML = '<i class="fa-solid fa-circle-stop"></i> Stop'; // Changed icon to Stop
+  buttonElement.innerHTML = '<i class="fa-solid fa-circle-stop"></i>'; 
 
-  // 7. When it naturally finishes talking, reset
+  // 7. On end, reset to Volume icon
   currentUtterance.onend = () => {
     buttonElement.classList.remove('playing');
-    buttonElement.innerHTML = '<i class="fa-solid fa-volume-high"></i> Listen';
+    buttonElement.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
   };
 
-  // 8. Speak!
   window.speechSynthesis.speak(currentUtterance);
 }
