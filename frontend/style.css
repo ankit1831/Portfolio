@@ -901,9 +901,9 @@ nav {
   background: var(--bot-msg-bg); /* Now it adapts to light/dark mode! */
   border: 1px solid var(--border);
   border-bottom-left-radius: 6px;
-  width: fit-content;    /* Shrinks box to text size */
-  max-width: 80%;       /* Prevents stretching too far */
-  margin-right: auto;    /* Pushes it to the left */
+  width: fit-content; /* Shrinks box to text size */
+  max-width: 80%; /* Prevents stretching too far */
+  margin-right: auto; /* Pushes it to the left */
   display: inline-block;
 }
 
@@ -992,4 +992,23 @@ nav {
   100% {
     transform: scale(1);
   }
+}
+
+/* Force the specific default message bubble to shrink */
+.ai-msg.bot:first-child,
+.ai-msg.bot {
+  display: inline-block !important; /* Forces the box to only wrap the text */
+  width: auto !important; /* Overrides any 100% width inherits */
+  max-width: 80% !important; /* Keeps it from hitting the right wall */
+  min-width: 50px !important; /* Ensures it doesn't disappear */
+  margin-right: auto !important; /* Pushes it to the left */
+  flex: none !important; /* Prevents flex-grow from stretching it */
+}
+
+/* Ensure the container isn't forcing children to stretch */
+.ai-chat-shell,
+.ai-chat-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Keeps all bot messages pinned left */
 }
