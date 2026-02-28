@@ -399,23 +399,55 @@ async function sendAIChat() {
       fullAnswer += chunk;
 
       // LIVE FORMATTING: Apply subtle bolding and sizing rules
+      // LIVE FORMATTING: Apply subtle bolding and sizing rules
       let formattedText = fullAnswer
-        // 1. Bold text (**text**)
         .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-        // 2. Subtle Headers (## text): Just 5% larger, bold, and accent colored
-        .replace(
-          /^###?\s+(.*)$/gm,
-          "<strong style='font-size: 1.05em; color: var(--accent1); display: block; margin-top: 6px;'>$1</strong>",
-        )
-        // 3. Clean bullet points (changes "-" to "•")
-        .replace(/^- /gm, "• ");
+        .replace(/^###?\s+(.*)$/gm, "<strong style='font-size: 1.05em; color: var(--accent1); display: block; margin-top: 6px;'>$1</strong>")
+        .replace(/^- /gm, "• ")
+        // NEW: Instantly hide the secret tag from the user's view while streaming
+        .replace(/\[IMG:.*?\]/g, ""); 
 
-      // CRITICAL FIX: Use innerHTML instead of innerText so the <strong> tags render!
       // CRITICAL FIX: Use innerHTML instead of innerText so the <strong> tags render!
       botText.innerHTML = formattedText;
       box.scrollTop = box.scrollHeight;
     } // <-- End of the while loop
+    // --- NEW: RICH MEDIA INJECTION LOGIC ---
+    const projectMedia = {
+      "brain-tumor": { img: "assets/brain.webp", title: "Brain Tumor Detection", modal: "modal-brain-tumor" },
+      "heal-bridge": { img: "assets/heal.webp", title: "Heal-Bridge AI", modal: "modal-heal-bridge" },
+      "groq-chat": { img: "assets/chat.webp", title: "Groq LLM Chatbot", modal: "modal-groq-chat" },
+      "gait": { img: "assets/gait.webp", title: "Gait Biometrics", modal: "modal-gait" },
+      "food-delivery": { img: "assets/food.webp", title: "Delivery Time Prediction", modal: "modal-food-delivery" },
+      "churn": { img: "assets/cust.webp", title: "Customer Churn Prediction", modal: "modal-churn" },
+      "student-performance": { img: "assets/stu.webp", title: "Student Performance Prediction", modal: "modal-student-performance" }
+    };
 
+    // Use Regex to find the secret tag hidden in the final answer
+    const tagMatch = fullAnswer.match(/\[IMG:\s*([^\]]+)\]/);
+    
+    if (tagMatch) {
+      const projectKey = tagMatch[1].trim();
+      const project = projectMedia[projectKey];
+
+      if (project) {
+        // Build the sleek image card
+        const mediaCard = document.createElement("div");
+        mediaCard.style.cssText = "margin-top: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,0.02);";
+        
+        mediaCard.innerHTML = `
+          <img src="${project.img}" alt="${project.title}" style="width: 100%; height: auto; display: block; border-bottom: 1px solid var(--border);">
+          <div style="padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.9rem; font-weight: 600; color: var(--text);">${project.title}</span>
+            <button class="ai-pill" onclick="document.getElementById('${project.modal}').showModal()" style="margin: 0; padding: 6px 12px; font-size: 0.8rem; cursor: pointer; border: 1px solid var(--accent1); color: var(--accent1); background: transparent; border-radius: 999px;">View Details</button>
+          </div>
+        `;
+        
+        botText.appendChild(mediaCard);
+      }
+    }
+    // --- END RICH MEDIA INJECTION ---
+
+    // (Your speaker button code follows right below here...)
     // --- NEW: INJECT THE SPEAKER BUTTON INLINE ---
     const speakerBtn = document.createElement("button");
     speakerBtn.className = "speaker-btn";
