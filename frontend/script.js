@@ -146,8 +146,8 @@ function injectTypingDotsCSSOnce() {
   style.textContent = `
     .ai-typing-dots .dot{
       width:8px;height:8px;border-radius:50%;
-      background: rgba(59, 130, 246, 0.85); /* Swap here */
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.10); /* And here */
+      background: rgba(0,255,136,0.85);
+      box-shadow: 0 0 0 2px rgba(0,255,136,0.10);
       animation: aiDotBounce 1s infinite ease-in-out;
     }
     .ai-typing-dots .dot:nth-child(2){ animation-delay: 0.15s; opacity:0.85; }
