@@ -249,11 +249,12 @@ function initAIChatUI() {
         padding:12px;
         background:var(--bg2);
         border-top:2px solid var(--border);
+        align-items: center; /* Ensures the mic icon aligns perfectly with the buttons */
       ">
         <input id="ai-input" type="text" placeholder="Ask about my projects..."
           style="
             flex:1;
-            min-width: 0; /* CRITICAL FIX: Allows input to shrink below default width */
+            min-width: 0;
             padding:10px 14px;
             border-radius:999px;
             border:2px solid var(--border);
@@ -263,6 +264,23 @@ function initAIChatUI() {
             font-family:Inter, sans-serif;
           "
         />
+
+        <button id="mic-btn" type="button" title="Speak your question" 
+          style="
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+          ">
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+
         <button id="ai-clear" type="button"
           style="
             padding:10px 14px;
@@ -272,7 +290,7 @@ function initAIChatUI() {
             font-weight:800;
             background:transparent;
             color:var(--text);
-            white-space: nowrap; /* Prevents button text from breaking */
+            white-space: nowrap;
           "
         >Clear</button>
 
@@ -285,7 +303,7 @@ function initAIChatUI() {
             font-weight:800;
             color:#0a0a0a;
             background:linear-gradient(45deg,var(--accent1),var(--accent2));
-            white-space: nowrap; /* Prevents button text from breaking */
+            white-space: nowrap;
           "
         >Send</button>
       </div>
@@ -498,4 +516,46 @@ if (typingTextEl) {
       typingTextEl.style.opacity = 0.9;
     }, 400);
   }, 3500); // Cycles every 3.5 seconds
+}
+
+// --- SPEECH TO TEXT (Microphone Logic) ---
+const micBtn = document.getElementById("mic-btn");
+const aiInput = document.getElementById("ai-input"); 
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+  const recognition = new SpeechRecognition();
+  recognition.continuous = false; 
+  recognition.interimResults = false; 
+  recognition.lang = 'en-IN'; // Optimized for Hinglish
+
+  micBtn.addEventListener("click", () => {
+    recognition.start();
+  });
+
+  recognition.onstart = () => {
+    micBtn.classList.add("recording");
+    aiInput.placeholder = "Listening... Speak now.";
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    aiInput.value = transcript; 
+  };
+
+  recognition.onerror = (event) => {
+    console.error("Speech recognition error:", event.error);
+    aiInput.placeholder = "Error listening. Try typing.";
+  };
+
+  recognition.onend = () => {
+    micBtn.classList.remove("recording");
+    if (aiInput.placeholder === "Listening... Speak now.") {
+        aiInput.placeholder = "Ask about my projects...";
+    }
+  };
+} else {
+  console.warn("Speech Recognition API is not supported in this browser.");
+  if (micBtn) micBtn.style.display = "none";
 }
