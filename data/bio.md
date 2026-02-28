@@ -16,6 +16,7 @@ Himachal Pradesh, India
 - Data Scientist
 - Machine Learning Engineer
 - AI Engineer
+- Software Developer
 
 ## Education
 

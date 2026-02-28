@@ -432,9 +432,9 @@
 
           <div class="project-content">
             <h3 class="project-title">Brain Tumor Detection</h3>
-            <p>94% accuracy CNN for MRI scans</p>
+            <p>96% accuracy CNN for MRI scans</p>
             <div class="project-tags">
-              <span>TensorFlow</span><span>Flask</span><span>94% Acc</span>
+              <span>TensorFlow</span><span>CNNs</span><span>
             </div>
           </div>
         </article>
@@ -463,7 +463,7 @@
             <h3 class="project-title">Heal-Bridge AI</h3>
             <p>Live healthcare + AI symptom checker</p>
             <div class="project-tags">
-              <span>Flask</span><span>Streamlit</span><span>LIVE</span>
+              <span>ANN</span><span>Machine Learning</span>
             </div>
           </div>
         </article>
@@ -490,7 +490,7 @@
 
           <div class="project-content">
             <h3 class="project-title">Groq LLM Chatbot</h3>
-            <p>300ms multi-model streaming chat</p>
+            <p>300ms groq model streaming chat</p>
             <div class="project-tags">
               <span>Groq API</span><span>Streamlit</span>
             </div>
@@ -549,7 +549,7 @@
             <h3 class="project-title">Student Performance Prediction</h3>
             <p>Complete ML pipeline + Flask app (92.5% accuracy)</p>
             <div class="project-tags">
-              <span>Scikit-learn</span><span>Flask</span><span>92.5%</span>
+              <span>Scikit-learn</span><span>Machine Learning</span>
             </div>
           </div>
         </article>
@@ -576,9 +576,9 @@
 
           <div class="project-content">
             <h3 class="project-title">Food Delivery Time Prediction</h3>
-            <p>ETA regression (RMSE 3.2 min, R² 0.87)</p>
+            <p>ETA regression (RMSE 5.2 min, R² 0.87)</p>
             <div class="project-tags">
-              <span>XGBoost</span><span>Pandas</span><span>RMSE 3.2</span>
+              <span>XGBoost</span><span>Regression</span>
             </div>
           </div>
         </article>
@@ -607,7 +607,7 @@
             <h3 class="project-title">Customer Churn Prediction</h3>
             <p>Explainable churn model (AUC 0.95)</p>
             <div class="project-tags">
-              <span>XGBoost</span><span>SHAP</span><span>AUC 0.95</span>
+              <span>XGBoost</span><span>SHAP</span>
             </div>
           </div>
         </article>
@@ -632,13 +632,6 @@
           <div class="modal-actions">
             <a
               class="modal-link"
-              href="https://ankit1831.github.io/Brain-Tumor-Detection-System/"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Live</a
-            >
-            <a
-              class="modal-link"
               href="https://github.com/ankit1831/Brain-Tumor-Detection-System"
               target="_blank"
               rel="noopener noreferrer"
@@ -650,21 +643,22 @@
             <h4>Technologies</h4>
             <div class="modal-chips">
               <span>TensorFlow / Keras</span><span>Transfer Learning</span
-              ><span>Flask</span><span>Streamlit</span>
+              ><span>Flask</span><span>CNN</span>
             </div>
           </div>
 
           <div class="modal-section">
             <h4>Detailed explanation</h4>
-            <p>
-              Paste your MD-file detailed writeup here (problem → approach →
-              results → deployment → learnings). Keep it 6–10 lines for best
-              readability.
-            </p>
+            <ul>
+            <li><strong>Problem:</strong> Rapid and accurate detection of brain tumors is critical for patient care, but analyzing complex medical data requires robust, automated diagnostic tools.</li>
+<li><strong>Approach:</strong> I engineered a comprehensive, dual-input diagnostic system. The core pipeline utilizes Custom CNNs and Transfer Learning architectures to process and classify uploaded MRI images into tumor or non-tumor categories. Complementing this, I built a structured Machine Learning pipeline designed to evaluate specific clinical feature inputs and predict tumor presence based on tabular data.</li>
+<li><strong>Results & Deployment:</strong> The deep learning image classifier achieved a strong accuracy of over 96%, utilizing careful image augmentation (CLAHE, resizing) to prevent overfitting. Both the image classification model and the feature-based ML pipeline were deployed into a unified Flask web application, allowing users to submit either MRI scans or clinical data for real-time inference.</li>
+<li><strong>Learnings:</strong> Designing this system deepened my expertise in handling multi-modal inputs—bridging the gap between computer vision (pixels) and traditional machine learning (structured features)—while reinforcing the importance of rigorous evaluation in healthcare applications.</li>
+</ul>
             <ul class="modal-bullets">
-              <li>Dataset: MRI scans (multi-class).</li>
+              <li>Dataset: MRI scans Brats 2020.</li>
               <li>Model: VGG16/ResNet50 fine-tuning + augmentation.</li>
-              <li>Result: 94% accuracy, fast inference pipeline.</li>
+              <li>Result: 96% accuracy, fast inference pipeline.</li>
             </ul>
           </div>
         </div>
@@ -682,7 +676,7 @@
 
           <h3 id="heal-title">Heal-Bridge AI</h3>
           <p class="modal-subtitle">
-            Healthcare platform with AI symptom checker & booking.
+            Healthcare platform with AI symptom checker 
           </p>
 
           <div class="modal-actions">
@@ -705,22 +699,17 @@
           <div class="modal-section">
             <h4>Technologies</h4>
             <div class="modal-chips">
-              <span>Flask</span><span>Streamlit</span><span>ML Model</span
-              ><span>Database</span><span>Multi-language</span>
+              <span>Flask</span><span>ML Model</span
+              ><span>Database</span><span>Deployment</span>
             </div>
           </div>
 
           <div class="modal-section">
             <h4>Detailed explanation</h4>
-            <p>
-              Paste your MD-file explanation here (features, architecture,
-              deployment, challenges).
-            </p>
-            <ul class="modal-bullets">
-              <li>AI symptom checker flow + confidence output.</li>
-              <li>Appointments + patient records.</li>
-              <li>Production deployment link + monitoring notes.</li>
-            </ul>
+            <p><strong>Problem:</strong> Accessing preliminary medical guidance and managing healthcare logistics often involves fragmented systems, creating bottlenecks for both patients and providers.</p>
+<p><strong>Approach:</strong> I architected an end-to-end healthcare platform that integrates an AI-powered symptom checker with practical patient services. The application manages complex user flows using a Python, Flask, and Streamlit stack.</p>
+<p><strong>Results & Deployment:</strong> The platform is fully operational and deployed live on Render. It successfully demonstrates a usable, full-stack product experience rather than just an isolated ML experiment, built with a scalable architecture that is prepared for future teleconsultation and EHR (Electronic Health Record) integrations.</p>
+<p><strong>Learnings:</strong> Building this system shifted my perspective from pure model-training to comprehensive product engineering. It taught me how to handle real-world deployment stability, manage user privacy edge cases, and safely design medical AI tools with proper clinical disclaimers and escalation paths.</p>
           </div>
         </div>
       </dialog>
@@ -767,14 +756,11 @@
 
           <div class="modal-section">
             <h4>Detailed explanation</h4>
-            <p>
-              Paste your MD-file details here (prompting, latency, streaming UI,
-              eval, cost).
-            </p>
-            <ul class="modal-bullets">
-              <li>300ms streaming target + optimizations.</li>
-              <li>Model selection UX + fallbacks.</li>
-              <li>Conversation memory / safety notes.</li>
+            <ul>
+              <li><strong>Problem:</strong> Traditional LLM interfaces often suffer from noticeable latency and lock users into a single architecture, creating a rigid and sluggish conversational experience.</li>
+<li><strong>Approach:</strong> I engineered an ultra-fast, multi-model conversational agent utilizing the Groq LPU API. Built with Python and Streamlit, the system allows users to seamlessly switch between state-of-the-art open-weight models (including Llama 3, Mixtral, and Gemma) mid-conversation while strictly managing chat history and session state.</li>
+<li><strong>Results & Deployment:</strong> By optimizing for token streaming, the application achieves a perceived latency of under 300ms, delivering responses in real-time. The responsive Streamlit deployment features clean UX controls, including instant model swapping and conversation management.</li>
+<li><strong>Learnings:</strong> This project deepened my understanding of high-speed inference and frontend state management. It highlighted that in GenAI applications, engineering for streaming responses and minimizing latency is just as critical as the underlying model quality when driving user adoption.</li>
             </ul>
           </div>
         </div>
@@ -794,16 +780,10 @@
           <p class="modal-subtitle">Cross-view gait recognition on CASIA-B.</p>
 
           <div class="modal-actions">
+            
             <a
               class="modal-link"
-              href="YOUR_PAPER_OR_LIVE_LINK"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Live/Docs</a
-            >
-            <a
-              class="modal-link"
-              href="YOUR_GITHUB_LINK"
+              href="https://github.com/ankit1831/GAIT-Based-Biometric-Recognition-System"
               target="_blank"
               rel="noopener noreferrer"
               >GitHub</a
@@ -813,23 +793,20 @@
           <div class="modal-section">
             <h4>Technologies</h4>
             <div class="modal-chips">
-              <span>PyTorch</span><span>OpenCV</span><span>CNN + LSTM</span
-              ><span>CASIA-B</span>
+              <span>PyTorch</span><span>OpenCV</span><span>CNN </span
+              ><span>CASIA-B</span><span>Transfer Learning</span>
             </div>
           </div>
 
           <div class="modal-section">
             <h4>Detailed explanation</h4>
-            <p>
-              Paste your MD writeup here (preprocessing, model, training, rank-1
-              metric, cross-view).
-            </p>
-            <ul class="modal-bullets">
-              <li>Preprocessing: silhouettes / sequence extraction.</li>
-              <li>Model: CNN features + temporal modeling.</li>
-              <li>Result: Cross-view evaluation + findings.</li>
-            </ul>
-          </div>
+            <ul>
+            <li><strong>Problem:</strong> Traditional biometric systems fail when faces are obscured or captured from a distance. Gait recognition provides a non-intrusive alternative by identifying individuals via walking patterns, but introduces extreme complexities regarding cross-view camera angles and clothing variations.</li>
+<li><strong>Approach:</strong> For this long-term research initiative, I architected a deep learning pipeline to process silhouette sequences from the CASIA-B dataset. I utilized custom CNNs and transfer learning (Xception) to extract robust spatial features, which were then fed into an LSTM network to model the temporal dynamics of the human walk.</li>
+<li><strong>Results & Status:</strong> The transfer learning architecture achieved a peak accuracy of 98%, demonstrating strong capability in handling both same-view and cross-view challenges. This is an active, ongoing team project where we are currently focused on improving view-invariant representations and metric learning.</li>
+<li><strong>Learnings:</strong> Building this system pushed my deep learning skills beyond static image classification and into complex temporal sequence modeling (CNN +Transfer Learning). It taught me the critical importance of rigorous evaluation design—specifically, how to structure training splits to prevent data leakage across different camera angles.</li>
+</ul>          
+</div>
         </div>
       </dialog>
       <dialog
@@ -847,13 +824,7 @@
           </p>
 
           <div class="modal-actions">
-            <a
-              class="modal-link"
-              href="https://github.com/ankit1831/Student_performance_prediction"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Live</a
-            >
+            
             <a
               class="modal-link"
               href="https://github.com/ankit1831/Student_performance_prediction"
@@ -865,6 +836,9 @@
 
           <div class="modal-section">
             <h4>Key results</h4>
+
+
+
             <ul class="modal-bullets">
               <li>Best model: Random Forest.</li>
               <li>Accuracy: 92.5%, F1-Score: 0.91.</li>
@@ -882,12 +856,12 @@
 
           <div class="modal-section">
             <h4>Detailed explanation</h4>
-            <p>
-              Dataset: 1,000+ student records. Preprocessing included outlier
-              removal, encoding, and SMOTE balancing. Built multiple models (LR,
-              DT, RF, KNN, SVM, XGBoost) and deployed the final predictor as a
-              Flask web app.
-            </p>
+            <ul>
+              <li><strong>Problem:</strong> Educational institutions often struggle to identify at-risk students early enough to provide meaningful interventions, traditionally relying on lagging academic indicators rather than predictive, data-driven analytics.</li>
+              <li><strong>Approach:</strong> I engineered an end-to-end machine learning pipeline designed to forecast student outcomes based on demographic, socioeconomic, and behavioral data. The system features a robust data preprocessing engine—handling complex categorical encoding, missing value imputation, and feature scaling—feeding into optimized predictive models (such as Random Forest and XGBoost) to predict final performance metrics.</li>
+              <li><strong>Results & Deployment:</strong> The model achieved high statistical confidence in identifying key performance drivers, such as study time and parental education levels. The entire predictive pipeline was deployed through a clean, user-friendly web interface, allowing educators to input student profiles and instantly receive actionable performance forecasts.</li>
+              <li><strong>Learnings:</strong> This project significantly sharpened my data engineering and exploratory data analysis (EDA) skills. It reinforced that when building tools for non-technical stakeholders, rigorous feature engineering and model interpretability are just as critical as raw predictive accuracy.</li>
+            </ul>
           </div>
         </div>
       </dialog>
@@ -907,13 +881,7 @@
           </p>
 
           <div class="modal-actions">
-            <a
-              class="modal-link"
-              href="https://github.com/ankit1831/Food_delivery_time_prediction"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Live</a
-            >
+            
             <a
               class="modal-link"
               href="https://github.com/ankit1831/Food_delivery_time_prediction"
@@ -941,11 +909,12 @@
 
           <div class="modal-section">
             <h4>Detailed explanation</h4>
-            <p>
-              Trained regression models using 18 variables (distance, traffic,
-              weather, ratings, order volume). Insights showed weather and peak
-              hours as major drivers (~25% variance explained).
-            </p>
+            <ul>
+              <li><strong>Problem:</strong> Accurate delivery time predictions are critical for customer satisfaction and operational efficiency in the food delivery industry, yet they are challenged by complex, non-linear interactions between various factors such as traffic, weather, and order specifics.</li>
+              <li><strong>Approach:</strong> I developed a comprehensive regression pipeline to predict food delivery times using a rich dataset of order details, temporal features, and external conditions. The pipeline included advanced feature engineering techniques (like interaction terms and polynomial features) and leveraged powerful algorithms such as XGBoost to capture complex patterns in the data.</li>
+              <li><strong>Results & Deployment:</strong> The XGBoost model achieved a strong performance with an RMSE of 3.2 minutes and an R² of 0.87, significantly outperforming simpler models. The system is designed for easy integration into existing delivery platforms, providing real-time ETA predictions that can enhance both customer experience and logistical planning.</li>
+              <li><strong>Learnings:</strong> This project deepened my understanding of regression modeling and the importance of feature engineering in improving predictive performance. It also highlighted the practical challenges of deploying machine learning models in dynamic, real-world environments where data distributions can shift over time.</li>
+            </ul>
           </div>
         </div>
       </dialog>
@@ -963,13 +932,6 @@
           <p class="modal-subtitle">Explainable churn classifier with SHAP.</p>
 
           <div class="modal-actions">
-            <a
-              class="modal-link"
-              href="https://github.com/ankit1831/Customer-Churn-Prediction"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Live</a
-            >
             <a
               class="modal-link"
               href="https://github.com/ankit1831/Customer-Churn-Prediction"
@@ -1001,12 +963,12 @@
 
           <div class="modal-section">
             <h4>Detailed explanation</h4>
-            <p>
-              Built a telco churn classifier on 7,000+ customer records with
-              SMOTE balancing and feature selection. Used an ensemble approach
-              (XGBoost + Logistic Regression) and added SHAP explanations for
-              business insights.
-            </p>
+            <ul>
+              <li><strong>Problem:</strong> Customer churn is a critical issue for subscription-based businesses, and accurately predicting which customers are likely to leave can enable targeted retention strategies. However, many predictive models lack interpretability, making it difficult for business stakeholders to understand the key drivers of churn.</li>
+              <li><strong>Approach:</strong> I developed a robust classification pipeline to predict customer churn using a combination of data preprocessing, feature engineering, and model optimization. The pipeline included handling class imbalance with techniques like SMOTE and evaluating multiple algorithms (Random Forest, XGBoost) to identify the best-performing model. To enhance interpretability, I integrated SHAP (SHapley Additive exPlanations) to provide clear insights into which features were most influential in driving churn predictions.</li>
+              <li><strong>Results & Deployment:</strong> The final XGBoost model achieved an AUC-ROC of 0.95 and an accuracy of 93.2%. The SHAP analysis revealed that contract type and monthly charges were the most significant factors influencing churn, providing actionable insights for business decision-makers. The project is designed for easy integration into customer relationship management (CRM) systems to facilitate real-time churn prediction and intervention.</li>
+              <li><strong>Learnings:</strong> This project reinforced the importance of model interpretability in machine learning applications, especially in business contexts where understanding the "why" behind predictions is crucial for stakeholder buy-in. It also highlighted the value of rigorous evaluation metrics beyond just accuracy when dealing with imbalanced classification problems.</li>
+            </ul>
           </div>
         </div>
       </dialog>

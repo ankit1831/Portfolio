@@ -5,6 +5,7 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 ---
 
 ## Top skills (most relevant for placements)
+
 - Machine Learning (supervised/unsupervised, model selection, evaluation)
 - Deep Learning (CNNs, transfer learning, optimization)
 - Computer Vision (classification, preprocessing, OpenCV pipelines)
@@ -15,6 +16,7 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 - Deployment basics (Flask/Streamlit apps, practical hosting)
 
 ## Evidence (skills → where used)
+
 - Computer Vision + CNNs → Brain Tumor Detection
 - Sequence modeling / temporal modeling → Gait Recognition (CNN→LSTM)
 - LLM app building + UX → Groq-Powered LLM Chatbot
@@ -25,6 +27,7 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 ---
 
 ## Machine Learning
+
 - Cross-validation, model comparison, hyperparameter tuning
 - Feature engineering, handling imbalanced data , exploratory data analysis , data visualisation
 - Metrics: accuracy, F1, AUC, RMSE, R²
@@ -36,24 +39,29 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 - PyTorch / TensorFlow-Keras usage
 
 ## Computer Vision
+
 - Preprocessing: resize, normalization, CLAHE enhancement
 - OpenCV pipelines and image-based model deployment
 
 ## NLP & Transformers
+
 - Tokenization, embeddings (Word2Vec/BERT-style)
 - Transformers architecture basics and LLM application building
 
 ## Generative AI & LLMs
+
 - RAG basics, prompt engineering
 - Chatbots: model selection, streaming UX patterns
 - Fine-tuning concepts (PEFT/LoRA) and evaluation awareness
 
 ## Web / App development
+
 - Frontend: HTML, CSS, JavaScript (async/await, DOM, responsive UI)
 - Backend basics: Flask
 - App frameworks: Streamlit
 
 ## Databases & CS fundamentals
+
 - MySQL concepts: queries, joins, indexing, normalization
 - OS + Networks fundamentals, DSA foundations, DBMS
 
