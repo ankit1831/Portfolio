@@ -518,44 +518,56 @@ if (typingTextEl) {
   }, 3500); // Cycles every 3.5 seconds
 }
 
-// --- SPEECH TO TEXT (Microphone Logic) ---
-const micBtn = document.getElementById("mic-btn");
-const aiInput = document.getElementById("ai-input"); 
-
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+// --- SPEECH TO TEXT (Dynamic/Delegated Logic) ---
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
 
 if (SpeechRecognition) {
   const recognition = new SpeechRecognition();
-  recognition.continuous = false; 
-  recognition.interimResults = false; 
-  recognition.lang = 'en-IN'; // Optimized for Hinglish
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = "en-IN"; // Optimized for Hinglish
 
-  micBtn.addEventListener("click", () => {
-    recognition.start();
+  // We attach the listener to the whole document because the button is created dynamically later
+  document.addEventListener("click", function (event) {
+    // Check if the clicked element (or its icon inside) is the mic button
+    const micBtnClicked = event.target.closest("#mic-btn");
+
+    if (micBtnClicked) {
+      recognition.start();
+    }
   });
 
   recognition.onstart = () => {
-    micBtn.classList.add("recording");
-    aiInput.placeholder = "Listening... Speak now.";
+    // We grab the elements fresh every time it starts
+    const micBtn = document.getElementById("mic-btn");
+    const aiInput = document.getElementById("ai-input");
+
+    if (micBtn) micBtn.classList.add("recording");
+    if (aiInput) aiInput.placeholder = "Listening... Speak now.";
   };
 
   recognition.onresult = (event) => {
     const transcript = event.results[0][0].transcript;
-    aiInput.value = transcript; 
+    const aiInput = document.getElementById("ai-input");
+    if (aiInput) aiInput.value = transcript;
   };
 
   recognition.onerror = (event) => {
     console.error("Speech recognition error:", event.error);
-    aiInput.placeholder = "Error listening. Try typing.";
+    const aiInput = document.getElementById("ai-input");
+    if (aiInput) aiInput.placeholder = "Error listening. Try typing.";
   };
 
   recognition.onend = () => {
-    micBtn.classList.remove("recording");
-    if (aiInput.placeholder === "Listening... Speak now.") {
-        aiInput.placeholder = "Ask about my projects...";
+    const micBtn = document.getElementById("mic-btn");
+    const aiInput = document.getElementById("ai-input");
+
+    if (micBtn) micBtn.classList.remove("recording");
+    if (aiInput && aiInput.placeholder === "Listening... Speak now.") {
+      aiInput.placeholder = "Ask about my projects...";
     }
   };
 } else {
   console.warn("Speech Recognition API is not supported in this browser.");
-  if (micBtn) micBtn.style.display = "none";
 }
