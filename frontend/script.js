@@ -398,27 +398,29 @@ async function sendAIChat() {
       fullAnswer += chunk;
 
       // LIVE FORMATTING
+      // LIVE FORMATTING
       let formattedText = fullAnswer
         .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
         .replace(
           /^###?\s+(.*)$/gm,
-          "<strong style='font-size: 1.05em; color: var(--accent1); display: block; margin-top: 6px;'>$1</strong>",
+          "<strong style='font-size: 1.05em; color: var(--accent1); display: block; margin-top: 6px;'>$1</strong>"
         )
         .replace(/^- /gm, "• ")
-        // CRITICAL FIX: This regex hides the tag even while it is half-typed!
-        .replace(/\[IMG:[^\]]*\]?/gi, "");
+        // UPDATED: Now hides both IMG and ACTION tags instantly
+        .replace(/\[(?:IMG|ACTION):[^\]]*\]?/gi, ""); 
 
       botText.innerHTML = formattedText;
       box.scrollTop = box.scrollHeight;
     } // <-- End of the while loop
+    // 2. Completely scrub the tags from the final answer for memory and TTS
 
     // --- NEW: EXTRACT TAG AND SCRUB MEMORY ---
     // 1. Find the tag (Case insensitive, handles weird spacing)
     const tagMatch = fullAnswer.match(/\[IMG:\s*([^\]]+)\]/i);
 
     // 2. Completely scrub the tag from the final answer so it doesn't go into history or the speaker
-    const cleanAnswer = fullAnswer.replace(/\[IMG:[^\]]*\]?/gi, "").trim();
-
+// 2. Completely scrub the tags from the final answer for memory and TTS
+    const cleanAnswer = fullAnswer.replace(/\[(?:IMG|ACTION):[^\]]*\]?/gi, "").trim();
     // --- RICH MEDIA INJECTION LOGIC ---
     const projectMedia = {
       "brain-tumor": {
@@ -465,12 +467,10 @@ async function sendAIChat() {
       if (project) {
         // Build the SLEEK, COMPACT image card
         const mediaCard = document.createElement("div");
-        mediaCard.style.cssText =
-          "margin-top: 12px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,0.03); display: flex; align-items: center; gap: 12px; padding: 8px 12px;";
+        mediaCard.style.cssText = "margin-top: 12px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,0.03); display: flex; align-items: center; gap: 12px; padding: 8px 12px;";
 
         mediaCard.innerHTML = `
           <img src="${project.img}" alt="${project.title}" style="width: 120px; height: 40px; object-fit: cover; border-radius: 4px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1);">
-          
           <div style="flex: 1; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
             <span style="font-size: 0.85rem; font-weight: 600; color: var(--text); line-height: 1.2;">${project.title}</span>
             <button class="ai-pill" onclick="document.getElementById('${project.modal}').showModal()" style="margin: 0; padding: 5px 10px; font-size: 0.75rem; cursor: pointer; border: 1px solid var(--accent1); color: var(--accent1); background: transparent; border-radius: 999px; white-space: nowrap; flex-shrink: 0;">View Details</button>
@@ -480,9 +480,37 @@ async function sendAIChat() {
       }
     }
 
+    // --- NEW: RESUME DROP INJECTION LOGIC ---
+    const actionMatch = fullAnswer.match(/\[ACTION:\s*([^\]]+)\]/i);
+    
+    if (actionMatch && actionMatch[1].trim().toLowerCase() === "resume") {
+      const resumeCard = document.createElement("div");
+      resumeCard.style.cssText = "margin-top: 15px; border-radius: 8px; padding: 14px; border: 1px dashed var(--accent1); background: rgba(0, 255, 136, 0.05); display: flex; align-items: center; justify-content: space-between; gap: 12px;";
+
+      resumeCard.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="font-size: 1.8rem; color: var(--accent1);">
+            <i class="fa-solid fa-file-pdf"></i>
+          </div>
+          <div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: var(--text);">Ankit_Sharma_Resume.pdf</div>
+            <div style="font-size: 0.75rem; color: #888;">AI/ML Engineer • 120 KB</div>
+          </div>
+        </div>
+        <a href="assets/resume.pdf" target="_blank" download style="text-decoration: none;">
+          <button class="ai-pill" style="margin: 0; padding: 8px 16px; font-size: 0.85rem; font-weight: 700; cursor: pointer; border: none; color: #0a0a0a; background: var(--accent1); border-radius: 6px; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,255,136,0.2);">
+            <i class="fa-solid fa-download"></i> Download
+          </button>
+        </a>
+      `;
+      botText.appendChild(resumeCard);
+    }
+    // --- END RESUME DROP ---
+
     // --- INJECT THE SPEAKER BUTTON INLINE ---
     const speakerBtn = document.createElement("button");
     speakerBtn.className = "speaker-btn";
+// ... (the rest of your code continues normally below this)
     speakerBtn.title = "Listen to answer";
     speakerBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
 
