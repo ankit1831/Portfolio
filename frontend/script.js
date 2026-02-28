@@ -402,10 +402,13 @@ async function sendAIChat() {
       // LIVE FORMATTING: Apply subtle bolding and sizing rules
       let formattedText = fullAnswer
         .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-        .replace(/^###?\s+(.*)$/gm, "<strong style='font-size: 1.05em; color: var(--accent1); display: block; margin-top: 6px;'>$1</strong>")
+        .replace(
+          /^###?\s+(.*)$/gm,
+          "<strong style='font-size: 1.05em; color: var(--accent1); display: block; margin-top: 6px;'>$1</strong>",
+        )
         .replace(/^- /gm, "• ")
         // NEW: Instantly hide the secret tag from the user's view while streaming
-        .replace(/\[IMG:.*?\]/g, ""); 
+        .replace(/\[IMG:.*?\]/g, "");
 
       // CRITICAL FIX: Use innerHTML instead of innerText so the <strong> tags render!
       botText.innerHTML = formattedText;
@@ -413,18 +416,46 @@ async function sendAIChat() {
     } // <-- End of the while loop
     // --- NEW: RICH MEDIA INJECTION LOGIC ---
     const projectMedia = {
-      "brain-tumor": { img: "assets/brain.webp", title: "Brain Tumor Detection", modal: "modal-brain-tumor" },
-      "heal-bridge": { img: "assets/heal.webp", title: "Heal-Bridge AI", modal: "modal-heal-bridge" },
-      "groq-chat": { img: "assets/chat.webp", title: "Groq LLM Chatbot", modal: "modal-groq-chat" },
-      "gait": { img: "assets/gait.webp", title: "Gait Biometrics", modal: "modal-gait" },
-      "food-delivery": { img: "assets/food.webp", title: "Delivery Time Prediction", modal: "modal-food-delivery" },
-      "churn": { img: "assets/cust.webp", title: "Customer Churn Prediction", modal: "modal-churn" },
-      "student-performance": { img: "assets/stu.webp", title: "Student Performance Prediction", modal: "modal-student-performance" }
+      "brain-tumor": {
+        img: "assets/brain.webp",
+        title: "Brain Tumor Detection",
+        modal: "modal-brain-tumor",
+      },
+      "heal-bridge": {
+        img: "assets/heal.webp",
+        title: "Heal-Bridge AI",
+        modal: "modal-heal-bridge",
+      },
+      "groq-chat": {
+        img: "assets/chat.webp",
+        title: "Groq LLM Chatbot",
+        modal: "modal-groq-chat",
+      },
+      gait: {
+        img: "assets/gait.webp",
+        title: "Gait Biometrics",
+        modal: "modal-gait",
+      },
+      "food-delivery": {
+        img: "assets/food.webp",
+        title: "Delivery Time Prediction",
+        modal: "modal-food-delivery",
+      },
+      churn: {
+        img: "assets/cust.webp",
+        title: "Customer Churn Prediction",
+        modal: "modal-churn",
+      },
+      "student-performance": {
+        img: "assets/stu.webp",
+        title: "Student Performance Prediction",
+        modal: "modal-student-performance",
+      },
     };
 
     // Use Regex to find the secret tag hidden in the final answer
     const tagMatch = fullAnswer.match(/\[IMG:\s*([^\]]+)\]/);
-    
+
     if (tagMatch) {
       const projectKey = tagMatch[1].trim();
       const project = projectMedia[projectKey];
@@ -432,8 +463,9 @@ async function sendAIChat() {
       if (project) {
         // Build the sleek image card
         const mediaCard = document.createElement("div");
-        mediaCard.style.cssText = "margin-top: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,0.02);";
-        
+        mediaCard.style.cssText =
+          "margin-top: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,0.02);";
+
         mediaCard.innerHTML = `
           <img src="${project.img}" alt="${project.title}" style="width: 100%; height: auto; display: block; border-bottom: 1px solid var(--border);">
           <div style="padding: 12px; display: flex; justify-content: space-between; align-items: center;">
@@ -441,7 +473,7 @@ async function sendAIChat() {
             <button class="ai-pill" onclick="document.getElementById('${project.modal}').showModal()" style="margin: 0; padding: 6px 12px; font-size: 0.8rem; cursor: pointer; border: 1px solid var(--accent1); color: var(--accent1); background: transparent; border-radius: 999px;">View Details</button>
           </div>
         `;
-        
+
         botText.appendChild(mediaCard);
       }
     }
@@ -647,9 +679,9 @@ window.speechSynthesis.getVoices();
 
 function speakText(text, buttonElement) {
   // If playing, stop it
-  if (buttonElement.classList.contains('playing')) {
+  if (buttonElement.classList.contains("playing")) {
     window.speechSynthesis.cancel();
-    buttonElement.classList.remove('playing');
+    buttonElement.classList.remove("playing");
     buttonElement.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
     return;
   }
@@ -658,32 +690,37 @@ function speakText(text, buttonElement) {
   window.speechSynthesis.cancel();
 
   // 2. Reset all speaker icons
-  document.querySelectorAll('.speaker-btn').forEach(btn => {
-    btn.classList.remove('playing');
+  document.querySelectorAll(".speaker-btn").forEach((btn) => {
+    btn.classList.remove("playing");
     btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
   });
 
   // 3. Clean text
-  let cleanText = text.replace(/[*#_]/g, '').replace(/•/g, '. ');
+  let cleanText = text.replace(/[*#_]/g, "").replace(/•/g, ". ");
 
   // 4. Create speech
   currentUtterance = new SpeechSynthesisUtterance(cleanText);
-  currentUtterance.rate = 1.0; 
+  currentUtterance.rate = 1.0;
 
   // 5. Find voice
   const voices = window.speechSynthesis.getVoices();
-  const bestVoice = voices.find(v => v.lang.includes("en-IN") || v.name.includes("India") || v.name.includes("UK"));
+  const bestVoice = voices.find(
+    (v) =>
+      v.lang.includes("en-IN") ||
+      v.name.includes("India") ||
+      v.name.includes("UK"),
+  );
   if (bestVoice) {
     currentUtterance.voice = bestVoice;
   }
 
   // 6. UI Update: Change to Stop Icon
-  buttonElement.classList.add('playing');
-  buttonElement.innerHTML = '<i class="fa-solid fa-circle-stop"></i>'; 
+  buttonElement.classList.add("playing");
+  buttonElement.innerHTML = '<i class="fa-solid fa-circle-stop"></i>';
 
   // 7. On end, reset to Volume icon
   currentUtterance.onend = () => {
-    buttonElement.classList.remove('playing');
+    buttonElement.classList.remove("playing");
     buttonElement.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
   };
 
