@@ -518,53 +518,71 @@ if (typingTextEl) {
   }, 3500); // Cycles every 3.5 seconds
 }
 
-// --- SPEECH TO TEXT (Dynamic/Delegated Logic) ---
+// --- SPEECH TO TEXT (Continuous Toggle Logic) ---
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 
 if (SpeechRecognition) {
   const recognition = new SpeechRecognition();
-  recognition.continuous = false;
+  // CRITICAL FIX: Set to true so it doesn't stop when you pause
+  recognition.continuous = true;
   recognition.interimResults = false;
-  recognition.lang = "en-IN"; // Optimized for Hinglish
+  recognition.lang = "en-IN";
 
-  // We attach the listener to the whole document because the button is created dynamically later
+  let isRecording = false; // Track if the mic is currently on
+
+  // Listen for the mic button click
   document.addEventListener("click", function (event) {
-    // Check if the clicked element (or its icon inside) is the mic button
     const micBtnClicked = event.target.closest("#mic-btn");
 
     if (micBtnClicked) {
-      recognition.start();
+      if (!isRecording) {
+        recognition.start(); // Turn ON if it's off
+      } else {
+        recognition.stop(); // Turn OFF if it's already on
+      }
     }
   });
 
   recognition.onstart = () => {
-    // We grab the elements fresh every time it starts
+    isRecording = true;
     const micBtn = document.getElementById("mic-btn");
     const aiInput = document.getElementById("ai-input");
 
     if (micBtn) micBtn.classList.add("recording");
-    if (aiInput) aiInput.placeholder = "Listening... Speak now.";
+    if (aiInput) aiInput.placeholder = "Listening... (Click mic again to stop)";
   };
 
   recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
     const aiInput = document.getElementById("ai-input");
-    if (aiInput) aiInput.value = transcript;
+    if (!aiInput) return;
+
+    // Because it is continuous, we string together all the phrases you say
+    let finalTranscript = "";
+    for (let i = 0; i < event.results.length; i++) {
+      finalTranscript += event.results[i][0].transcript + " ";
+    }
+
+    aiInput.value = finalTranscript.trim();
   };
 
   recognition.onerror = (event) => {
     console.error("Speech recognition error:", event.error);
+    isRecording = false;
     const aiInput = document.getElementById("ai-input");
+    const micBtn = document.getElementById("mic-btn");
+
+    if (micBtn) micBtn.classList.remove("recording");
     if (aiInput) aiInput.placeholder = "Error listening. Try typing.";
   };
 
   recognition.onend = () => {
+    isRecording = false;
     const micBtn = document.getElementById("mic-btn");
     const aiInput = document.getElementById("ai-input");
 
     if (micBtn) micBtn.classList.remove("recording");
-    if (aiInput && aiInput.placeholder === "Listening... Speak now.") {
+    if (aiInput && aiInput.placeholder.includes("Listening")) {
       aiInput.placeholder = "Ask about my projects...";
     }
   };
