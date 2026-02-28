@@ -504,7 +504,7 @@ async function sendAIChat() {
           </div>
         </div>
         
-        <a href="/frontend/docs/Ankit Sharma Resume.pdf" target="_blank" download style="text-decoration: none; flex-shrink: 0;">
+          <a href="/docs/Ankit%20Sharma%20Resume.pdf" target="_blank" download="Ankit Sharma Resume.pdf" style="text-decoration: none; flex-shrink: 0;">
           <button class="ai-pill" style="margin: 0; padding: 5px 10px; font-size: 0.75rem; font-weight: 700; cursor: pointer; border: none; color: #0a0a0a; background: var(--accent1); border-radius: 4px; white-space: nowrap;">
             <i class="fa-solid fa-download"></i> Save
           </button>
