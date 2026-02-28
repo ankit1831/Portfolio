@@ -72,7 +72,7 @@ except Exception as e:
 # 4) Groq LLM (LangChain Native for LangSmith Tracking)
 client = ChatGroq(
     api_key=os.environ.get("GROQ_API_KEY"),
-    model="llama-3.1-8b-instant",
+    model="gemma2-9b-it",
     temperature=0.1,
     max_tokens=300
 )
@@ -95,7 +95,11 @@ You are Ankit's warm, conversational, and professional AI Portfolio Assistant.
 {context}
 
 **User Question:** {question}
-**[FINAL CRITICAL INSTRUCTION]: Look strictly at the "User Question" above. You MUST reply in the EXACT SAME language as that specific question. If the question is in English, you MUST reply in English. If the question is in Hinglish/Hindi, reply in Hinglish. COMPLETELY IGNORE the language used in the "Chat History".**
+FINAL STRICT RULE: You MUST answer strictly in the language of the "User Question" above.
+- If "User Question" is in English -> Answer ONLY in English.
+- If "User Question" is in Hinglish/Hindi -> Answer ONLY in Hinglish.
+- COMPLETELY IGNORE the language of the Chat History. Do not mix languages.
+- NEVER repeat or translate the user's question. Start your answer directly.
 **Answer:**
 """
 
