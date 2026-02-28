@@ -15,8 +15,10 @@
   --footer-bg: #0a0a0a;
   --footer-border: rgba(0, 255, 136, 0.2);
 
-  --accent1: #00ff88;
-  --accent2: #00d4aa;
+
+
+  --accent1: #3b82f6; /* Swap this */
+  --accent2: #60a5fa;
   --bot-msg-bg: rgba(255, 255, 255, 0.08); /* Default for dark mode */
 }
 

@@ -146,8 +146,8 @@ function injectTypingDotsCSSOnce() {
   style.textContent = `
     .ai-typing-dots .dot{
       width:8px;height:8px;border-radius:50%;
-      background: rgba(0,255,136,0.85);
-      box-shadow: 0 0 0 2px rgba(0,255,136,0.10);
+      background: rgba(59, 130, 246, 0.85); /* Swap here */
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.10); /* And here */
       animation: aiDotBounce 1s infinite ease-in-out;
     }
     .ai-typing-dots .dot:nth-child(2){ animation-delay: 0.15s; opacity:0.85; }
@@ -402,11 +402,11 @@ async function sendAIChat() {
         .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
         .replace(
           /^###?\s+(.*)$/gm,
-          "<strong style='font-size: 1.05em; color: var(--accent1); display: block; margin-top: 6px;'>$1</strong>"
+          "<strong style='font-size: 1.05em; color: var(--accent1); display: block; margin-top: 6px;'>$1</strong>",
         )
         .replace(/^- /gm, "• ")
         // CRITICAL FIX: This regex hides the tag even while it is half-typed!
-        .replace(/\[IMG:[^\]]*\]?/gi, ""); 
+        .replace(/\[IMG:[^\]]*\]?/gi, "");
 
       botText.innerHTML = formattedText;
       box.scrollTop = box.scrollHeight;
@@ -415,19 +415,47 @@ async function sendAIChat() {
     // --- NEW: EXTRACT TAG AND SCRUB MEMORY ---
     // 1. Find the tag (Case insensitive, handles weird spacing)
     const tagMatch = fullAnswer.match(/\[IMG:\s*([^\]]+)\]/i);
-    
+
     // 2. Completely scrub the tag from the final answer so it doesn't go into history or the speaker
     const cleanAnswer = fullAnswer.replace(/\[IMG:[^\]]*\]?/gi, "").trim();
 
     // --- RICH MEDIA INJECTION LOGIC ---
     const projectMedia = {
-      "brain-tumor": { img: "assets/brain.webp", title: "Brain Tumor Detection", modal: "modal-brain-tumor" },
-      "heal-bridge": { img: "assets/heal.webp", title: "Heal-Bridge AI", modal: "modal-heal-bridge" },
-      "groq-chat": { img: "assets/chat.webp", title: "Groq LLM Chatbot", modal: "modal-groq-chat" },
-      "gait": { img: "assets/gait.webp", title: "Gait Biometrics", modal: "modal-gait" },
-      "food-delivery": { img: "assets/food.webp", title: "Delivery Time Prediction", modal: "modal-food-delivery" },
-      "churn": { img: "assets/cust.webp", title: "Customer Churn Prediction", modal: "modal-churn" },
-      "student-performance": { img: "assets/stu.webp", title: "Student Performance Prediction", modal: "modal-student-performance" }
+      "brain-tumor": {
+        img: "assets/brain.webp",
+        title: "Brain Tumor Detection",
+        modal: "modal-brain-tumor",
+      },
+      "heal-bridge": {
+        img: "assets/heal.webp",
+        title: "Heal-Bridge AI",
+        modal: "modal-heal-bridge",
+      },
+      "groq-chat": {
+        img: "assets/chat.webp",
+        title: "Groq LLM Chatbot",
+        modal: "modal-groq-chat",
+      },
+      gait: {
+        img: "assets/gait.webp",
+        title: "Gait Biometrics",
+        modal: "modal-gait",
+      },
+      "food-delivery": {
+        img: "assets/food.webp",
+        title: "Delivery Time Prediction",
+        modal: "modal-food-delivery",
+      },
+      churn: {
+        img: "assets/cust.webp",
+        title: "Customer Churn Prediction",
+        modal: "modal-churn",
+      },
+      "student-performance": {
+        img: "assets/stu.webp",
+        title: "Student Performance Prediction",
+        modal: "modal-student-performance",
+      },
     };
 
     if (tagMatch) {
@@ -437,7 +465,8 @@ async function sendAIChat() {
       if (project) {
         // Build the SLEEK, COMPACT image card
         const mediaCard = document.createElement("div");
-        mediaCard.style.cssText = "margin-top: 12px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,0.03); display: flex; align-items: center; gap: 12px; padding: 8px 12px;";
+        mediaCard.style.cssText =
+          "margin-top: 12px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,0.03); display: flex; align-items: center; gap: 12px; padding: 8px 12px;";
 
         mediaCard.innerHTML = `
           <img src="${project.img}" alt="${project.title}" style="width: 120px; height: 40px; object-fit: cover; border-radius: 4px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1);">
@@ -454,7 +483,7 @@ async function sendAIChat() {
     // --- INJECT THE SPEAKER BUTTON INLINE ---
     const speakerBtn = document.createElement("button");
     speakerBtn.className = "speaker-btn";
-    speakerBtn.title = "Listen to answer"; 
+    speakerBtn.title = "Listen to answer";
     speakerBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
 
     speakerBtn.onclick = function () {
@@ -468,6 +497,11 @@ async function sendAIChat() {
     // 4. Update Chat History with the CLEAN answer
     chatHistory.push({ role: "user", content: q });
     chatHistory.push({ role: "assistant", content: cleanAnswer });
+
+    // --- MINIMAL FIX: Sliding Window (Keep only last 6 messages / 3 interactions) ---
+    if (chatHistory.length > 6) {
+      chatHistory = chatHistory.slice(-6);
+    }
     sessionStorage.setItem("ankit_chat_history", JSON.stringify(chatHistory));
   } catch (err) {
     if (typing) typing.style.display = "none";
