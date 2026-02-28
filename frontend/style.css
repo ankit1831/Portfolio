@@ -900,7 +900,11 @@ nav {
   color: var(--text);
   background: var(--bot-msg-bg); /* Now it adapts to light/dark mode! */
   border: 1px solid var(--border);
-  border-bottom-left-radius: 2px;
+  border-bottom-left-radius: 6px;
+  width: fit-content;    /* Shrinks box to text size */
+  max-width: 80%;       /* Prevents stretching too far */
+  margin-right: auto;    /* Pushes it to the left */
+  display: inline-block;
 }
 
 /* Mobile Optimizations for AI Chat Modal */
