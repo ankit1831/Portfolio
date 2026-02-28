@@ -880,7 +880,7 @@ nav {
 }
 /* AI Chat Bubble Styles */
 .ai-msg {
-  max-width: 75%;
+  max-width: 78%;
   width: fit-content; /* <-- ADD THIS LINE to make the box hug the text */
   padding: 12px 14px;
   border-radius: 16px;
@@ -900,8 +900,7 @@ nav {
   color: var(--text);
   background: var(--bot-msg-bg); /* Now it adapts to light/dark mode! */
   border: 1px solid var(--border);
-  border-bottom-left-radius: 6px;
-  margin-right: auto;
+  border-bottom-left-radius: 2px;
 }
 
 /* Mobile Optimizations for AI Chat Modal */

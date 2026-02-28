@@ -552,9 +552,7 @@ function clearAIChat() {
   chatHistory = []; // <-- Reset History
 
   box.innerHTML = `
-    <div class="ai-msg bot">
-      Hi! Ask me about Ankit's skills, projects, internship, or achievements.
-    </div>
+    <div class="ai-msg bot">Hi! Ask me about Ankit's skills, projects, internship, or achievements.</div>
   `;
   focusAIInput();
 }
