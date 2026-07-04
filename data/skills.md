@@ -8,7 +8,7 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 
 - Machine Learning (supervised/unsupervised, model selection, evaluation)
 - Deep Learning (CNNs, transfer learning, optimization)
-- Computer Vision (classification, preprocessing, OpenCV pipelines)
+- Computer Vision (spatial segmentation, binary masking, preprocessing, OpenCV pipelines)
 - NLP & Transformers (tokenization, embeddings, transformer basics)
 - Generative AI / LLM apps (RAG , prompt engineering, chatbot UX)
 - Python (ML stack, APIs, automation)
@@ -18,11 +18,14 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 - API Integration & Serverless Architecture (FastAPI, Hugging Face, Vercel Edge)
 - Geospatial Analytics & Routing
 - Agentic AI
+- Edge AI & Real-Time Inference (PyTorch/TIMM deployment on local hardware)
+- Multithreaded Architecture & Hardware Integration (OpenCV overrides, sensor hijacking)
 
 ## Evidence (skills → where used)
 
 - Computer Vision + CNNs → Brain Tumor Detection
-- Sequence modeling / temporal modeling → Gait Recognition (CNN→LSTM)
+- Real-Time Computer Vision & Edge Inference → Edge Biometric Gait Recognition (YOLOv8, TIMM Xception, OpenCV)
+- Multithreading & Hardware Overrides → Edge Biometric Gait Recognition (Decoupled background processing, 1080p sensor integration)
 - LLM app building + UX → Heal Bridge AI, Groq-Powered LLM Chatbot
 - Full product workflow → Medicy
 - Regression + feature engineering → Food Delivery ETA
@@ -31,6 +34,7 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 - Vercel Edge UI + Hugging Face Serverless Backend - Heal Bridge Decoupled Full-Stack Architecture
 - LangGraph State Machinery - Context-Aware Symptom Discovery & Dynamic Tie-Breaking Pipeline
 - Groq LPU API Integration - Real-Time Multi-Model Translation & Report Synthesis Engine
+- Debugging Training-Serving Skew → Edge Biometric Gait Recognition (Aligning live tensor geometry to training environments)
 
 ---
 
@@ -88,20 +92,26 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 - Backend basics: Flask
 - App frameworks: Streamlit
 - FastAPI (Building high-performance, asynchronous REST API endpoints)
+- Micro-Server Architectures: Bypassing browser hardware constraints via localized Flask APIs and asynchronous HTTP polling loops.
 
 ## Databases & CS fundamentals
 
 - MySQL concepts: queries, joins, indexing, normalization
 - OS + Networks fundamentals, DSA foundations, DBMS
+- Multithreading & Concurrency: Decoupling I/O loops from compute threads to prevent main-thread blocking.
+- I/O Memory Management: Automated garbage collection for real-time video buffering.
 
 ## Tools
 
 - Git/GitHub, VS Code, Jupyter, Anaconda
 - Linux command line basics
 - Vercel Edge Networks, Hugging Face Spaces
+- Ultralytics YOLOv8, TIMM (PyTorch Image Models), OpenCV, PIL
 
 ## AI Platform Engineering & MLOps
 
 - Serverless Backend Hosting (Hugging Face Spaces): Deploying stateless, micro-containerized Python applications using FastAPI and Uvicorn for production-ready inference
 - Orchestration Frameworks (LangChain / LangGraph): Designing complex, multi-turn agentic workflows using dynamic state tracking, conditional routing loops, and structured output parsing.
 - Asynchronous Inference & Compute (Groq LPU): Integrating dedicated hardware acceleration engines via ultra-low latency LPUs to build fluid, token-streaming user experiences.
+- Edge AI Deployment: Porting heavy PyTorch architectures to consumer hardware for zero-network-latency inference and privacy-first biometric processing.
+- Model Diagnostics: Identifying and patching Training-Serving Skew (aspect ratio distortion, pixel interpolation blur, and normalization mismatches) in live production feeds.

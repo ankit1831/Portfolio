@@ -49,7 +49,53 @@ To make the platform actionable for emergency ("RED") cases, I engineered a cust
 - **GitHub:** [ankit1831/Heal-Bridge](https://github.com/ankit1831/Heal-Bridge)
 - **Live App:** [https://healbridge-seven.vercel.app/](https://healbridge-seven.vercel.app/)
 
-## 2. Brain Tumor Detection System
+---
+
+## 2. Real-Time Edge Biometric Gait Recognition (Second Signature Project)
+
+**Aliases:** edge inference computer vision, real-time gait recognition, YOLOv8 silhouette extraction, PyTorch Xception edge deployment, multithreaded camera pipeline, training-serving skew debugging.
+
+### One-liner
+
+A production-grade, real-time biometric authentication pipeline processing 1080p video on edge hardware, utilizing YOLOv8 for spatial segmentation and a custom PyTorch Xception model to classify 10 unique subjects with zero network latency.
+
+### Problem
+
+Real-world biometric systems frequently suffer from "Training-Serving Skew," where lab-trained models fail completely on live, noisy webcam data. Furthermore, transmitting high-definition video (over 2 million pixels per frame) to a cloud server introduces unacceptable network latency and privacy concerns for continuous authentication.
+
+### System Architecture (The Edge-to-API Pipeline)
+
+I engineered a decoupled, multithreaded pipeline that isolates lightweight camera observation from heavy neural network math, allowing real-time processing on consumer hardware.
+
+Phase 1: Hardware Engineering & The Smart Tripwire (OpenCV & YOLOv8n):
+Engineered a hardware-override pipeline to hijack high-definition smartphone sensors (1920x1080 resolution), bypassing low-quality laptop webcams. Deployed an ultra-fast YOLOv8 detection model to continuously monitor a 60% Region of Interest (ROI). When triggered, it captures a precise 5-second video buffer and hands it to a background worker thread.
+
+Phase 2: Semantic Segmentation & Geometry Standardization (YOLOv8-Seg):
+The background thread processes the buffer using YOLOv8-Segmentation, mathematically isolating the human subject (binary masking), cropping with a 10% spatial safety buffer, and strictly standardizing the extractions to 64x64 pixel matrices to perfectly match the training data geometry.
+
+Phase 3: Zero-Latency Edge Inference (PyTorch & TIMM):
+Pre-loaded a heavy Xception architecture into RAM for instant inference. Engineered a "Majority Vote" algorithm that batches 10 to 15 frames per walk, calculates softmax probabilities against 10 authorized subjects, averages the scores, and enforces a >0.70 (70%) confidence threshold, eliminating outlier glitches.
+
+Phase 4: The Micro-Server API (Flask):
+Bypassed browser hardware-access restrictions by building a localized Flask API (127.0.0.1:5001). Implemented HTTP polling endpoints that allow a frontend UI to fetch background predictions every 1,000 milliseconds (1 second) with zero UI blocking or network lag.
+
+### Results & Status
+
+- **Peak Accuracy:** **98%** using the Xception + LSTM architecture.
+- **Status:** Active, ongoing team research project currently focused on improving view-invariant representations and metric learning.
+- **Learnings:** Deepened expertise in temporal sequence modeling and preventing data leakage across different camera angles.
+- **Debugging Training-Serving Skew**: Successfully diagnosed and patched a critical spatial bug where live extractions were mathematically stretched by PyTorch transforms from 64x64 to 72x72, completely restoring the live model's accuracy to match validation metrics.
+- **Impact**: Maintained stable multithreaded processing on 2,073,600 pixels per frame without freezing the main camera thread, creating a fully functional, cloud-independent biometric system.
+
+### Tech Stack & Data
+
+- **Stack:** PyTorch, Ultralytics YOLOv8 (Detection & Segmentation), OpenCV, TIMM (Xception), Flask, Python Multithreading.
+- **Data:** CASIA-B (124 subjects, 11 angles, 3 clothing variations).
+- **GitHub:** [ankit1831/GAIT-Based-Biometric-Recognition-System](https://github.com/ankit1831/GAIT-Based-Biometric-Recognition-System)
+
+---
+
+## 3. Brain Tumor Detection System
 
 **Aliases:** brain tumor, MRI tumor classifier, brain MRI classification, medical imaging AI
 
@@ -76,36 +122,6 @@ I engineered a comprehensive, dual-input diagnostic system. The core pipeline ut
 - **Stack:** TensorFlow/Keras, OpenCV, Flask, Python.
 - **Data:** 3,000+ T1-weighted MRI scans (Brats2022 dataset) with custom augmentation.
 - **GitHub:** [ankit1831/Brain-Tumor-Detection-System](https://github.com/ankit1831/Brain-Tumor-Detection-System)
-
----
-
-## 3. Gait Recognition System (CASIA-B)
-
-**Aliases:** gait biometrics, CASIA-B, view-invariant gait, walking pattern recognition
-
-### One-liner
-
-Long-term research initiative achieving **98% accuracy** in biometric identification via temporal walking dynamics.
-
-### Problem
-
-Traditional biometric systems fail when faces are obscured or captured from a distance. Gait recognition provides a non-intrusive alternative but introduces complexities regarding cross-view camera angles and clothing variations.
-
-### Approach
-
-I architected a deep learning pipeline to process silhouette sequences from the CASIA-B dataset. I utilized Transfer Learning (Xception) to extract robust spatial features, which were then fed into an LSTM network to model the temporal dynamics of the human walk.
-
-### Results & Status
-
-- **Peak Accuracy:** **98%** using the Xception + LSTM architecture.
-- **Status:** Active, ongoing team research project currently focused on improving view-invariant representations and metric learning.
-- **Learnings:** Deepened expertise in temporal sequence modeling and preventing data leakage across different camera angles.
-
-### Tech Stack & Data
-
-- **Stack:** PyTorch, OpenCV, Xception, LSTM.
-- **Data:** CASIA-B (124 subjects, 11 angles, 3 clothing variations).
-- **GitHub:** [ankit1831/GAIT-Based-Biometric-Recognition-System](https://github.com/ankit1831/GAIT-Based-Biometric-Recognition-System)
 
 ---
 

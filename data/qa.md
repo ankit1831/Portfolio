@@ -74,6 +74,30 @@ When the system predicts a "RED" severity diagnosis, it triggers a spatial intel
 
 The backend operates with complete session amnesia; there is zero database persistence. For the clinical report generation, I bypassed insecure server-side PDF libraries. Instead, I engineered a hidden DOM architecture on the client side using html2pdf.js. This ensures the user's medical data is rendered into a PDF entirely within their local browser's native print engine, eliminating any risk of PHI interception.
 
+## Deep Dive: Real-Time Edge Biometric Gait Recognition
+
+### Q: Walk me through the architecture of your real-time Gait Recognition system.
+
+**A:** I designed it as a decoupled, multithreaded edge pipeline to handle high-definition video without frame-blocking.
+
+1. **Observation Layer:** I used OpenCV to hijack a 1080p smartphone sensor, passing the feed to a YOLOv8n model acting as a tripwire over a 60% Region of Interest (ROI).
+2. **Buffer & Threading:** When triggered, it buffers 5 seconds of video and passes it to a background worker thread, instantly freeing the main camera thread.
+3. **Segmentation:** The background thread uses YOLOv8-Seg to extract binary human silhouettes, cropping and standardizing them into strict 64x64 pixel matrices.
+4. **Inference & UI:** A pre-loaded PyTorch Xception model processes the batch. A localized Flask API (`127.0.0.1:5001`) polls the results every 1000ms, displaying the biometric match with zero network latency.
+
+### Q: What was the hardest engineering challenge you faced, and how did you solve it?
+
+**A:** I encountered a severe case of **Training-Serving Skew**. The PyTorch model achieved excellent validation accuracy in the lab but failed miserably on the live 1080p camera feed.
+By auditing the pipeline, I discovered a spatial geometry mismatch. My live YOLO script was cropping silhouettes at 64x64, but the live PyTorch `transforms` block was mathematically stretching them to 72x72 via pixel interpolation before inference. This artificial blur destroyed the exact stride angles the model relied on. I aligned the live tensor geometry back to exactly 64x64, which instantly restored the live feed's accuracy to match our lab metrics.
+
+### Q: Why did you run this on local Edge hardware instead of just sending the video to a Cloud API?
+
+**A:** Two reasons: Latency and Data Payload. I upgraded the camera to a 1080p sensor, which means the system is capturing over 2 million pixels per frame. Zipping and transmitting a 5-second buffer of 1080p video over standard HTTP protocols introduces massive network latency, completely ruining the "real-time" aspect of a security system. By porting the Xception model directly into the local RAM, I reduced network latency to exactly zero and eliminated the privacy concerns of sending raw biometric video over the internet.
+
+### Q: How do you prevent a single glitchy frame or shadow from causing a false prediction?
+
+**A:** I implemented a **Majority Vote Algorithm** over a temporal batch. A 5-second walk generates roughly 10 to 15 viable silhouette frames. Instead of trusting a single frame, the pipeline pushes the entire batch through the Xception model. It aggregates the class ID predictions across all 10 authorized subjects, selects the most frequent prediction, and averages its softmax probabilities. If the averaged confidence is below a strict 0.70 threshold, it rejects it. This makes the system incredibly resilient to random lighting glitches or shadow artifacts.
+
 ### Q10. Walk me through your Brain Tumor Detection project.
 
 Brain Tumor Detection is a multi-class MRI image classification system. I built both a custom CNN baseline and transfer learning variants (VGG16/ResNet50) with a preprocessing pipeline (resize, normalization, CLAHE enhancement). The best version achieved **96%+ test accuracy** and a weighted F1 of 0.94. I deployed it as a Flask web app for image upload and inference, which helped me think about usability and real-time inference constraints.
@@ -186,7 +210,7 @@ Strengths: Disciplined evaluation, end-to-end pipeline thinking, and deployment 
 
 You should hire me because I bridge the gap between rigorous machine learning theory and end-to-end, production-ready engineering. I don't just train models in notebooks; I build complete systems.
 My technical foundation spans multiple domains, proven by measurable results:
-Computer Vision & Deep Learning: I built a Brain Tumor Detection system achieving 96%+ accuracy and engineered a temporal sequence model for Gait Recognition reaching 98% accuracy.  
+Computer Vision & Deep Learning: I built a Brain Tumor Detection system achieving 96%+ accuracy and engineered a zero-latency Edge Biometric Gait Recognition pipeline, porting a PyTorch Xception model to consumer hardware to process 1080p video streams locally, completely bypassing cloud latency.  
  Explainable ML & Data Science: I developed a Customer Churn Predictor (AUC: 0.95) using SMOTE and SHAP to translate complex algorithms into actionable business insights.  
  Modern AI Engineering: I architect advanced, hybrid AI systems—orchestrating multimodal LLMs, agentic workflows, and prompt-chaining to solve real-world problems like generative hallucinations.  
  Ultimately, I bring the complete package: I can process high-dimensional data, train highly accurate classical or deep learning models, and deploy them to live, serverless edge environments. I am ready to bring this level of ownership and architectural discipline to your team's hardest problems.
@@ -202,3 +226,11 @@ Python, TensorFlow/Keras, PyTorch, Flask/Streamlit, Scikit-Learn, OpenCV, and Gi
 ### Q32. What makes you different?
 
 I combine measurable ML performance with practical deployment: I can build models, evaluate them correctly, and present them as usable products for users or stakeholders.
+
+### Q33. Tell me about a time your model failed in production.
+
+**A:** My Gait Recognition model suffered from Training-Serving Skew. The live feed was being mathematically stretched from 64x64 to 72x72 by PyTorch transforms, blurring the silhouettes. I aligned the production preprocessing to the exact training geometry, instantly fixing the accuracy drop.
+
+### Q34. How do you handle heavy AI processing on a live video feed without lagging?
+
+**A:** Multithreaded decoupling. I keep the OpenCV camera on the main thread and push the YOLO segmentation and PyTorch inference to background worker threads, communicating state via a localized Flask API.

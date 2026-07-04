@@ -435,7 +435,7 @@ async function sendAIChat() {
         title: "Brain Tumor Detection",
         modal: "modal-brain-tumor",
       },
-      "medicy": {
+      medicy: {
         img: "assets/heal.webp",
         title: "Medicy AI Healthcare",
         modal: "modal-heal-bridge",
@@ -445,7 +445,7 @@ async function sendAIChat() {
         title: "Groq LLM Chatbot",
         modal: "modal-groq-chat",
       },
-      "gait": {
+      gait: {
         img: "assets/gait.webp",
         title: "Gait Biometrics",
         modal: "modal-gait",
@@ -455,7 +455,7 @@ async function sendAIChat() {
         title: "Delivery Time Prediction",
         modal: "modal-food-delivery",
       },
-      "churn": {
+      churn: {
         img: "assets/cust.webp",
         title: "Customer Churn Prediction",
         modal: "modal-churn",

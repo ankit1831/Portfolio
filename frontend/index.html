@@ -451,6 +451,33 @@
           </div>
         </article>
         <!-- Card 1 -->
+         <article
+          class="project-card"
+          data-modal="modal-gait"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-gait"
+        >
+          <div class="project-image">
+            <img
+              src="assets\gait.webp"
+              alt="Gait Biometrics thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="190"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Gait Biometrics</h3>
+            <p>View-invariant walking recognition</p>
+            <div class="project-tags">
+              <span>PyTorch</span><span>OpenCV</span>
+            </div>
+          </div>
+        </article>
         <article
           class="project-card"
           data-modal="modal-brain-tumor"
@@ -983,8 +1010,10 @@
             ×
           </button>
 
+          
+        <div>
           <h3 id="gait-title">Gait Biometrics</h3>
-          <p class="modal-subtitle">Cross-view gait recognition on CASIA-B.</p>
+          <p class="modal-subtitle">Real-Time Edge Biometric Authentication & Cross-View Gait Recognition.</p>
 
           <div class="modal-actions">
             <a
@@ -999,8 +1028,7 @@
           <div class="modal-section">
             <h4>Technologies</h4>
             <div class="modal-chips">
-              <span>PyTorch</span><span>OpenCV</span><span>CNN </span
-              ><span>CASIA-B</span><span>Transfer Learning</span>
+              <span>PyTorch</span><span>OpenCV</span><span>YOLOv8-Seg</span><span>Xception</span><span>Flask</span>
             </div>
           </div>
 
@@ -1008,36 +1036,16 @@
             <h4>Detailed explanation</h4>
             <ul>
               <li>
-                <strong>Problem:</strong> Traditional biometric systems fail
-                when faces are obscured or captured from a distance. Gait
-                recognition provides a non-intrusive alternative by identifying
-                individuals via walking patterns, but introduces extreme
-                complexities regarding cross-view camera angles and clothing
-                variations.
+                <strong>Problem:</strong> Real-world biometric systems frequently suffer from "Training-Serving Skew," where lab-trained models fail completely on live, noisy camera data. Furthermore, transmitting high-definition video (over 2 million pixels per frame) to a cloud server introduces unacceptable network latency and privacy risks for continuous authentication.
               </li>
               <li>
-                <strong>Approach:</strong> For this long-term research
-                initiative, I architected a deep learning pipeline to process
-                silhouette sequences from the CASIA-B dataset. I utilized custom
-                CNNs and transfer learning (Xception) to extract robust spatial
-                features, which were then fed into an LSTM network to model the
-                temporal dynamics of the human walk.
+                <strong>Approach:</strong> Architected a decoupled, multithreaded edge pipeline to handle 1080p hardware sensors without frame-blocking. Deployed YOLOv8-Segmentation as a 60% ROI digital tripwire. When triggered, it captures 5-second video buffers in the background, isolating binary human silhouettes, applying a 10% spatial safety boundary, and strictly standardizing extractions into 64x64 matrices. 
               </li>
               <li>
-                <strong>Results & Status:</strong> The transfer learning
-                architecture achieved a peak accuracy of 98%, demonstrating
-                strong capability in handling both same-view and cross-view
-                challenges. This is an active, ongoing team project where we are
-                currently focused on improving view-invariant representations
-                and metric learning.
+                <strong>Results & Impact:</strong> Diagnosed and resolved a critical spatial geometry bug where live PyTorch transforms were artificially stretching 64x64 crops to 72x72. Engineered a 15-frame temporal majority-vote algorithm (>70% confidence threshold) to maintain 98% accuracy across 124 subjects and 11 view angles on the CASIA-B dataset. Achieved zero network latency via a localized 1000ms polling Flask API.
               </li>
               <li>
-                <strong>Learnings:</strong> Building this system pushed my deep
-                learning skills beyond static image classification and into
-                complex temporal sequence modeling (CNN +Transfer Learning). It
-                taught me the critical importance of rigorous evaluation
-                design—specifically, how to structure training splits to prevent
-                data leakage across different camera angles.
+                <strong>Learnings:</strong> Building this system evolved my skills from static deep learning to complete AI Systems Engineering. It taught me how to handle multithreaded I/O decoupling, manage physical hardware sensor integration, and mathematically align production preprocessing with training environments to prevent real-world model failure.
               </li>
             </ul>
           </div>

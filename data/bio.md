@@ -63,12 +63,16 @@ Himachal Pradesh, India
 - Hybrid AI-ML Architectures
 - High-Dimensional Data Engineering
 - Agentic LLM Workflows: Implementing prompt-chaining, structured JSON output generation, and semantic embedding lookups
+- Edge AI & Real-Time Video Processing: Deploying heavy deep learning models (PyTorch/TIMM) onto local hardware for zero-latency inference.
+- Hardware-Software Integration: Architecting multithreaded camera pipelines, handling sensor exposure overrides via OpenCV, and bridging background scripts to web UIs via Flask APIs.
 
 ## Highlights (evidence)
 
 - Strong academic performance (CGPA 8.80/10)
 - Internship experience in GenAI/chatbots + evaluation pipelines
-- Multiple production-style ML projects with metrics and deployments
+- Multiple production-style ML projects with metrics and deployments.
+- Engineered an end-to-end Real-Time Biometric Gait Recognition system from scratch, utilizing YOLOv8 for spatial segmentation and an Xception model for edge inference, completely bypassing cloud latency.
+- Agentic LLM Workflows: Implementing prompt-chaining, structured JSON output generation, and semantic embedding lookups
 
 ## Leadership & extracurricular
 
