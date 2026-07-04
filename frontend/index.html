@@ -422,6 +422,34 @@
       <h2>Featured Projects</h2>
 
       <div class="projects-grid">
+        <!-- Card 0: Heal Bridge V2 (Enterprise) -->
+        <article
+          class="project-card"
+          data-modal="modal-heal-bridge-v2"
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-controls="modal-heal-bridge-v2"
+        >
+          <div class="project-image">
+            <img
+              src="assets/heal-v2.webp"
+              alt="Heal Bridge V2 thumbnail"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="165"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Heal Bridge</h3>
+            <p>Serverless medical triage AI with geospatial routing</p>
+            <div class="project-tags">
+              <span>Multi-Agent</span><span>Prompting</span>
+            </div>
+          </div>
+        </article>
         <!-- Card 1 -->
         <article
           class="project-card"
@@ -626,6 +654,99 @@
       </div>
 
       <!-- MODALS -->
+      <dialog
+        id="modal-heal-bridge-v2"
+        class="project-modal"
+        aria-labelledby="heal-v2-title"
+      >
+        <div class="modal-inner">
+          <button class="modal-close" type="button" aria-label="Close modal">
+            ×
+          </button>
+
+          <h3 id="heal-v2-title">Heal Bridge | Autonomous AI Medical Triage</h3>
+          <p class="modal-subtitle">
+            Hallucination-free diagnostic AI bridging Generative NLP with
+            Deterministic Math.
+          </p>
+
+          <div class="modal-actions">
+            <a
+              class="modal-link"
+              href="https://healbridge-seven.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live
+            </a>
+            <a
+              class="modal-link"
+              href="https://github.com/ankit1831/Heal-Bridge"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+
+          <div class="modal-section">
+            <h4>Technologies</h4>
+            <div class="modal-chips">
+              <span>Multi-Agent Orchestration</span
+              ><span>Deterministic Bayesian Classifiers</span
+              ><span>FastAPI</span><span>Constrained Decoding Workflows</span
+              ><span>Memory-Mapped Tensors</span>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4>System Architecture</h4>
+            <ul>
+              <li>
+                <strong>The Scribe (Generative NLP):</strong> Utilizes Llama-3
+                on ultra-low latency Groq LPUs for strict prompt-chaining,
+                stripping conversational noise and extracting patient data into
+                a rigid JSON schema.
+              </li>
+              <li>
+                <strong>The Judge (Deterministic ML Core):</strong> Maps the
+                extracted payload to a 959-column sparse matrix. The backend
+                downcasts features to <code>np.int8</code> for memory
+                optimization and executes inference via a Bernoulli Naive Bayes
+                classifier—trained out-of-core (<code>partial_fit</code>) on 1M+
+                vectorized records.
+              </li>
+              <li>
+                <strong>The CMO (Synthesis):</strong> Injects the mathematically
+                anchored probabilities back into the LLM context window to
+                synthesize an empathetic patient summary and assign a severity
+                tier (RED/YELLOW/GREEN).
+              </li>
+            </ul>
+          </div>
+
+          <div class="modal-section">
+            <h4>Geospatial & Frontend Engineering</h4>
+            <ul class="modal-bullets">
+              <li>
+                <strong>Spatial Emergency Routing:</strong> Integrates Nominatim
+                and the Overpass API alongside the Haversine formula (utilizing
+                a 1.45x road-routing multiplier) to dynamically locate and route
+                "RED" severity patients to the nearest hospital within a 25km
+                radius.
+              </li>
+              <li>
+                <strong>3D Anatomical Raycasting:</strong> Engineered an
+                interactive Three.js human body model allowing users to pinpoint
+                pain locations via direct mesh interaction.
+              </li>
+              <li>
+                <strong>Privacy-by-Design:</strong> Achieved complete session
+                amnesia (zero DB persistence) and engineered a client-side
+                DOM-to-PDF rendering engine to strictly protect PHI data.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </dialog>
       <dialog
         id="modal-brain-tumor"
         class="project-modal"

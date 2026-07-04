@@ -425,14 +425,19 @@ async function sendAIChat() {
       .trim();
     // --- RICH MEDIA INJECTION LOGIC ---
     const projectMedia = {
+      "heal-bridge-v2": {
+        img: "assets/heal-v2.webp",
+        title: "Heal Bridge (Enterprise Triage)",
+        modal: "modal-heal-bridge-v2",
+      },
       "brain-tumor": {
         img: "assets/brain.webp",
         title: "Brain Tumor Detection",
         modal: "modal-brain-tumor",
       },
-      "heal-bridge": {
+      medicy: {
         img: "assets/heal.webp",
-        title: "Heal-Bridge AI",
+        title: "Medicy AI Healthcare",
         modal: "modal-heal-bridge",
       },
       "groq-chat": {
