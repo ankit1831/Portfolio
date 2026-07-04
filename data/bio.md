@@ -2,13 +2,14 @@
 
 ## Quick intro
 
-I’m Ankit Sharma, a B.Tech Computer Science student at VIT Bhopal University (2023–Present, CGPA 8.75/10). I build Machine Learning and Generative AI systems with a focus on real-world deployment and measurable results.
+I’m Ankit Sharma, a B.Tech Computer Science student at VIT Bhopal University (2023–Present, CGPA 8.80/10). I architect production-ready Machine Learning and Generative AI systems with a focus on real-world deployment and measurable results.
 
 ## Location
 
 Himachal Pradesh, India
 
 ## Age
+
 22
 
 ## Target roles (placements)
@@ -17,12 +18,13 @@ Himachal Pradesh, India
 - Machine Learning Engineer
 - AI Engineer
 - Software Developer
+- Data Engineer
 
 ## Education
 
 ### VIT Bhopal University — B.Tech Computer Science (2023–Present)
 
-- Current CGPA: 8.75/10
+- Current CGPA: 8.80/10
 - Focus areas: AI, Machine Learning, Cloud Computing
 
 ### Jawahar Navodaya Vidyalaya (CBSE)
@@ -56,12 +58,15 @@ Himachal Pradesh, India
 - Building end-to-end ML pipelines (data → training → evaluation → deployment)
 - Computer vision classification and model optimization
 - LLM application building (chatbots, RAG basics, prompt engineering)
-- Explaining models with metrics and interpretable insights 
+- Explaining models with metrics and interpretable insights
 - Building ML & DL model solving real world problems
+- Hybrid AI-ML Architectures
+- High-Dimensional Data Engineering
+- Agentic LLM Workflows: Implementing prompt-chaining, structured JSON output generation, and semantic embedding lookups
 
 ## Highlights (evidence)
 
-- Strong academic performance (CGPA 8.75/10)
+- Strong academic performance (CGPA 8.80/10)
 - Internship experience in GenAI/chatbots + evaluation pipelines
 - Multiple production-style ML projects with metrics and deployments
 
@@ -76,3 +81,4 @@ Himachal Pradesh, India
 - Email: ankitsharma1831ao@gmail.com
 - LinkedIn: https://www.linkedin.com/in/sharma-ankit-
 - GitHub: https://github.com/ankit1831
+- Portfolio: https://ankit-sharma-sigma.vercel.app
