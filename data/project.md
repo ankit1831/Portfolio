@@ -4,7 +4,7 @@ This document serves as the primary source of truth for Ankit's technical projec
 
 ---
 
-## 1. Heal Bridge | Autonomous AI Medical Triage System
+## 1. Heal Bridge | Autonomous AI Medical Triage System (Signature project , best project)
 
 **Aliases:** Heal Bridge, medical triage AI, dual-engine diagnostic system, hallucination-free AI, spatial hospital routing, sparse matrix ML pipeline.
 

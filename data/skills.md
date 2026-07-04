@@ -10,7 +10,7 @@ This file is organized for fast retrieval: top skills first, then categories, wi
 - Deep Learning (CNNs, transfer learning, optimization)
 - Computer Vision (classification, preprocessing, OpenCV pipelines)
 - NLP & Transformers (tokenization, embeddings, transformer basics)
-- Generative AI / LLM apps (RAG basics, prompt engineering, chatbot UX)
+- Generative AI / LLM apps (RAG , prompt engineering, chatbot UX)
 - Python (ML stack, APIs, automation)
 - Model evaluation (metrics, error analysis)
 - Deployment basics (Flask/Streamlit apps, practical hosting)

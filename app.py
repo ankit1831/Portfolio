@@ -59,9 +59,16 @@ try:
         index_token=UPSTASH_TOKEN
     )
     
+    # 3) Load Vector Store with Explicit Credentials
+# ... (keep your existing try/except block up to the retriever) ...
+
     retriever = vector_store.as_retriever(
-        search_type="similarity", # Changed from MMR for better accuracy on facts
-        search_kwargs={"k": 5} 
+        search_type="mmr", # <-- Switch back to MMR for diversity
+        search_kwargs={
+            "k": 12,          # <-- Increase from 5 to 12 to grab more info
+            "fetch_k": 40,    # <-- Pull 40 chunks initially, filter down to best 12
+            "lambda_mult": 0.6 # <-- Balances exact match vs. diversity
+        } 
     )
     print("✅ Vector Store Online and Verified!")
     
@@ -134,6 +141,7 @@ def format_history(history):
         role = "User" if msg.role == 'user' else "AI"
         formatted_history += f"{role}: {msg.content}\n"
     return formatted_history if formatted_history else "No previous history."
+
 # 6) Updated API Schema
 class Message(BaseModel):
     role: str

@@ -24,6 +24,8 @@ I’m Ankit Sharma, a final year B.Tech CSE student at VIT Bhopal (2027 batch; C
 
 ### Intro — Data Engineer (30s)
 
+I’m Ankit Sharma, a final year B.Tech CSE student at VIT Bhopal (2027 batch; CGPA 8.80/10). I specialize in high-dimensional data processing and ETL pipelines for machine learning. For my latest architecture, Heal Bridge, I engineered out-of-core chunk processing to train on 1 Million+ clinical records without exceeding RAM limits, and optimized inference by mapping unstructured JSON data into np.int8 sparse matrices. I’m targeting Data Engineer roles where I can optimize data streaming, manage vector schemas, and build resilient infrastructure for AI/ML systems.
+
 ---
 
 ## Core intro
@@ -48,7 +50,7 @@ My priority is ML Engineer, followed by Data Scientist and AI Engineer. I enjoy 
 
 ## Signature projects (deep dive)
 
-### Q4. Walk me through your Heal Bridge project.
+### Q4. Walk me through your Heal Bridge project(signature project , best project ).
 
 Heal Bridge is an institutional-grade, serverless medical triage platform. I designed it to solve the hallucination problem inherent in LLMs by completely decoupling natural language processing from diagnostic mathematics. It uses Llama-3 running on Groq LPUs to extract unstructured patient symptoms into a rigid JSON schema. This schema maps to a 959-column sparse matrix, which is evaluated by a classical Bernoulli Naive Bayes classifier trained on over 1 million vectorized records. The deterministic output is then synthesized back into a human-readable report by the LLM.
 
