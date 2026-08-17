@@ -520,7 +520,7 @@ async function sendAIChat() {
     // --- END RESUME DROP ---
 
     // --- INJECT THE SPEAKER BUTTON INLINE (if response is valid) ---
-    if (cleanAnswer) {
+    if (cleanAnswer && !cleanAnswer.startsWith("Error generating response:")) {
       const speakerBtn = document.createElement("button");
       speakerBtn.className = "speaker-btn";
       speakerBtn.title = "Listen to answer";
@@ -535,6 +535,8 @@ async function sendAIChat() {
       // 4. Update Chat History with the CLEAN answer
       chatHistory.push({ role: "user", content: q });
       chatHistory.push({ role: "assistant", content: cleanAnswer });
+    } else if (cleanAnswer && cleanAnswer.startsWith("Error generating response:")) {
+      botText.innerHTML = `<span style="color: #ff6b6b; font-size: 0.9em;">⚠️ ${cleanAnswer}</span>`;
     } else {
       botText.innerHTML = "Sorry, I couldn't generate a response. Please try again.";
     }
