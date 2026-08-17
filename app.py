@@ -79,7 +79,7 @@ except Exception as e:
 # 4) Groq LLM (LangChain Native for LangSmith Tracking)
 client = ChatGroq(
     api_key=os.environ.get("GROQ_API_KEY"),
-    model="openai/gpt-oss-20b",
+    model="qwen-2.5-32b",
     temperature=0.1,
     max_tokens=300
 )
