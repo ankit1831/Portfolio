@@ -519,24 +519,26 @@ async function sendAIChat() {
     }
     // --- END RESUME DROP ---
 
-    // --- INJECT THE SPEAKER BUTTON INLINE ---
-    const speakerBtn = document.createElement("button");
-    speakerBtn.className = "speaker-btn";
-    // ... (the rest of your code continues normally below this)
-    speakerBtn.title = "Listen to answer";
-    speakerBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+    // --- INJECT THE SPEAKER BUTTON INLINE (if response is valid) ---
+    if (cleanAnswer) {
+      const speakerBtn = document.createElement("button");
+      speakerBtn.className = "speaker-btn";
+      speakerBtn.title = "Listen to answer";
+      speakerBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
 
-    speakerBtn.onclick = function () {
-      // Use the CLEAN answer so it doesn't read the tag out loud!
-      speakText(cleanAnswer, this);
-    };
+      speakerBtn.onclick = function () {
+        speakText(cleanAnswer, this);
+      };
 
-    botText.appendChild(speakerBtn);
+      botText.appendChild(speakerBtn);
+
+      // 4. Update Chat History with the CLEAN answer
+      chatHistory.push({ role: "user", content: q });
+      chatHistory.push({ role: "assistant", content: cleanAnswer });
+    } else {
+      botText.innerHTML = "Sorry, I couldn't generate a response. Please try again.";
+    }
     box.scrollTop = box.scrollHeight;
-
-    // 4. Update Chat History with the CLEAN answer
-    chatHistory.push({ role: "user", content: q });
-    chatHistory.push({ role: "assistant", content: cleanAnswer });
 
     // --- MINIMAL FIX: Sliding Window (Keep only last 6 messages / 3 interactions) ---
     if (chatHistory.length > 6) {
